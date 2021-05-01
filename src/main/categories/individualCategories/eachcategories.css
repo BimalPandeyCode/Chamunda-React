@@ -1,0 +1,25 @@
+.eachCategories {
+  background-color: lightblue;
+  max-width: 300px;
+  min-height: 350px;
+  margin: 15px;
+  display: grid;
+  grid-template-rows: 1fr 0.2fr 0.5fr;
+  grid-template-areas:
+    "image"
+    "title"
+    "description";
+}
+.eachCategories-image {
+  width: 290px;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+  grid-area: image;
+}
+.eachCategories-title {
+  grid-area: title;
+}
+.eachCategories-description {
+  grid-area: description;
+}

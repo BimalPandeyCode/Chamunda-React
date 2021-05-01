@@ -1,0 +1,81 @@
+.navbar {
+  --color: #f08c2e;
+  display: grid;
+  grid-template-columns: 0.25fr 1fr 0.1fr 0.1fr;
+  grid-template-rows: 60px;
+  background-color: var(--color);
+  grid-template-areas: "title search cart signin";
+  justify-content: space-between;
+  /* #c06014 */
+}
+.navbar-title {
+  grid-area: title;
+  /* text-align: center; */
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-family: "Rock Salt", cursive;
+}
+.navbar-search-box {
+  grid-area: search;
+  display: grid;
+  place-items: center;
+}
+.navbar-search-input {
+  width: 80%;
+  height: 70%;
+  border-width: 0px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+.navbar-cart {
+  grid-area: cart;
+  background-color: var(--color);
+  display: grid;
+  grid-template-rows: 0.2fr 0.1fr;
+  grid-template-areas: "cartnumber" "cartimage";
+  place-items: center;
+  border: none;
+}
+.navbar-cart:hover {
+  /* outline: none; */
+  background-color: hsl(25, 80%, 50%);
+}
+.navbar-cart-number {
+  grid-area: cartnumber;
+  font-family: "Orelega One", cursive;
+  font-weight: bold;
+  /* position: absolute;
+  top: 1%;
+  padding-left: 2.5%; */
+}
+#navbar-cart-image {
+  grid-area: cartimage;
+}
+.navbar-signin {
+  grid-area: signin;
+  background-color: var(--color);
+  border: none;
+}
+.navbar-signin:hover {
+  /* outline: none; */
+  background-color: hsl(25, 80%, 50%);
+}
+/* media queries from here */
+@media screen and (max-width: 600px) {
+  .navbar {
+    grid-template-columns: 0.75fr 1.5fr 0.1fr 0.1fr;
+    grid-template-rows: 50px 50px;
+    background-color: var(--color);
+    grid-template-areas:
+      "title . cart signin"
+      "search search search search";
+    justify-content: space-between;
+  }
+  .navbar-search-input {
+    width: 98%;
+    border-radius: 5px;
+  }
+}
