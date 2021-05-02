@@ -18,6 +18,10 @@
   place-items: center;
   font-family: "Rock Salt", cursive;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 .navbar-search-box {
   grid-area: search;
   display: grid;

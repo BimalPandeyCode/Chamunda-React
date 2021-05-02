@@ -1,13 +1,14 @@
 .eachCategories {
-  background-color: lightblue;
+  background-color: rgb(236, 226, 226);
+  box-shadow: 5px 7px 15px 7px rgb(184, 184, 184);
   max-width: 300px;
   min-height: 350px;
   margin: 15px;
   display: grid;
-  grid-template-rows: 1fr 0.2fr 0.5fr;
+  grid-template-rows: 0.1fr 0.65fr 0.5fr;
   grid-template-areas:
-    "image"
     "title"
+    "image"
     "description";
 }
 .eachCategories-image {
@@ -19,7 +20,33 @@
 }
 .eachCategories-title {
   grid-area: title;
+  font-family: "Chilanka";
 }
 .eachCategories-description {
   grid-area: description;
+  font-family: "New Tegomin", serif;
+}
+.eachCategories-seemore {
+  display: flex;
+  justify-self: flex-start;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100px;
+  background-color: #cff800;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+.eachCategories-seemore:hover {
+  background-color: #b3d600;
+}
+@media screen and (max-width: 676px) {
+  .eachCategories {
+    max-width: 100%;
+  }
+  .eachCategories-image {
+    width: 90%;
+  }
 }

@@ -1,4 +1,4 @@
-import react, { useRef, useState, useReducer } from "react";
+import react, { useRef, useState } from "react";
 import Slick from "react-slick";
 import "./topslider.css";
 const TopSlider = () => {
@@ -8,21 +8,21 @@ const TopSlider = () => {
     dots: false,
     infinite: true,
     speed: 600,
-    autoplay: false,
-    autoplaySpeed: 600,
+    autoplay: true,
+    autoplaySpeed: 4800,
     slidesToShow: 1,
     slidesToScroll: 1,
   });
-  const setting = {
-    arrows: false,
-    dots: true,
-    infinite: true,
-    speed: 300,
-    autoplay: true,
-    autoplaySpeed: 600,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  // const setting = {
+  //   arrows: false,
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 300,
+  //   autoplay: false,
+  //   autoplaySpeed: 600,
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  // };
   const slideBack = () => {
     sliderReference.current.slickPrev();
   };
