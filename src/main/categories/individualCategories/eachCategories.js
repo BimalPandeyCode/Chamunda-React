@@ -21,5 +21,4 @@ const Eachcategories = () => {
     </Link>
   );
 };
-
 export default Eachcategories;
