@@ -29,15 +29,15 @@ const TopSlider = () => {
   const slideFront = () => {
     sliderReference.current.slickNext();
   };
-  const stopSLick = () => {
-    console.log(useSlick);
-    if (useSlick.autoplay) {
-      setUseSlick({ ...useSlick, autoplay: false });
-    } else {
-      setUseSlick({ ...useSlick, autoplay: true });
-    }
-    console.log(useSlick);
-  };
+  // const stopSLick = () => {
+  //   console.log(useSlick);
+  //   if (useSlick.autoplay) {
+  //     setUseSlick({ ...useSlick, autoplay: false });
+  //   } else {
+  //     setUseSlick({ ...useSlick, autoplay: true });
+  //   }
+  //   console.log(useSlick);
+  // };
   return (
     <>
       <div className="buttonHolder">

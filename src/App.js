@@ -9,25 +9,39 @@ import {
 import Navbar from "./navbar/navbar.js";
 import TopSlider from "./main/topSlider/topslider.js";
 import Categories from "./main/categories/categories.js";
+import Footer from "./Footer/Footer.js";
+
+import IndividualCategoriesPage from "./CategoriesPage/IndividualCategoriesPage.js";
+
+import "./App.css";
 function App() {
   return (
     <Router>
-      <Navbar />
       <Switch>
         <Route exact path="/">
-          <TopSlider />
-          <Categories />
+          <div style={{ minheight: "100vh" }}>
+            <Navbar />
+            <TopSlider />
+            <Categories />
+          </div>
         </Route>
-        <Route path="/category/:category">
-          <Child />
+        <Route path="/category/:categoryId">
+          <div style={{ minHeight: "100vh" }}>
+            <Navbar />
+            <IndividualCategoriesPage />
+          </div>
         </Route>
         <Route path="*">
-          <h1>
-            Yo you went to a place you weren't supposed to go, Please kindly{" "}
-            <Link to="/"> go back</Link>
-          </h1>
+          <div className="Wrong-URL">
+            <Navbar />
+            <h1>
+              Yo you went to a place you weren't supposed to go, Please kindly{" "}
+              <Link to="/"> go back</Link>
+            </h1>
+          </div>
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 }
