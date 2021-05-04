@@ -20,12 +20,8 @@ const IndividualCategoriesPage = () => {
         </div>
         <div className="IndividualCategoriesPage-sideSortBar">
           <div style={{ position: "fixed" }}>
-            <div className="IndividualCategoriesPage-sideSortBar-priceSort">
-              This is fixed div
-            </div>
-            <div className="IndividualCategoriesPage-sideSortBar-ratingSort">
-              This toooooo
-            </div>
+            <div className="IndividualCategoriesPage-sideSortBar-priceSort"></div>
+            <div className="IndividualCategoriesPage-sideSortBar-ratingSort"></div>
           </div>
         </div>
         <div className="IndividualCategoriesPage-productsHolder">{output}</div>
@@ -45,7 +41,7 @@ const Product = ({ image, key }) => {
         />
         <div className="IndividualCategoriesPage-product-info">
           <p style={{ fontSize: "20px" }}>Product Name</p>
-          <Rating n={"2.5"} numberOfPeople={"133"} />
+          <Rating n={"2.5"} numberOfPeople={"133"} key={key} />
           <p>
             Lorem Ipsum is a phrase that I do not understand, its probably
             something latin for how my cow stopped giving milk.

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Rating.css";
-const Rating = ({ n, numberOfPeople }) => {
+const Rating = ({ n, numberOfPeople, key }) => {
   let output = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= n) {
@@ -18,7 +18,11 @@ const Rating = ({ n, numberOfPeople }) => {
   if (numberOfPeople) {
     output.push(<i>({numberOfPeople})</i>);
   }
-  return <div className="rating-container">{output}</div>;
+  return (
+    <div className="rating-container" key={key}>
+      {output}
+    </div>
+  );
 };
 
 export default Rating;
