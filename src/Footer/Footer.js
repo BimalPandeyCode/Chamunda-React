@@ -5,7 +5,7 @@ const Footer = () => {
     <React.Fragment>
       <footer className="Footer">
         <i className="fas fa-copyright"></i>
-        <p>Copyright Bimal Corp</p>
+        <p>Copyright Seymour Baatts Corp</p>
       </footer>
     </React.Fragment>
   );

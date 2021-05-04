@@ -41,6 +41,7 @@
 }
 .eachCategories-seemore:hover {
   background-color: #b3d600;
+  cursor: pointer;
 }
 @media screen and (max-width: 676px) {
   .eachCategories {

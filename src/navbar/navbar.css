@@ -6,6 +6,8 @@
   background-color: var(--color);
   grid-template-areas: "title search cart signin";
   justify-content: space-between;
+  margin-bottom: 0px;
+  padding: 0px;
   /* #c06014 */
 }
 .navbar-title {

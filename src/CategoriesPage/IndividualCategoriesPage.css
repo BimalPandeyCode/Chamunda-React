@@ -1,0 +1,103 @@
+.IndividualCategoriesPage {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+  grid-template-rows: 75px 1.5fr;
+  grid-template-areas:
+    "mainTitle mainTitle"
+    "sideSortBar products";
+}
+
+.IndividualCategoriesPage-mainTitle {
+  grid-area: mainTitle;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgb(0, 255, 26) 0%,
+    rgb(0, 199, 0) 50%,
+    rgba(103, 255, 37, 1) 100%
+  );
+}
+
+.IndividualCategoriesPage-sideSortBar {
+  grid-area: sideSortBar;
+  height: 100%;
+  background-color: lightpink;
+}
+
+.IndividualCategoriesPage-productsHolder {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  grid-area: products;
+  background-color: rgb(193, 243, 255);
+}
+
+/* products from hererererere */
+.IndividualCategoriesPage-product {
+  width: 250px;
+  height: 400px;
+  margin: 10px;
+  border-radius: 1px;
+  box-shadow: 0 10px 6px -6px #777;
+  background-color: #ffffff;
+}
+.IndividualCategoriesPage-product-info {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+.IndividualCategoriesPage-product-Image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+.IndividualCategoriesPage-product-info-priceHolder {
+  display: flex;
+  flex-direction: row;
+}
+.IndividualCategoriesPage-product-info-truePrice {
+  display: block;
+  margin-top: auto;
+  font-weight: bold;
+  color: red;
+  font-size: 18px;
+}
+.IndividualCategoriesPage-product-info-crossedPrice {
+  font-size: 13px;
+  /* text-align: end; */
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: super;
+}
+.IndividualCategoriesPage-product-buttonHolder {
+  display: grid;
+  margin: auto;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "addToCart Buy";
+  width: 95%;
+}
+.IndividualCategoriesPage-product-buttonHolder-addToCart {
+  grid-area: addToCart;
+  height: 30px;
+  background-color: #35affa;
+  border: none;
+  border-radius: 2px;
+}
+.IndividualCategoriesPage-product-buttonHolder-addToCart:hover {
+  background-color: #0275d8;
+}
+.IndividualCategoriesPage-product-buttonHolder-Buy {
+  grid-area: Buy;
+  height: 30px;
+  background-color: #d9534f;
+  border: none;
+  border-radius: 2px;
+}
+.IndividualCategoriesPage-product-buttonHolder-Buy:hover {
+  background-color: #bd2626;
+}
