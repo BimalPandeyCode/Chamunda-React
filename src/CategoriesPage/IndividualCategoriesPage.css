@@ -11,7 +11,7 @@
   grid-area: mainTitle;
   display: grid;
   place-items: center;
-  width: 100%;
+  /* width: 100%; */
   background: linear-gradient(
     90deg,
     rgb(0, 255, 26) 0%,
@@ -22,8 +22,43 @@
 
 .IndividualCategoriesPage-sideSortBar {
   grid-area: sideSortBar;
-  height: 100%;
-  background-color: lightpink;
+  background-color: lightcyan;
+}
+
+.IndividualCategoriesPage-sideSortBar-holder {
+  position: relative;
+  width: auto;
+}
+.IndividualCategoriesPage-sideSortBar-priceSort {
+  grid-area: priceSort;
+}
+.IndividualCategoriesPage-sideSortBar-filter {
+  display: none;
+  grid-area: filter;
+}
+
+.IndividualCategoriesPage-sideSortBar-ratingSort {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.IndividualCategoriesPage-sideSortBar-ratingSort-button {
+  /* border: none; */
+  outline: none;
+  margin-bottom: 10px;
+  background-color: rgba(219, 212, 200, 0);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "SortRating";
+}
+
+.IndividualCategoriesPage-sideSortBar-ratingSort-button-rating {
+  grid-area: SortRating;
+}
+
+.IndividualCategoriesPage-sideSortBar-ratingSort-button-label {
+  grid-area: SortLabel;
 }
 
 .IndividualCategoriesPage-productsHolder {
@@ -38,7 +73,7 @@
 /* products from hererererere */
 .IndividualCategoriesPage-product {
   width: 250px;
-  height: 400px;
+  height: fit-content;
   margin: 10px;
   border-radius: 1px;
   box-shadow: 0 10px 6px -6px #777;
@@ -80,6 +115,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "addToCart Buy";
   width: 95%;
+  padding-bottom: 10px;
 }
 .IndividualCategoriesPage-product-buttonHolder-addToCart {
   grid-area: addToCart;
@@ -100,4 +136,41 @@
 }
 .IndividualCategoriesPage-product-buttonHolder-Buy:hover {
   background-color: #bd2626;
+}
+
+@media screen and (max-width: 700px) {
+  .IndividualCategoriesPage {
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: 75px 1.5fr;
+    grid-template-areas:
+      "mainTitle sideSortBar"
+      "products products";
+  }
+  .IndividualCategoriesPage-sideSortBar-holder {
+    height: 75px;
+    display: grid;
+    grid-template-columns: 1.7fr 0.5fr;
+    grid-template-areas: "priceSort filter";
+  }
+  .IndividualCategoriesPage-sideSortBar-priceSort {
+    display: block;
+    margin: auto;
+    /* display: grid;
+    place-items: center; */
+  }
+  /* d; */
+  .IndividualCategoriesPage-sideSortBar-filter {
+    display: grid;
+    place-items: center;
+    padding-left: 10px;
+  }
+  .IndividualCategoriesPage-sideSortBar-ratingSort {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 539px) {
+  .IndividualCategoriesPage-product {
+    width: 90%;
+  }
 }
