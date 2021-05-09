@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import "./IndividualCategoriesPage.css";
 import data from "../data.js";
@@ -6,6 +6,9 @@ import data from "../data.js";
 import Rating from "../Components/Rating/Rating.js";
 
 const IndividualCategoriesPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { categoryId } = useParams();
   let IndividualCategoriesPageSideSortBarRatingSort = useRef();
   if (categoryId < data.length) {
@@ -27,11 +30,10 @@ const IndividualCategoriesPage = () => {
               <div className="IndividualCategoriesPage-sideSortBar-priceSort">
                 <label>Sort by:</label>
                 <button>Popular</button>
-                {/* <button>UP</button> */}
               </div>
-              <div className="IndividualCategoriesPage-sideSortBar-filter">
-                <i className="far fa-sort fa-2x">Sort</i>
-              </div>
+              <button className="IndividualCategoriesPage-sideSortBar-filter">
+                <i className="far fa-sort fa-1x">Sort</i>
+              </button>
               <div
                 className="IndividualCategoriesPage-sideSortBar-ratingSort"
                 ref={IndividualCategoriesPageSideSortBarRatingSort}
@@ -120,7 +122,10 @@ const Product = ({ image, key }) => {
             </strike>
           </div>
           <div className="IndividualCategoriesPage-product-buttonHolder">
-            <button className="IndividualCategoriesPage-product-buttonHolder-addToCart">
+            <button
+              className="IndividualCategoriesPage-product-buttonHolder-addToCart"
+              onClick={() => window.scrollTo(0, 0)}
+            >
               Add to cart
             </button>
             <button className="IndividualCategoriesPage-product-buttonHolder-Buy">

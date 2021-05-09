@@ -1,6 +1,5 @@
 .eachCategories {
-  background-color: rgb(236, 226, 226);
-  box-shadow: 5px 7px 15px 7px rgb(184, 184, 184);
+  background-color: rgb(228, 228, 228);
   max-width: 300px;
   min-height: 350px;
   margin: 15px;
@@ -10,6 +9,10 @@
     "title"
     "image"
     "description";
+}
+.eachCategories:hover {
+  box-shadow: 5px 7px 15px 7px rgb(184, 184, 184);
+  background-color: rgb(236, 226, 226);
 }
 .eachCategories-image {
   width: 290px;

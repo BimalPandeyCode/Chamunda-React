@@ -158,11 +158,13 @@
     /* display: grid;
     place-items: center; */
   }
-  /* d; */
   .IndividualCategoriesPage-sideSortBar-filter {
     display: grid;
     place-items: center;
-    padding-left: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    outline: orange solid 1px;
+    box-shadow: 0 0 3pt 2pt red;
   }
   .IndividualCategoriesPage-sideSortBar-ratingSort {
     display: none;
