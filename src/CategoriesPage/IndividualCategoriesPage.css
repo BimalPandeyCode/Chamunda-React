@@ -31,6 +31,22 @@
 }
 .IndividualCategoriesPage-sideSortBar-priceSort {
   grid-area: priceSort;
+  position: relative;
+  font-family: Arial;
+  margin-bottom: 20px;
+}
+.IndividualCategoriesPage-sideSortBar-priceSort select {
+  background-color: #8183ff;
+  color: lightcyan;
+  padding: 5px;
+  border: none;
+}
+.IndividualCategoriesPage-sideSortBar-priceSort select:focus {
+  outline: none;
+  border: none;
+}
+.IndividualCategoriesPage-sideSortBar-priceSort select:hover {
+  background-color: #4b4eff;
 }
 .IndividualCategoriesPage-sideSortBar-filter {
   display: none;
@@ -44,7 +60,6 @@
 }
 
 .IndividualCategoriesPage-sideSortBar-ratingSort-button {
-  /* border: none; */
   outline: none;
   margin-bottom: 10px;
   background-color: rgba(219, 212, 200, 0);
@@ -70,7 +85,6 @@
   background-color: rgb(193, 243, 255);
 }
 
-/* products from hererererere */
 .IndividualCategoriesPage-product {
   width: 250px;
   height: fit-content;
@@ -79,22 +93,26 @@
   box-shadow: 0 10px 6px -6px #777;
   background-color: #ffffff;
 }
+
 .IndividualCategoriesPage-product-info {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 95%;
 }
+
 .IndividualCategoriesPage-product-Image {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 95%;
 }
+
 .IndividualCategoriesPage-product-info-priceHolder {
   display: flex;
   flex-direction: row;
 }
+
 .IndividualCategoriesPage-product-info-truePrice {
   display: block;
   margin-top: auto;
@@ -102,13 +120,14 @@
   color: red;
   font-size: 18px;
 }
+
 .IndividualCategoriesPage-product-info-crossedPrice {
   font-size: 13px;
-  /* text-align: end; */
   margin-top: auto;
   margin-bottom: auto;
   vertical-align: super;
 }
+
 .IndividualCategoriesPage-product-buttonHolder {
   display: grid;
   margin: auto;
@@ -117,6 +136,7 @@
   width: 95%;
   padding-bottom: 10px;
 }
+
 .IndividualCategoriesPage-product-buttonHolder-addToCart {
   grid-area: addToCart;
   height: 30px;
@@ -124,9 +144,11 @@
   border: none;
   border-radius: 2px;
 }
+
 .IndividualCategoriesPage-product-buttonHolder-addToCart:hover {
   background-color: #0275d8;
 }
+
 .IndividualCategoriesPage-product-buttonHolder-Buy {
   grid-area: Buy;
   height: 30px;
@@ -134,6 +156,7 @@
   border: none;
   border-radius: 2px;
 }
+
 .IndividualCategoriesPage-product-buttonHolder-Buy:hover {
   background-color: #bd2626;
 }
@@ -154,17 +177,15 @@
   }
   .IndividualCategoriesPage-sideSortBar-priceSort {
     display: block;
-    margin: auto;
-    /* display: grid;
-    place-items: center; */
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
   }
   .IndividualCategoriesPage-sideSortBar-filter {
     display: grid;
     place-items: center;
     background-color: rgba(0, 0, 0, 0);
     border: none;
-    outline: orange solid 1px;
-    box-shadow: 0 0 3pt 2pt red;
   }
   .IndividualCategoriesPage-sideSortBar-ratingSort {
     display: none;

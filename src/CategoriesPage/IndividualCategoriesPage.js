@@ -6,6 +6,7 @@ import data from "../data.js";
 import Rating from "../Components/Rating/Rating.js";
 
 const IndividualCategoriesPage = () => {
+  const sortUp = <i className="fas fa-sort-up"></i>;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -28,8 +29,13 @@ const IndividualCategoriesPage = () => {
           <div className="IndividualCategoriesPage-sideSortBar">
             <div className="IndividualCategoriesPage-sideSortBar-holder">
               <div className="IndividualCategoriesPage-sideSortBar-priceSort">
-                <label>Sort by:</label>
-                <button>Popular</button>
+                <select className="fa">
+                  <option value="0">Popular</option>
+                  <option value="fas fa-sort-up">Price &#xf161;</option>
+                  <option value="fas fa-sort-amount-down-alt">
+                    Price &#xf884;
+                  </option>
+                </select>
               </div>
               <button className="IndividualCategoriesPage-sideSortBar-filter">
                 <i className="far fa-sort fa-1x">Sort</i>
