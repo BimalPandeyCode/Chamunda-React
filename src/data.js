@@ -2,7 +2,7 @@ const data = [
   {
     id: 0,
     name: "Bimal Pandey",
-    rating: 0,
+    rating: 1,
     noOfRateing: 12,
     prevPrice: 1000,
     currPrice: 950,
@@ -32,7 +32,7 @@ const data = [
   {
     id: 3,
     name: "Purna Bahadur Pandey",
-    rating: 5,
+    rating: 3.5,
     noOfRateing: 100,
     prevPrice: 950,
     currPrice: 930,
@@ -42,7 +42,7 @@ const data = [
   {
     id: 4,
     name: "Dhal Kumari Pandey",
-    rating: 5,
+    rating: 3.5,
     noOfRateing: 120,
     prevPrice: 1000,
     currPrice: 1000,
@@ -63,7 +63,7 @@ const data = [
     id: 6,
     name: "Hitesh Budathoki",
     rating: 2.5,
-    noOfRateing: -1000,
+    noOfRateing: 12593,
     prevPrice: 1000,
     currPrice: 999,
     image:
