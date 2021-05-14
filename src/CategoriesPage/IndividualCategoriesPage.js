@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useReducer } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import "./IndividualCategoriesPage.css";
 import data from "../data.js";
@@ -128,8 +128,82 @@ const IndividualCategoriesPage = () => {
     if (outputPriceDown.length === 0) {
       outputPriceDown.push(<Empty />);
     }
+    if (showRatingSort) {
+      document.body.style.overflow = "hidden";
+      // let PosX = window.scrollX;
+      // let posY = window.scrollY;
+      // window.onscroll = () => window.scrollTo(PosX, posY);
+    } else {
+      document.body.style.overflow = "scroll";
+      // window.onscroll = () => {};
+    }
     return (
       <React.Fragment>
+        {showRatingSort ? (
+          <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-Div">
+            <button
+              className="hidden-IndividualCategoriesPage-sideSortBar-filter-exitButton"
+              onClick={() =>
+                setTimeout(() => {
+                  setShowRatingSort(!showRatingSort);
+                }, 200)
+              }
+            ></button>
+            <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating">
+              <button
+                className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating-resetButton"
+                onClick={() => setStarRating(0)}
+              >
+                Reset
+              </button>
+              <div className="IndividualCategoriesPage-sideSortBar-ratingSort2">
+                <label>Rating:</label>
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  onClick={() => setStarRating(5)}
+                >
+                  <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
+                    <Rating n={5} />
+                  </div>
+                </button>
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  onClick={() => setStarRating(4)}
+                >
+                  <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
+                    <Rating n={4} />
+                  </div>
+                </button>
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  onClick={() => setStarRating(3)}
+                >
+                  <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
+                    <Rating n={3} />
+                  </div>
+                </button>
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  onClick={() => setStarRating(2)}
+                >
+                  <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
+                    <Rating n={2} />
+                  </div>
+                </button>
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  onClick={() => setStarRating(1)}
+                >
+                  <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
+                    <Rating n={1} />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="IndividualCategoriesPage">
           <div className="IndividualCategoriesPage-mainTitle">
             <h3>{name}</h3>
@@ -183,17 +257,13 @@ const IndividualCategoriesPage = () => {
                   </option>
                 </select>
               </div> */}
-              <button className="IndividualCategoriesPage-sideSortBar-filter">
+              <button
+                className="IndividualCategoriesPage-sideSortBar-filter"
+                onClick={() => setShowRatingSort(!showRatingSort)}
+              >
                 <i className="far fa-sort fa-1x">Sort</i>
               </button>
-              {/* <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-Div">
-                <button className="hidden-IndividualCategoriesPage-sideSortBar-filter-exitButton">
-                  Button here
-                </button>
-                <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating">
-                  ratings here
-                </div>
-              </div> */}
+
               <div className="IndividualCategoriesPage-sideSortBar-ratingSort">
                 <label>Rating:</label>
                 <button
@@ -321,36 +391,14 @@ const Empty = () => {
       <span
         style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}
       >
-        We've searched far and wide but we can't seem to find what you are
-        looking for...
-        <i className="fas fa-box-open fa-3x"></i>
+        <p>
+          We've searched far and wide but we can't seem to find what you are
+          looking for...
+        </p>
+        <i className="fas fa-box-open fa-3x">Empty</i>
       </span>
     </>
   );
 };
-
-// const PriceSort = (setSortName) => {
-//   return (
-//     <React.Fragment>
-//       <div className="PriceSortHolder">
-//         <button
-//           className="PriceSortHolderButton"
-//           onClick={() => setSortName("Popular")}
-//         >
-//           Popular
-//         </button>
-//         <button
-//           className="PriceSortHolderButton"
-//           onClick={() => setSortName("Not so popular")}
-//         >
-//           Price<i className="fas fa-sort-amount-down"></i>
-//         </button>
-//         <button className="PriceSortHolderButton">
-//           Price<i className="fas fa-sort-amount-up"></i>
-//         </button>
-//       </div>
-//     </React.Fragment>
-//   );
-// };
 
 export default IndividualCategoriesPage;

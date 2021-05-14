@@ -219,21 +219,40 @@
   }
 
   .hidden-IndividualCategoriesPage-sideSortBar-filter-Div {
-    position: absolute;
+    position: fixed;
+    overflow: hidden;
     display: grid;
-    grid-template-columns: 0.3fr 1fr;
+    grid-template-columns: 1fr 1.3fr;
+    grid-template-rows: 1fr;
     grid-template-areas: "starExitButton starRatingMobile";
-    top: 150px;
+    /* "starExitButtonTop starExitButtonTop" */
+    top: 0px;
     left: 0px;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     z-index: 5;
   }
   .hidden-IndividualCategoriesPage-sideSortBar-filter-exitButton {
     grid-area: starExitButton;
+    filter: opacity(0.7) blur(3px) brightness(50%);
+    /* transform: scale(1.08); */
+    /* margin: -5px; */
+    /* -webkit-filter: hue-rotate(90deg) grayscale(50%) opacity(0.8) blur(5px)
+      brightness(3%) contrast(200%); */
+    border: none;
+  }
+  .hidden-IndividualCategoriesPage-sideSortBar-filter-starRating-resetButton {
+    background-color: aquamarine;
+    outline: none;
+    border-width: 1px;
+
+    border-radius: 3px;
+    width: 30%;
+    height: 30px;
   }
   .hidden-IndividualCategoriesPage-sideSortBar-filter-starRating {
     grid-area: starRatingMobile;
+    background-color: lightyellow;
   }
   .IndividualCategoriesPage-sideSortBar-filter {
     display: grid;
