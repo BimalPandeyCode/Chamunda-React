@@ -199,6 +199,24 @@ const IndividualCategoriesPage = () => {
                   </div>
                 </button>
               </div>
+              <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-min-maxPrice">
+                <span className="IndividualCategoriesPage-sideSortBar-min-maxPrice-label">
+                  Price:
+                </span>
+                <input
+                  type="number"
+                  placeholder="min"
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
+                />
+                <input
+                  type="number"
+                  placeholder="max"
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
+                />
+                <button className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton">
+                  {">"}
+                </button>
+              </div>
             </div>
           </div>
         ) : (
@@ -305,6 +323,24 @@ const IndividualCategoriesPage = () => {
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={1} />
                   </div>
+                </button>
+              </div>
+              <div className="IndividualCategoriesPage-sideSortBar-min-maxPrice">
+                <span className="IndividualCategoriesPage-sideSortBar-min-maxPrice-label">
+                  Price:
+                </span>
+                <input
+                  type="number"
+                  placeholder="min"
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
+                />
+                <input
+                  type="number"
+                  placeholder="max"
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
+                />
+                <button className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton">
+                  {">"}
                 </button>
               </div>
             </div>

@@ -91,6 +91,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas: "SortRating";
+  border-width: 1px;
 }
 
 .IndividualCategoriesPage-sideSortBar-ratingSort-button-rating {
@@ -99,6 +100,30 @@
 
 .IndividualCategoriesPage-sideSortBar-ratingSort-button-label {
   grid-area: SortLabel;
+}
+.IndividualCategoriesPage-sideSortBar-min-maxPrice {
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: 50px 50px 10px 20px;
+  grid-template-rows: 16px 5px 20px;
+  grid-template-areas:
+    "MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel"
+    ". . . ."
+    "minimumPrice maximumPrice . goButton";
+}
+.IndividualCategoriesPage-sideSortBar-min-maxPrice-label {
+  grid-area: MinMaxPricelabel;
+}
+.IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice {
+  grid-area: minimumPrice;
+  max-width: 45px;
+}
+.IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice {
+  grid-area: maximumPrice;
+  max-width: 45px;
+}
+.IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton {
+  grid-area: goButton;
 }
 
 .IndividualCategoriesPage-productsHolder {
@@ -260,7 +285,20 @@
     background-color: rgba(0, 0, 0, 0);
     border: none;
   }
+  .hidden-IndividualCategoriesPage-sideSortBar-filter-min-maxPrice {
+    display: grid;
+    max-width: 100%;
+    grid-template-columns: 50px 50px 10px 20px;
+    grid-template-rows: 16px 5px 20px;
+    grid-template-areas:
+      "MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel"
+      ". . . ."
+      "minimumPrice maximumPrice . goButton";
+  }
   .IndividualCategoriesPage-sideSortBar-ratingSort {
+    display: none;
+  }
+  .IndividualCategoriesPage-sideSortBar-min-maxPrice {
     display: none;
   }
 }
