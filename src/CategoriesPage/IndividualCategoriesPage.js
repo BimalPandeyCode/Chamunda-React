@@ -13,6 +13,7 @@ const IndividualCategoriesPage = () => {
   const [sortingName, setSortingName] = useState("popular"); //this is for re rendering the products
   const [starRating, setStarRating] = useState(0);
   const [showRatingSort, setShowRatingSort] = useState(false);
+  const [minMaxPrice, setMinMaxPrice] = useState([-Infinity, Infinity]);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -75,7 +76,11 @@ const IndividualCategoriesPage = () => {
       return b.currPrice - a.currPrice;
     });
     for (let i = 0; i < popular.length; i++) {
-      if (popular[i].rating >= starRating) {
+      if (
+        popular[i].rating >= starRating &&
+        popular[i].currPrice <= minMaxPrice[1] &&
+        popular[i].currPrice >= minMaxPrice[0]
+      ) {
         outputPopular.push(
           <Product
             image={popular[i].image}
@@ -93,7 +98,11 @@ const IndividualCategoriesPage = () => {
       outputPopular.push(<Empty />);
     }
     for (let j = 0; j < priceUpToDown.length; j++) {
-      if (priceUpToDown[j].rating >= starRating) {
+      if (
+        priceUpToDown[j].rating >= starRating &&
+        priceUpToDown[j].currPrice <= minMaxPrice[1] &&
+        priceUpToDown[j].currPrice >= minMaxPrice[0]
+      ) {
         outputPriceUp.push(
           <Product
             image={priceUpToDown[j].image}
@@ -111,7 +120,11 @@ const IndividualCategoriesPage = () => {
       outputPriceUp.push(<Empty />);
     }
     for (let k = 0; k < priceDownToUp.length; k++) {
-      if (priceDownToUp[k].rating >= starRating) {
+      if (
+        priceDownToUp[k].rating >= starRating &&
+        priceDownToUp[k].currPrice <= minMaxPrice[1] &&
+        priceDownToUp[k].currPrice >= minMaxPrice[0]
+      ) {
         outputPriceDown.push(
           <Product
             image={priceDownToUp[k].image}
@@ -126,16 +139,12 @@ const IndividualCategoriesPage = () => {
       }
     }
     if (outputPriceDown.length === 0) {
-      outputPriceDown.push(<Empty />);
+      outputPriceDown.push(<Empty key="999" />);
     }
     if (showRatingSort) {
-      document.body.style.overflow = "hidden";
-      // let PosX = window.scrollX;
-      // let posY = window.scrollY;
-      // window.onscroll = () => window.scrollTo(PosX, posY);
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflow = "scroll";
-      // window.onscroll = () => {};
+      document.body.style.overflowY = "scroll";
     }
     return (
       <React.Fragment>
@@ -146,13 +155,17 @@ const IndividualCategoriesPage = () => {
               onClick={() =>
                 setTimeout(() => {
                   setShowRatingSort(!showRatingSort);
-                }, 200)
+                }, 0)
               }
             ></button>
             <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating">
               <button
                 className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating-resetButton"
-                onClick={() => setStarRating(0)}
+                onClick={() => {
+                  setStarRating(0);
+                  setMinMaxPrice([-Infinity, Infinity]);
+                  setShowRatingSort(!showRatingSort);
+                }}
               >
                 Reset
               </button>
@@ -160,7 +173,10 @@ const IndividualCategoriesPage = () => {
                 <label>Rating:</label>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(5)}
+                  onClick={() => {
+                    setStarRating(5);
+                    setShowRatingSort(!showRatingSort);
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={5} />
@@ -168,7 +184,10 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(4)}
+                  onClick={() => {
+                    setStarRating(4);
+                    setShowRatingSort(!showRatingSort);
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={4} />
@@ -176,7 +195,10 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(3)}
+                  onClick={() => {
+                    setStarRating(3);
+                    setShowRatingSort(!showRatingSort);
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={3} />
@@ -184,7 +206,10 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(2)}
+                  onClick={() => {
+                    setStarRating(2);
+                    setShowRatingSort(!showRatingSort);
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={2} />
@@ -192,7 +217,10 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(1)}
+                  onClick={() => {
+                    setStarRating(1);
+                    setShowRatingSort(!showRatingSort);
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={1} />
@@ -207,14 +235,37 @@ const IndividualCategoriesPage = () => {
                   type="number"
                   placeholder="min"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
+                  id="minPriceMobile"
                 />
                 <input
                   type="number"
                   placeholder="max"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
+                  id="maxPriceMobile"
                 />
-                <button className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton">
-                  {">"}
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton"
+                  onClick={() => {
+                    let minPriceMobile = parseFloat(
+                      document.getElementById("minPriceMobile").value
+                    );
+                    let maxPriceMobile = parseFloat(
+                      document.getElementById("maxPriceMobile").value
+                    );
+                    if (
+                      minPriceMobile <= maxPriceMobile &&
+                      minPriceMobile !== undefined &&
+                      maxPriceMobile !== undefined
+                    ) {
+                      setMinMaxPrice([minPriceMobile, maxPriceMobile]);
+                      setShowRatingSort(!showRatingSort);
+                    }
+                  }}
+                >
+                  <i
+                    id="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton"
+                    className="fas fa-chevron-circle-right"
+                  ></i>
                 </button>
               </div>
             </div>
@@ -266,15 +317,6 @@ const IndividualCategoriesPage = () => {
                   <></>
                 )}
               </div>
-              {/* <div className="IndividualCategoriesPage-sideSortBar-priceSort">
-                <select className="fa">
-                  <option value="0">Popular</option>
-                  <option value="fas fa-sort-up">Price &#xf161;</option>
-                  <option value="fas fa-sort-amount-down-alt">
-                    Price &#xf884;
-                  </option>
-                </select>
-              </div> */}
               <button
                 className="IndividualCategoriesPage-sideSortBar-filter"
                 onClick={() => setShowRatingSort(!showRatingSort)}
@@ -286,7 +328,25 @@ const IndividualCategoriesPage = () => {
                 <label>Rating:</label>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(5)}
+                  id="IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                  onClick={() => {
+                    setStarRating(5);
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                    ).style.backgroundColor = "lightsteelblue";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                    ).style.backgroundColor = "";
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={5} />
@@ -294,7 +354,25 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(4)}
+                  id="IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                  onClick={() => {
+                    setStarRating(4);
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                    ).style.backgroundColor = "lightsteelblue";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                    ).style.backgroundColor = "";
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={4} />
@@ -302,7 +380,25 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(3)}
+                  id="IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                  onClick={() => {
+                    setStarRating(3);
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                    ).style.backgroundColor = "lightsteelblue";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                    ).style.backgroundColor = "";
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={3} />
@@ -310,7 +406,25 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(2)}
+                  id="IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                  onClick={() => {
+                    setStarRating(2);
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                    ).style.backgroundColor = "lightsteelblue";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                    ).style.backgroundColor = "";
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={2} />
@@ -318,7 +432,25 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
-                  onClick={() => setStarRating(1)}
+                  id="IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                  onClick={() => {
+                    setStarRating(1);
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                    ).style.backgroundColor = "lightsteelblue";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                    ).style.backgroundColor = "";
+                    document.getElementById(
+                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                    ).style.backgroundColor = "";
+                  }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
                     <Rating n={1} />
@@ -333,14 +465,36 @@ const IndividualCategoriesPage = () => {
                   type="number"
                   placeholder="min"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
+                  id="minPrice"
                 />
                 <input
                   type="number"
                   placeholder="max"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
+                  id="maxPrice"
                 />
-                <button className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton">
-                  {">"}
+                <button
+                  className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton"
+                  onClick={() => {
+                    let minPrice = parseFloat(
+                      document.getElementById("minPrice").value
+                    );
+                    let maxPrice = parseFloat(
+                      document.getElementById("maxPrice").value
+                    );
+                    if (
+                      minPrice <= maxPrice &&
+                      minPrice !== undefined &&
+                      maxPrice !== undefined
+                    ) {
+                      setMinMaxPrice([minPrice, maxPrice]);
+                    }
+                  }}
+                >
+                  <i
+                    id="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton"
+                    className="fas fa-chevron-circle-right"
+                  ></i>
                 </button>
               </div>
             </div>
@@ -423,17 +577,20 @@ const Product = ({
 
 const Empty = () => {
   return (
-    <>
-      <span
-        style={{ display: "grid", placeItems: "center", minHeight: "100vh" }}
-      >
-        <p>
-          We've searched far and wide but we can't seem to find what you are
-          looking for...
-        </p>
-        <i className="fas fa-box-open fa-3x">Empty</i>
-      </span>
-    </>
+    <span
+      style={{
+        display: "grid",
+        placeItems: "center",
+        minHeight: "100vh",
+      }}
+      key="99"
+    >
+      <p>
+        We've searched far and wide but we can't seem to find what you are
+        looking for...
+      </p>
+      <i className="fas fa-box-open fa-2x">Empty</i>
+    </span>
   );
 };
 

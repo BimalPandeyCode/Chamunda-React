@@ -82,6 +82,7 @@ a {
   }
   .navbar-search-input {
     width: 98%;
+    height: 85%;
     border-radius: 5px;
   }
 }
