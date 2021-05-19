@@ -8,8 +8,10 @@ const Eachcategories = ({ id, image, key, name }) => {
         <img src={image} alt="" className="eachCategories-image" />
         <h3 className="eachCategories-title">{name}</h3>
         <p className="eachCategories-description">
-          Hey guys this is a good product, if it weren't then would we hire
-          Ronaldo to promote it? Think about it. r/iam14andthisisdeep
+          Two hunters are out in the woods when one of them collapses. The other
+          guy calls 911. He gasps, "My friend is dead!" The operator says, "Calm
+          down.. First, let's make sure he's dead." There is a silence; then a
+          gun shot is heard. The guy says, "OK, now what?"
         </p>
 
         <button className="eachCategories-seemore">See more</button>

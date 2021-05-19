@@ -284,6 +284,11 @@
     /* width: 30%; */
     min-width: 133px;
     height: 30px;
+    margin: 7px 0px 7px 7px;
+  }
+  .hidden-IndividualCategoriesPage-sideSortBar-filter-starRating-ratingSort {
+    margin-left: 7px;
+    margin-bottom: 7px;
   }
   .hidden-IndividualCategoriesPage-sideSortBar-filter-starRating {
     grid-area: starRatingMobile;
@@ -304,6 +309,7 @@
       "MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel MinMaxPricelabel"
       ". . . ."
       "minimumPrice maximumPrice . goButton";
+    margin: 7px 0px 7px 7px;
   }
   .IndividualCategoriesPage-sideSortBar-ratingSort {
     display: none;

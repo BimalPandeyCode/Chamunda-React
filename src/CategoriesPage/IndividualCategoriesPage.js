@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
 import "./IndividualCategoriesPage.css";
 import data from "../data.js";
 
@@ -12,8 +12,10 @@ const IndividualCategoriesPage = () => {
   const [sortName, setSortName] = useState(<span>Popular</span>);
   const [sortingName, setSortingName] = useState("popular"); //this is for re rendering the products
   const [starRating, setStarRating] = useState(0);
-  const [showRatingSort, setShowRatingSort] = useState(false);
+  const [showRatingSortMobile, setShowRatingSortMobile] = useState(false);
+  const [starRatingClickedMoile, setStarRatingClickedMobile] = useState(0);
   const [minMaxPrice, setMinMaxPrice] = useState([-Infinity, Infinity]);
+  const [minMaxpriceMobile, setMinMaxPriceMobile] = useState(["", ""]);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -83,6 +85,7 @@ const IndividualCategoriesPage = () => {
       ) {
         outputPopular.push(
           <Product
+            id={popular[i].id}
             image={popular[i].image}
             key={i}
             name={popular[i].name}
@@ -105,6 +108,7 @@ const IndividualCategoriesPage = () => {
       ) {
         outputPriceUp.push(
           <Product
+            id={priceUpToDown[j].id}
             image={priceUpToDown[j].image}
             key={j}
             name={priceUpToDown[j].name}
@@ -127,6 +131,7 @@ const IndividualCategoriesPage = () => {
       ) {
         outputPriceDown.push(
           <Product
+            id={priceDownToUp[k].id}
             image={priceDownToUp[k].image}
             key={k}
             name={priceDownToUp[k].name}
@@ -139,22 +144,23 @@ const IndividualCategoriesPage = () => {
       }
     }
     if (outputPriceDown.length === 0) {
-      outputPriceDown.push(<Empty key="999" />);
+      outputPriceDown.push(<Empty />);
     }
-    if (showRatingSort) {
+
+    if (showRatingSortMobile) {
       document.body.style.overflowY = "hidden";
     } else {
       document.body.style.overflowY = "scroll";
     }
     return (
       <React.Fragment>
-        {showRatingSort ? (
+        {showRatingSortMobile ? (
           <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-Div">
             <button
               className="hidden-IndividualCategoriesPage-sideSortBar-filter-exitButton"
               onClick={() =>
                 setTimeout(() => {
-                  setShowRatingSort(!showRatingSort);
+                  setShowRatingSortMobile(!showRatingSortMobile);
                 }, 0)
               }
             ></button>
@@ -164,18 +170,26 @@ const IndividualCategoriesPage = () => {
                 onClick={() => {
                   setStarRating(0);
                   setMinMaxPrice([-Infinity, Infinity]);
-                  setShowRatingSort(!showRatingSort);
+                  setShowRatingSortMobile(!showRatingSortMobile);
+                  setStarRatingClickedMobile(0);
+                  setMinMaxPriceMobile(["", ""]);
                 }}
               >
                 Reset
               </button>
-              <div className="IndividualCategoriesPage-sideSortBar-ratingSort2">
+              <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-starRating-ratingSort">
                 <label>Rating:</label>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  style={
+                    starRatingClickedMoile === 5
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "none" }
+                  }
                   onClick={() => {
                     setStarRating(5);
-                    setShowRatingSort(!showRatingSort);
+                    setShowRatingSortMobile(!showRatingSortMobile);
+                    setStarRatingClickedMobile(5);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -184,9 +198,15 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  style={
+                    starRatingClickedMoile === 4
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "none" }
+                  }
                   onClick={() => {
                     setStarRating(4);
-                    setShowRatingSort(!showRatingSort);
+                    setShowRatingSortMobile(!showRatingSortMobile);
+                    setStarRatingClickedMobile(4);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -195,9 +215,15 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  style={
+                    starRatingClickedMoile === 3
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "none" }
+                  }
                   onClick={() => {
                     setStarRating(3);
-                    setShowRatingSort(!showRatingSort);
+                    setShowRatingSortMobile(!showRatingSortMobile);
+                    setStarRatingClickedMobile(3);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -206,9 +232,15 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  style={
+                    starRatingClickedMoile === 2
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "none" }
+                  }
                   onClick={() => {
                     setStarRating(2);
-                    setShowRatingSort(!showRatingSort);
+                    setShowRatingSortMobile(!showRatingSortMobile);
+                    setStarRatingClickedMobile(2);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -217,9 +249,15 @@ const IndividualCategoriesPage = () => {
                 </button>
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
+                  style={
+                    starRatingClickedMoile === 1
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "none" }
+                  }
                   onClick={() => {
                     setStarRating(1);
-                    setShowRatingSort(!showRatingSort);
+                    setShowRatingSortMobile(!showRatingSortMobile);
+                    setStarRatingClickedMobile(1);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -236,12 +274,26 @@ const IndividualCategoriesPage = () => {
                   placeholder="min"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
                   id="minPriceMobile"
+                  value={minMaxpriceMobile[0]}
+                  onChange={(min) =>
+                    setMinMaxPriceMobile([
+                      min.target.value,
+                      minMaxpriceMobile[1],
+                    ])
+                  }
                 />
                 <input
                   type="number"
                   placeholder="max"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
                   id="maxPriceMobile"
+                  value={minMaxpriceMobile[1]}
+                  onChange={(max) =>
+                    setMinMaxPriceMobile([
+                      minMaxpriceMobile[0],
+                      max.target.value,
+                    ])
+                  }
                 />
                 <button
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-GoButton"
@@ -258,7 +310,7 @@ const IndividualCategoriesPage = () => {
                       maxPriceMobile !== undefined
                     ) {
                       setMinMaxPrice([minPriceMobile, maxPriceMobile]);
-                      setShowRatingSort(!showRatingSort);
+                      setShowRatingSortMobile(!showRatingSortMobile);
                     }
                   }}
                 >
@@ -319,7 +371,7 @@ const IndividualCategoriesPage = () => {
               </div>
               <button
                 className="IndividualCategoriesPage-sideSortBar-filter"
-                onClick={() => setShowRatingSort(!showRatingSort)}
+                onClick={() => setShowRatingSortMobile(!showRatingSortMobile)}
               >
                 <i className="far fa-sort fa-1x">Sort</i>
               </button>
@@ -329,23 +381,14 @@ const IndividualCategoriesPage = () => {
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
                   id="IndividualCategoriesPage-sideSortBar-ratingSort-button5"
+                  style={
+                    starRatingClickedMoile === 5
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "#b3bcff00" }
+                  }
                   onClick={() => {
                     setStarRating(5);
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
-                    ).style.backgroundColor = "lightsteelblue";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
-                    ).style.backgroundColor = "";
+                    setStarRatingClickedMobile(5);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -355,23 +398,14 @@ const IndividualCategoriesPage = () => {
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
                   id="IndividualCategoriesPage-sideSortBar-ratingSort-button4"
+                  style={
+                    starRatingClickedMoile === 4
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "#b3bcff00" }
+                  }
                   onClick={() => {
                     setStarRating(4);
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
-                    ).style.backgroundColor = "lightsteelblue";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
-                    ).style.backgroundColor = "";
+                    setStarRatingClickedMobile(4);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -381,23 +415,14 @@ const IndividualCategoriesPage = () => {
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
                   id="IndividualCategoriesPage-sideSortBar-ratingSort-button3"
+                  style={
+                    starRatingClickedMoile === 3
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "#b3bcff00" }
+                  }
                   onClick={() => {
                     setStarRating(3);
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
-                    ).style.backgroundColor = "lightsteelblue";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
-                    ).style.backgroundColor = "";
+                    setStarRatingClickedMobile(3);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -407,23 +432,14 @@ const IndividualCategoriesPage = () => {
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
                   id="IndividualCategoriesPage-sideSortBar-ratingSort-button2"
+                  style={
+                    starRatingClickedMoile === 2
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "#b3bcff00" }
+                  }
                   onClick={() => {
                     setStarRating(2);
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
-                    ).style.backgroundColor = "lightsteelblue";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
-                    ).style.backgroundColor = "";
+                    setStarRatingClickedMobile(2);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -433,23 +449,14 @@ const IndividualCategoriesPage = () => {
                 <button
                   className="IndividualCategoriesPage-sideSortBar-ratingSort-button"
                   id="IndividualCategoriesPage-sideSortBar-ratingSort-button1"
+                  style={
+                    starRatingClickedMoile === 1
+                      ? { backgroundColor: "#b3bcff" }
+                      : { backgroundColor: "#b3bcff00" }
+                  }
                   onClick={() => {
                     setStarRating(1);
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button1"
-                    ).style.backgroundColor = "lightsteelblue";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button2"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button3"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button4"
-                    ).style.backgroundColor = "";
-                    document.getElementById(
-                      "IndividualCategoriesPage-sideSortBar-ratingSort-button5"
-                    ).style.backgroundColor = "";
+                    setStarRatingClickedMobile(1);
                   }}
                 >
                   <div className="IndividualCategoriesPage-sideSortBar-ratingSort-button-rating">
@@ -465,12 +472,26 @@ const IndividualCategoriesPage = () => {
                   type="number"
                   placeholder="min"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MinimumPrice"
+                  onChange={(min) =>
+                    setMinMaxPriceMobile([
+                      min.target.value,
+                      minMaxpriceMobile[1],
+                    ])
+                  }
+                  value={minMaxpriceMobile[0]}
                   id="minPrice"
                 />
                 <input
                   type="number"
                   placeholder="max"
                   className="IndividualCategoriesPage-sideSortBar-min-maxPrice-MaximumPrice"
+                  onChange={(max) =>
+                    setMinMaxPriceMobile([
+                      minMaxpriceMobile[0],
+                      max.target.value,
+                    ])
+                  }
+                  value={minMaxpriceMobile[1]}
                   id="maxPrice"
                 />
                 <button
@@ -523,6 +544,7 @@ const IndividualCategoriesPage = () => {
 };
 
 const Product = ({
+  id,
   name,
   image,
   key,
@@ -533,7 +555,11 @@ const Product = ({
 }) => {
   return (
     <React.Fragment>
-      <div className="IndividualCategoriesPage-product" key={key}>
+      <Link
+        to={`/product/${id}`}
+        className="IndividualCategoriesPage-product"
+        key={key}
+      >
         <img
           src={image}
           alt=""
@@ -570,7 +596,7 @@ const Product = ({
             </button>
           </div>
         </div>
-      </div>
+      </Link>
     </React.Fragment>
   );
 };

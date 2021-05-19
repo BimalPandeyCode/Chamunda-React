@@ -13,6 +13,8 @@ import Footer from "./Footer/Footer.js";
 
 import IndividualCategoriesPage from "./CategoriesPage/IndividualCategoriesPage.js";
 
+import Product from "./product/product.js";
+
 import "./App.css";
 function App() {
   return (
@@ -29,6 +31,12 @@ function App() {
           <div style={{ minHeight: "100vh" }}>
             <Navbar />
             <IndividualCategoriesPage />
+          </div>
+        </Route>
+        <Route path="/product/:productID">
+          <div style={{ minHeight: "100vh" }}>
+            <Navbar />
+            <Product />
           </div>
         </Route>
         <Route path="*">
