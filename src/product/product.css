@@ -1,0 +1,58 @@
+.productPageMainDiv {
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.3fr;
+  grid-template-areas: "slickContainer productInfoContainer checkoutInfo";
+}
+.slick-slider {
+  /* this is the slick js container  */
+  max-width: 100%;
+  min-width: 100%;
+  overflow-x: hidden;
+  /*  */
+  grid-area: slickContainer;
+  /*  */
+  /* display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  grid-template-areas: "slickDots ."; */
+}
+.slick-list {
+  grid-area: slickList;
+}
+
+.slick-slide {
+  display: grid;
+  place-items: center;
+}
+.productPageMainDiv-imageSlider-images {
+  width: 100%;
+}
+.productPageMainDiv-imageSlider-dots {
+  max-width: 100%;
+  max-height: 100%;
+}
+.slick-dots {
+  grid-area: slickDots;
+}
+.productPageMainDiv-imageSlider-dots-image {
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+}
+.slick-dots {
+  list-style: none;
+  width: fit-content;
+}
+.slick-dots > li {
+  width: 40px;
+  display: inline;
+  margin: 5px;
+}
+/* products container */
+.productPageMainDiv-infoContainer {
+  grid-area: productInfoContainer;
+}
+/* checkout */
+.productPageMainDiv-checkOutInfo {
+  grid-area: checkoutInfo;
+}
