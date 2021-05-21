@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import "./product.css";
 import data from "../data.js";
-
+import Rating from "../Components/Rating/Rating.js";
 const Product = () => {
   let { productID } = useParams();
-
-  const settings = {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  let settings = {
     customPaging: function (i) {
       return (
         <a href="##" className="productPageMainDiv-imageSlider-dots">
@@ -20,8 +22,9 @@ const Product = () => {
       );
     },
     dots: true,
+    // adaptiveHeight: true,
     dotsClass: "slick-dots slick-thumb",
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -55,20 +58,52 @@ const Product = () => {
           </div>
         </Slider>
         <div className="productPageMainDiv-infoContainer">
-          <h1>{data[productID].name}</h1>
-          <h1>${data[productID].currPrice}</h1>
-          <strike>
-            <h1>${data[productID].prevPrice}</h1>
-          </strike>
+          <div className="productPageMainDiv-infoContainer-div">
+            <h1>{data[productID].name}</h1>
+            <Rating
+              n={data[productID].rating}
+              numberOfPeople={data[productID].noOfRateing}
+            />
+            <p>Brand: No Brand</p>
+            <div className="productPageMainDiv-infoContainer-div-priceInfo">
+              <div className="productPageMainDiv-infoContainer-div-priceInfo-currPrice">
+                <h2>${data[productID].currPrice}</h2>
+              </div>
+              <strike className="productPageMainDiv-infoContainer-div-priceInfo-prevPrice">
+                <h3>${data[productID].prevPrice}</h3>
+              </strike>
+              <div>
+                <h4>
+                  {Number.parseFloat(
+                    ((data[productID].prevPrice - data[productID].currPrice) *
+                      100) /
+                      data[productID].prevPrice
+                  ).toFixed(2)}
+                  % OFF
+                </h4>
+              </div>
+            </div>
+
+            <p>{data[productID].desc}</p>
+          </div>
         </div>
         <div className="productPageMainDiv-checkOutInfo">
-          <button>Add to cart</button>
+          <button>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+              Add to cart
+            </a>
+          </button>
           <br />
           <br />
-          <a href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL">
-            Covid19
-          </a>
-          <button>BUY</button>
+
+          {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">
+            react js
+          </a> */}
+          <button>
+            <a href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL">
+              BUY
+            </a>
+          </button>
         </div>
       </div>
     </React.Fragment>
