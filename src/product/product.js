@@ -1,40 +1,109 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
+import ReactImageMagnify from "react-image-magnify";
 import Slider from "react-slick";
 import "./product.css";
 import data from "../data.js";
 import Rating from "../Components/Rating/Rating.js";
 const Product = () => {
   let { productID } = useParams();
+  const imgDimension = (imgSrc) => {
+    // Create new offscreen image to test
+    const theImage = new Image();
+    theImage.src = imgSrc;
+    // Get accurate measurements from that.
+    const imageWidth = theImage.width;
+    const imageHeight = theImage.height;
+    // Create an object to save the image width and height
+    const imgDimensions = { width: imageWidth, height: imageHeight };
+    // Return the result
+    return imgDimensions;
+  };
+  const [currentImage, setCurrentImage] = useState([
+    data[productID].otherImages[0],
+    0,
+    imgDimension(data[productID].otherImages[0]).width,
+    imgDimension(data[productID].otherImages[0]).height,
+  ]);
+  const props = {
+    width: "300",
+    img: currentImage[0],
+    scale: 1,
+    zoomLensStyle: "opacity: 0.4;background-color: gray;",
+  };
+  const ImagesPicker = () => {
+    let output = [];
+
+    for (let i = 0; i < data[productID].otherImages.length; i++) {
+      output.push(
+        <img
+          onMouseOver={() => {
+            setCurrentImage([
+              data[productID].otherImages[i],
+              i,
+              imgDimension(data[productID].otherImages[i]).width,
+              imgDimension(data[productID].otherImages[i]).height,
+            ]);
+            console.log(currentImage);
+          }}
+          style={
+            currentImage[1] === i
+              ? { boxShadow: "0px 0px 3px 1px #1410FF" }
+              : { border: "1px solid black" }
+          }
+          className="productPageMainDiv-productImages-imagesPicker-image"
+          src={data[productID].otherImages[i]}
+          alt=""
+        />
+      );
+    }
+    return output;
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  let settings = {
-    customPaging: function (i) {
-      return (
-        <a href="##" className="productPageMainDiv-imageSlider-dots">
-          <img
-            className="productPageMainDiv-imageSlider-dots-image"
-            src={data[productID].otherImages[i]}
-            alt=""
-          />
-        </a>
-      );
-    },
-    dots: true,
-    // adaptiveHeight: true,
-    dotsClass: "slick-dots slick-thumb",
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-  };
-
+  let multiplyFactor = 2;
+  if (currentImage[2] > currentImage[3]) {
+    multiplyFactor = 0.7;
+  } else {
+    multiplyFactor = 1.5;
+  }
   return (
     <React.Fragment>
       <div className="productPageMainDiv">
-        <Slider {...settings}>
+        <div className="productPageMainDiv-productImages">
+          <div className="productPageMainDiv-productImages-images">
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: "Wristwatch by Ted Baker London",
+                  isFluidWidth: true,
+                  src: currentImage[0],
+                  imageClassName:
+                    "productPageMainDiv-productImages-images-image",
+                },
+                largeImage: {
+                  src: currentImage[0],
+                  width: currentImage[2] * multiplyFactor,
+                  height: currentImage[3] * multiplyFactor,
+                },
+                isHintEnabled: true,
+                shouldUsePositiveSpaceLens: true,
+              }}
+            />
+            {/* <img
+              className="productPageMainDiv-productImages-images-image"
+              src={currentImage[0]}
+              alt=""
+            /> */}
+          </div>
+          <div className="productPageMainDiv-productImages-imagesPicker">
+            <div className="productPageMainDiv-productImages-imagesPicker-div">
+              <ImagesPicker />
+            </div>
+          </div>
+        </div>
+        {/* <Slider {...settings}>
           <div>
             <img
               src={data[productID].otherImages[0]}
@@ -56,7 +125,7 @@ const Product = () => {
               className="productPageMainDiv-imageSlider-images"
             />
           </div>
-        </Slider>
+        </Slider> */}
         <div className="productPageMainDiv-infoContainer">
           <div className="productPageMainDiv-infoContainer-div">
             <h1>{data[productID].name}</h1>
@@ -85,22 +154,30 @@ const Product = () => {
             </div>
 
             <p>{data[productID].desc}</p>
+            <br />
           </div>
         </div>
         <div className="productPageMainDiv-checkOutInfo">
           <button>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <a
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Add to cart
             </a>
           </button>
           <br />
           <br />
-
           {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">
             react js
           </a> */}
           <button>
-            <a href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL">
+            <a
+              href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               BUY
             </a>
           </button>

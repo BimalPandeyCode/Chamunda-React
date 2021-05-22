@@ -2,7 +2,45 @@
   overflow-x: hidden;
   display: grid;
   grid-template-columns: 0.5fr 1fr 0.3fr;
-  grid-template-areas: "slickContainer productInfoContainer checkoutInfo";
+  grid-template-areas: "productImages productInfoContainer checkoutInfo";
+  overflow-y: hidden;
+  /* grid-template-areas: "slickContainer productInfoContainer checkoutInfo"; */
+}
+.productPageMainDiv-productImages {
+  grid-area: productImages;
+  background-color: lightgreen;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-template-areas: "imagesPicker productImages-image";
+  /* height: 100px;
+  width: 100px; */
+}
+.productPageMainDiv-productImages-images {
+  grid-area: productImages-image;
+  background-color: lightpink;
+}
+.productPageMainDiv-productImages-images > div > img {
+  width: 100%;
+}
+.productPageMainDiv-productImages-images-image {
+  /* height: 100%; */
+  width: 100%;
+}
+.productPageMainDiv-productImages-imagesPicker {
+  grid-area: imagesPicker;
+  background-color: lightseagreen;
+  display: grid;
+  place-items: start;
+}
+.productPageMainDiv-productImages-imagesPicker-div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.productPageMainDiv-productImages-imagesPicker-image {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
 }
 .slick-slider {
   /* this is the slick js container  */
@@ -82,11 +120,14 @@
 /* responsive media quries */
 @media screen and (max-width: 900px) {
   .productPageMainDiv {
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr;
     grid-template-columns: 1fr 0.5fr;
     grid-template-areas:
-      "slickContainer slickContainer"
+      "productImages productImages"
       "productInfoContainer checkoutInfo";
+    /* grid-template-areas:
+      "slickContainer slickContainer"
+      "productInfoContainer checkoutInfo"; */
   }
   .productPageMainDiv-imageSlider-dots-image {
     width: 30px;
