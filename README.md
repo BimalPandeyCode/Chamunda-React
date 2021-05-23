@@ -1,2 +1,2 @@
 # Chamunda-React
-This is a stupid personal project so don't judge me. peace
+This is an "attempt" at making an E commerce website using React, mongoDB,Express and nodejs.
