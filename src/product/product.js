@@ -25,15 +25,8 @@ const Product = () => {
     imgDimension(data[productID].otherImages[0]).width,
     imgDimension(data[productID].otherImages[0]).height,
   ]);
-  const props = {
-    width: "300",
-    img: currentImage[0],
-    scale: 1,
-    zoomLensStyle: "opacity: 0.4;background-color: gray;",
-  };
   const ImagesPicker = () => {
     let output = [];
-
     for (let i = 0; i < data[productID].otherImages.length; i++) {
       output.push(
         <img
@@ -44,7 +37,7 @@ const Product = () => {
               imgDimension(data[productID].otherImages[i]).width,
               imgDimension(data[productID].otherImages[i]).height,
             ]);
-            console.log(currentImage);
+            // console.log(currentImage);
           }}
           style={
             currentImage[1] === i
@@ -59,12 +52,38 @@ const Product = () => {
     }
     return output;
   };
+  const ProductDescription = () => {
+    let output = [];
+    for (const key in data[productID].description) {
+      output.push(
+        <tr>
+          {
+            <td className="productPageMainDiv-infoContainer-div-tbody-key">
+              {key}:
+            </td>
+          }
+          {
+            <td className="productPageMainDiv-infoContainer-div-tbody-value">
+              {data[productID].description[key] === ""
+                ? "No Data"
+                : data[productID].description[key]}
+            </td>
+          }
+        </tr>
+      );
+    }
+    return output;
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   let multiplyFactor = 2;
   if (currentImage[2] > currentImage[3]) {
-    multiplyFactor = 0.7;
+    if (currentImage[3] < 300) {
+      multiplyFactor = 1.3;
+    } else {
+      multiplyFactor = 0.7;
+    }
   } else {
     multiplyFactor = 1.5;
   }
@@ -87,7 +106,7 @@ const Product = () => {
                   width: currentImage[2] * multiplyFactor,
                   height: currentImage[3] * multiplyFactor,
                 },
-                isHintEnabled: true,
+                isHintEnabled: false,
                 shouldUsePositiveSpaceLens: true,
               }}
             />
@@ -128,7 +147,7 @@ const Product = () => {
         </Slider> */}
         <div className="productPageMainDiv-infoContainer">
           <div className="productPageMainDiv-infoContainer-div">
-            <h1>{data[productID].name}</h1>
+            <h2>{data[productID].name}</h2>
             <Rating
               n={data[productID].rating}
               numberOfPeople={data[productID].noOfRateing}
@@ -139,48 +158,49 @@ const Product = () => {
                 <h2>${data[productID].currPrice}</h2>
               </div>
               <strike className="productPageMainDiv-infoContainer-div-priceInfo-prevPrice">
-                <h3>${data[productID].prevPrice}</h3>
+                <h5>${data[productID].prevPrice}</h5>
               </strike>
               <div>
-                <h4>
+                <h6>
                   {Number.parseFloat(
                     ((data[productID].prevPrice - data[productID].currPrice) *
                       100) /
                       data[productID].prevPrice
                   ).toFixed(2)}
                   % OFF
-                </h4>
+                </h6>
               </div>
             </div>
-
-            <p>{data[productID].desc}</p>
+            <tbody>
+              <ProductDescription />
+            </tbody>
             <br />
           </div>
         </div>
         <div className="productPageMainDiv-checkOutInfo">
-          <button>
-            <a
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          <div className="productPageMainDiv-checkOutInfo-buttonHolder">
+            <button className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton">
+              {/* <a
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                target="_blank"
+                rel="noopener noreferrer"
+              > */}
               Add to cart
-            </a>
-          </button>
-          <br />
-          <br />
-          {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">
+              {/* </a> */}
+            </button>
+            {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">
             react js
           </a> */}
-          <button>
-            <a
-              href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <button className="productPageMainDiv-checkOutInfo-buttonHolder-buy">
+              {/* <a
+                href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL"
+                target="_blank"
+                rel="noopener noreferrer"
+              > */}
               BUY
-            </a>
-          </button>
+              {/* </a> */}
+            </button>
+          </div>
         </div>
       </div>
     </React.Fragment>
