@@ -76,6 +76,9 @@ const Product = () => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.getElementsByClassName(
+      "productPageMainDiv-productImages-images-image"
+    )[0].style.position = "sticky";
   }, []);
   let multiplyFactor = 2;
   if (currentImage[2] > currentImage[3]) {
@@ -87,6 +90,7 @@ const Product = () => {
   } else {
     multiplyFactor = 1.5;
   }
+
   return (
     <React.Fragment>
       <div className="productPageMainDiv">
@@ -98,8 +102,6 @@ const Product = () => {
                   alt: "Wristwatch by Ted Baker London",
                   isFluidWidth: true,
                   src: currentImage[0],
-                  imageClassName:
-                    "productPageMainDiv-productImages-images-image",
                 },
                 largeImage: {
                   src: currentImage[0],
@@ -108,13 +110,10 @@ const Product = () => {
                 },
                 isHintEnabled: false,
                 shouldUsePositiveSpaceLens: true,
+                className: "productPageMainDiv-productImages-images-image",
+                isActivatedOnTouch: false,
               }}
             />
-            {/* <img
-              className="productPageMainDiv-productImages-images-image"
-              src={currentImage[0]}
-              alt=""
-            /> */}
           </div>
           <div className="productPageMainDiv-productImages-imagesPicker">
             <div className="productPageMainDiv-productImages-imagesPicker-div">
@@ -174,6 +173,10 @@ const Product = () => {
             <tbody>
               <ProductDescription />
             </tbody>
+            <label>
+              <h3>About this person</h3>
+            </label>
+            <p>{data[productID].AboutThisItem}</p>
             <br />
           </div>
         </div>
