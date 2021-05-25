@@ -1,7 +1,7 @@
 .productPageMainDiv {
   /* overflow-x: hidden; */
   display: grid;
-  grid-template-columns: 0.6fr 0.9fr 0.4fr;
+  grid-template-columns: 0.9fr 1fr 0.7fr;
   grid-template-areas: "productImages productInfoContainer checkoutInfo";
   /* overflow-y: hidden; */
 }
@@ -98,12 +98,39 @@
   border: 1px solid black;
   margin-left: 5%;
   width: 42.5%;
+  height: 35px;
+  border-radius: 3px;
 }
+.productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton:hover {
+  background-color: #ff2f2f;
+}
+/* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton:focus {
+  background-color: #ff4f4f;
+} */
 .productPageMainDiv-checkOutInfo-buttonHolder-buy {
   background-color: #8974ff;
   border: 1px solid black;
   margin-right: 5%;
   width: 42.5%;
+  height: 35px;
+  border-radius: 3px;
+}
+.productPageMainDiv-checkOutInfo-buttonHolder-buy:hover {
+  background-color: #6950f8;
+}
+.productPageMainDiv-checkOutInfo-numberOfItems {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 5%;
+  /* display: block; */
+  /* margin-left: 5%; */
+  /* margin-right: auto; */
+}
+.productPageMainDiv-checkOutInfo-numberOfItems-lessButton {
+}
+.productPageMainDiv-checkOutInfo-numberOfItems-input {
+  width: 2ch;
 }
 /* responsive media quries */
 @media screen and (max-width: 900px) {
@@ -154,16 +181,16 @@
       "productImages productImages"
       "productInfoContainer checkoutInfo";
   }
-  .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
+  /* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
     margin-left: 0%;
     width: 50%;
   }
   .productPageMainDiv-checkOutInfo-buttonHolder-buy {
     margin-right: 0%;
     width: 50%;
-  }
+  } */
 }
-@media screen and (max-width: 370px) {
+@media screen and (max-width: 550px) {
   .productPageMainDiv {
     grid-template-rows: 0.7fr 0.1fr 0.3fr;
     grid-template-columns: 1fr;
@@ -172,12 +199,12 @@
       "productInfoContainer "
       "checkoutInfo";
   }
-  .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
+  /* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
     margin-left: 0%;
     width: 50%;
   }
   .productPageMainDiv-checkOutInfo-buttonHolder-buy {
     margin-right: 0%;
     width: 50%;
-  }
+  } */
 }

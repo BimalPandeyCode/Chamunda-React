@@ -12,13 +12,14 @@ const Product = () => {
     const theImage = new Image();
     theImage.src = imgSrc;
     // Get accurate measurements from that.
-    const imageWidth = theImage.width;
-    const imageHeight = theImage.height;
+    const imageWidth = theImage.naturalWidth;
+    const imageHeight = theImage.naturalHeight;
     // Create an object to save the image width and height
     const imgDimensions = { width: imageWidth, height: imageHeight };
     // Return the result
     return imgDimensions;
   };
+  const [noOfItems, setNoOfItems] = useState(0);
   const [currentImage, setCurrentImage] = useState([
     data[productID].otherImages[0],
     0,
@@ -83,12 +84,12 @@ const Product = () => {
   let multiplyFactor = 2;
   if (currentImage[2] > currentImage[3]) {
     if (currentImage[3] < 300) {
-      multiplyFactor = 1.3;
+      multiplyFactor = 1.5;
     } else {
-      multiplyFactor = 0.7;
+      multiplyFactor = 1;
     }
   } else {
-    multiplyFactor = 1.5;
+    multiplyFactor = 2;
   }
 
   return (
@@ -181,6 +182,37 @@ const Product = () => {
           </div>
         </div>
         <div className="productPageMainDiv-checkOutInfo">
+          <div className="productPageMainDiv-checkOutInfo-numberOfItems">
+            <label style={{ marginRight: "5px" }}>Quantity</label>
+            <button
+              className="productPageMainDiv-checkOutInfo-numberOfItems-lessButton"
+              onClick={() => {
+                noOfItems > 0
+                  ? setNoOfItems(noOfItems - 1)
+                  : setNoOfItems(noOfItems);
+              }}
+            >
+              {"-"}
+            </button>
+            <input
+              className="productPageMainDiv-checkOutInfo-numberOfItems-input"
+              type="number"
+              value={noOfItems}
+            />
+            <button
+              className="productPageMainDiv-checkOutInfo-numberOfItems-moreButton"
+              onClick={() => {
+                noOfItems < data[productID].noOfItems
+                  ? setNoOfItems(noOfItems + 1)
+                  : setNoOfItems(noOfItems);
+              }}
+            >
+              {"+"}
+            </button>
+            <label style={{ marginLeft: "5px" }}>
+              {data[productID].noOfItems} items left
+            </label>
+          </div>
           <div className="productPageMainDiv-checkOutInfo-buttonHolder">
             <button className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton">
               {/* <a

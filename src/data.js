@@ -13,6 +13,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 9,
     description: {
       Gender: "Male",
       Age: 19,
@@ -38,6 +39,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 9,
     description: {
       Gender: "Male",
       Age: 25,
@@ -65,6 +67,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 10,
     description: {
       Gender: "Male",
       Age: 24,
@@ -93,6 +96,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 54,
     description: {
       Gender: "Male",
       Age: 60,
@@ -122,6 +126,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 1,
     description: {
       Gender: "Female",
       Age: 60,
@@ -151,6 +156,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 3,
     description: {
       Gender: "Female",
       Age: 13,
@@ -178,6 +184,7 @@ const data = [
       "https://images.unsplash.com/photo-1595835018349-198460e1d309?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=889&q=80",
       "https://images.unsplash.com/photo-1621433117294-483ab26c0f24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=755&q=80",
     ],
+    noOfItems: 0,
     description: {
       Gender: "Female",
       Age: 2,

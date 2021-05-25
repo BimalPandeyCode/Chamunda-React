@@ -555,17 +555,18 @@ const Product = ({
 }) => {
   return (
     <React.Fragment>
-      <Link
-        to={`/product/${id}`}
-        className="IndividualCategoriesPage-product"
-        key={key}
-      >
-        <img
-          src={image}
-          alt=""
-          className="IndividualCategoriesPage-product-Image"
-        />
-        <div className="IndividualCategoriesPage-product-info">
+      <div className="IndividualCategoriesPage-product" key={key}>
+        <Link to={`/product/${id}`}>
+          <img
+            src={image}
+            alt=""
+            className="IndividualCategoriesPage-product-Image"
+          />
+        </Link>
+        <Link
+          to={`/product/${id}`}
+          className="IndividualCategoriesPage-product-info"
+        >
           <p style={{ fontSize: "20px" }}>{name}</p>
           <Rating n={rating} numberOfPeople={noOfRating} key={key} />
           <p>
@@ -584,19 +585,19 @@ const Product = ({
                 "% OFF"}
             </p>
           </div>
-          <div className="IndividualCategoriesPage-product-buttonHolder">
-            <button
-              className="IndividualCategoriesPage-product-buttonHolder-addToCart"
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              Add to cart
-            </button>
-            <button className="IndividualCategoriesPage-product-buttonHolder-Buy">
-              Buy
-            </button>
-          </div>
+        </Link>
+        <div className="IndividualCategoriesPage-product-buttonHolder">
+          <button
+            className="IndividualCategoriesPage-product-buttonHolder-addToCart"
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            Add to cart
+          </button>
+          <button className="IndividualCategoriesPage-product-buttonHolder-Buy">
+            Buy
+          </button>
         </div>
-      </Link>
+      </div>
     </React.Fragment>
   );
 };
