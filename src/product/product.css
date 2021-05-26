@@ -132,6 +132,103 @@
 .productPageMainDiv-checkOutInfo-numberOfItems-input {
   width: 2ch;
 }
+/* questions */
+.productPageMainDiv-questionsContainer {
+  background-color: bisque;
+  width: 100%;
+}
+.productPageMainDiv-questionsContainer-title {
+  min-height: 64px;
+}
+.productPageMainDiv-questionsContainer-title > h2 {
+  padding-top: 16px;
+  padding-left: 3%;
+  margin: 0px;
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox {
+  width: 100%;
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox-input {
+  width: 60%;
+  height: 35px;
+  margin-left: 3%;
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox-post {
+  height: 40px;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer {
+  width: 100%;
+  padding-left: 3%;
+  background-color: burlywood;
+}
+/* q */
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv {
+  display: grid;
+  grid-template-columns: 30px 150px 1fr 0.3fr;
+  grid-template-areas: "questionPhoto questioName questioQuestion questionDate";
+  background-color: #ff5b5b;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-photo {
+  grid-area: questionPhoto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-name {
+  grid-area: questioName;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-question-div {
+  grid-area: questioQuestion;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-date-div {
+  grid-area: questionDate;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-date {
+  display: grid;
+  place-items: center;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+/* a */
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv {
+  display: grid;
+  grid-template-columns: 30px 250px 1fr 0.4fr;
+  grid-template-areas: "answerPhoto answerName answerQuestion answerDate";
+  background-color: #5bff63;
+  margin-left: 3%;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-photo {
+  grid-area: answerPhoto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-name {
+  grid-area: answerName;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-question-div {
+  grid-area: answerQuestion;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-date-div {
+  grid-area: answerDate;
+  border: 1px solid black;
+}
+.productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-date {
+  display: grid;
+  place-items: center;
+  /* margin-left: auto;
+  margin-right: auto; */
+}
 /* responsive media quries */
 @media screen and (max-width: 900px) {
   .productPageMainDiv {
@@ -142,7 +239,7 @@
       "productInfoContainer checkoutInfo";
   }
   .productPageMainDiv-productImages {
-    grid-template-rows: 1fr 40px;
+    grid-template-rows: 1fr 50px;
     grid-template-columns: 1fr;
     grid-template-areas:
       "productImages-image"
@@ -172,6 +269,20 @@
     height: 30px;
   }
   /*  */
+  .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv {
+    grid-template-columns: 30px 150px 1fr 5fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+      "questionPhoto questioName .  questionDate"
+      "questioQuestion questioQuestion questioQuestion questioQuestion";
+  }
+  .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv {
+    grid-template-columns: 30px 150px 1fr 5fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+      "answerPhoto answerName .  answerDate"
+      "answerQuestion answerQuestion answerQuestion answerQuestion";
+  }
 }
 @media screen and (max-width: 550px) {
   .productPageMainDiv {

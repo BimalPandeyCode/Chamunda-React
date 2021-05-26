@@ -24,6 +24,80 @@ const data = [
     },
     AboutThisItem:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    Questions: [
+      {
+        Q: {
+          name: "SomeGuy99",
+          Question: "Would you call this person a male?",
+          date: new Date("05 October 2011").toISOString().split("T")[0],
+        },
+        A: [
+          {
+            name: "notSomeGuy99",
+            Answer: "yes",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "MightBeSomeGuy99",
+            Answer: "Somewhat a male.",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "Seller",
+            Answer: "I don't understand the question.",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "ProbablySomeGuy99",
+            Answer: "Well gender is kind of arbitrary these days",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+        ],
+      },
+      {
+        Q: {
+          name: "RandomGuy420",
+          Question: "Is this guy likable?",
+          date: new Date("05 October 2011").toISOString().split("T")[0],
+        },
+        A: [
+          {
+            name: "ProbablyRandomGuy420",
+            Answer: "NO",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "NotRandomGuy420",
+            Answer: "Kind of a dick.",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+        ],
+      },
+      {
+        Q: {
+          name: "joseph",
+          Question: "What is the closest planet to the sun?",
+          date: new Date("05 October 2011").toISOString().split("T")[0],
+        },
+        A: [
+          {
+            name: "NotJoseph",
+            Answer: "Depends on what you mean by closest.",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "YesJoseph",
+            Answer: "The guy abhove me is a donkey, and below me is a monkey.",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+          {
+            name: "GoJoseph",
+            Answer: "Oh no, what have I done",
+            date: new Date("05 October 2011").toISOString().split("T")[0],
+          },
+        ],
+      },
+    ],
   },
   {
     id: 1,
