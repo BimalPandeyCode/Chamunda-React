@@ -29,47 +29,47 @@ const data = [
         Q: {
           name: "SomeGuy99",
           Question: "Would you call this person a male?",
-          date: new Date("05 October 2011").toISOString().split("T")[0],
+          date: new Date("May 17, 2021 03:24:00"),
         },
         A: [
           {
             name: "notSomeGuy99",
             Answer: "yes",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 17, 2021 03:40:00"),
           },
           {
             name: "MightBeSomeGuy99",
             Answer: "Somewhat a male.",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 20, 2021 03:24:00"),
           },
           {
             name: "Seller",
             Answer: "I don't understand the question.",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 21, 2021 03:24:00"),
           },
           {
             name: "ProbablySomeGuy99",
             Answer: "Well gender is kind of arbitrary these days",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 26, 2021 03:24:00"),
           },
         ],
       },
       {
         Q: {
-          name: "RandomGuy420",
+          name: "Me",
           Question: "Is this guy likable?",
-          date: new Date("05 October 2011").toISOString().split("T")[0],
+          date: new Date("January 17, 2020 03:24:00"),
         },
         A: [
           {
-            name: "ProbablyRandomGuy420",
+            name: "ProbablyMe",
             Answer: "NO",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("December 17, 2020 03:24:00"),
           },
           {
-            name: "NotRandomGuy420",
+            name: "NotMe",
             Answer: "Kind of a dick.",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("December 30, 2020 03:24:00"),
           },
         ],
       },
@@ -77,23 +77,23 @@ const data = [
         Q: {
           name: "joseph",
           Question: "What is the closest planet to the sun?",
-          date: new Date("05 October 2011").toISOString().split("T")[0],
+          date: new Date("May 17, 2021 01:20:00"),
         },
         A: [
           {
             name: "NotJoseph",
             Answer: "Depends on what you mean by closest.",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 27, 2021 01:24:00"),
           },
           {
             name: "YesJoseph",
             Answer: "The guy abhove me is a donkey, and below me is a monkey.",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 27, 2021 02:24:00"),
           },
           {
             name: "GoJoseph",
             Answer: "Oh no, what have I done",
-            date: new Date("05 October 2011").toISOString().split("T")[0],
+            date: new Date("May 27, 2021 05:24:00"),
           },
         ],
       },
