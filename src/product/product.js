@@ -25,6 +25,8 @@ const Product = () => {
     imgDimension(data[productID].otherImages[0]).width,
     imgDimension(data[productID].otherImages[0]).height,
   ]);
+  const [seeMore, setSeeMore] = useState(new Array(1).fill(false));
+  const [reply, setReply] = useState([false, ""]);
   const ImagesPicker = () => {
     let output = [];
     for (let i = 0; i < data[productID].otherImages.length; i++) {
@@ -144,7 +146,7 @@ const Product = () => {
       return output;
     };
     let i = 1000;
-    data[0].Questions.forEach((eachConv) => {
+    data[0].Questions.forEach((eachConv, index) => {
       let [nowMonth, nowDay, nowYear] = new Date()
         .toLocaleDateString("en-Np")
         .split("/");
@@ -201,14 +203,37 @@ const Product = () => {
             </div>
           </div>
           <div className="productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-reply-div">
-            <button className="productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-seeMore">
-              See more
+            <button
+              className="productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-seeMore"
+              onClick={() => {
+                let copy = JSON.parse(JSON.stringify(seeMore));
+                copy[index] = !copy[index];
+                setSeeMore(copy);
+              }}
+            >
+              {`see ${
+                seeMore[index] === true ? "less" : `more (${eachConv.A.length})`
+              } `}
             </button>
-            <button className="productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-reply">
+            <button
+              className="productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-reply"
+              onClick={() => {
+                setReply([true, eachConv.Q.Question]);
+                document
+                  .getElementsByClassName(
+                    "productPageMainDiv-questionsContainer-questionsSearchBox-input"
+                  )[0]
+                  .focus();
+              }}
+            >
               reply
             </button>
           </div>
-          <AnswerOutput eachConv={eachConv} />
+          {seeMore[index] === true ? (
+            <AnswerOutput eachConv={eachConv} />
+          ) : (
+            <></>
+          )}
         </React.Fragment>
       );
       i++;
@@ -220,6 +245,7 @@ const Product = () => {
     document.getElementsByClassName(
       "productPageMainDiv-productImages-images-image"
     )[0].style.position = "sticky";
+    setSeeMore(new Array(data[0].Questions.length).fill(false));
   }, []);
   let multiplyFactor = 2;
   if (currentImage[2] > currentImage[3]) {
@@ -262,36 +288,13 @@ const Product = () => {
             </div>
           </div>
         </div>
-        {/* <Slider {...settings}>
-          <div>
-            <img
-              src={data[productID].otherImages[0]}
-              alt=""
-              className="productPageMainDiv-imageSlider-images"
-            />
-          </div>
-          <div>
-            <img
-              src={data[productID].otherImages[1]}
-              alt=""
-              className="productPageMainDiv-imageSlider-images"
-            />
-          </div>
-          <div>
-            <img
-              src={data[productID].otherImages[2]}
-              alt=""
-              className="productPageMainDiv-imageSlider-images"
-            />
-          </div>
-        </Slider> */}
         <div className="productPageMainDiv-infoContainer">
           <div className="productPageMainDiv-infoContainer-div">
             <h2>{data[productID].name}</h2>
             <Rating
               n={data[productID].rating}
               numberOfPeople={data[productID].noOfRateing}
-              noOfquestions={5}
+              noOfquestions={data[0].Questions.length}
             />
             <p>Brand: No Brand</p>
             <div className="productPageMainDiv-infoContainer-div-priceInfo">
@@ -324,41 +327,48 @@ const Product = () => {
         </div>
         <div className="productPageMainDiv-checkOutInfo">
           <div className="productPageMainDiv-checkOutInfo-numberOfItems">
-            <label style={{ marginRight: "5px" }}>Quantity</label>
-            <button
-              className="productPageMainDiv-checkOutInfo-numberOfItems-lessButton"
-              onClick={() => {
-                parseInt(noOfItems) > 1
-                  ? setNoOfItems(parseInt(noOfItems) - 1)
-                  : isNaN(noOfItems)
-                  ? setNoOfItems(1)
-                  : setNoOfItems(parseInt(noOfItems));
-              }}
-            >
-              {"-"}
-            </button>
-            <input
-              className="productPageMainDiv-checkOutInfo-numberOfItems-input"
-              type="number"
-              value={noOfItems}
-            />
-            <button
-              className="productPageMainDiv-checkOutInfo-numberOfItems-moreButton"
-              onClick={() => {
-                if (noOfItems < data[productID].noOfItems) {
-                  setNoOfItems(parseInt(noOfItems) + 1);
-                } else if (isNaN(noOfItems) || noOfItems === "") {
-                  setNoOfItems(1);
-                } else {
-                  setNoOfItems(parseInt(noOfItems));
-                }
-              }}
-            >
-              {"+"}
-            </button>
-            <label style={{ marginLeft: "5px" }}>
-              {data[productID].noOfItems} items left
-            </label>
+            {data[productID].noOfItems > 0 ? (
+              <>
+                {" "}
+                <label style={{ marginRight: "5px" }}>Quantity</label>
+                <button
+                  className="productPageMainDiv-checkOutInfo-numberOfItems-lessButton"
+                  onClick={() => {
+                    parseInt(noOfItems) > 1
+                      ? setNoOfItems(parseInt(noOfItems) - 1)
+                      : isNaN(noOfItems)
+                      ? setNoOfItems(1)
+                      : setNoOfItems(parseInt(noOfItems));
+                  }}
+                >
+                  {"-"}
+                </button>
+                <input
+                  className="productPageMainDiv-checkOutInfo-numberOfItems-input"
+                  type="number"
+                  value={noOfItems}
+                />
+                <button
+                  className="productPageMainDiv-checkOutInfo-numberOfItems-moreButton"
+                  onClick={() => {
+                    if (noOfItems < data[productID].noOfItems) {
+                      setNoOfItems(parseInt(noOfItems) + 1);
+                    } else if (isNaN(noOfItems) || noOfItems === "") {
+                      setNoOfItems(1);
+                    } else {
+                      setNoOfItems(parseInt(noOfItems));
+                    }
+                  }}
+                >
+                  {"+"}
+                </button>
+                <label style={{ marginLeft: "5px" }}>
+                  {data[productID].noOfItems} items left
+                </label>{" "}
+              </>
+            ) : (
+              <h3>Unavailable</h3>
+            )}
           </div>
           <div className="productPageMainDiv-checkOutInfo-buttonHolder">
             <button className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton">
@@ -382,16 +392,6 @@ const Product = () => {
               BUY
               {/* </a> */}
             </button>
-            {/* <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.6210653746693!2d85.36880901453812!3d27.69810443250612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1a312ae6fef1%3A0x4315015f1b4ff106!2sSUNCITY%20PARTY%20PALACE!5e0!3m2!1sen!2snp!4v1622014031022!5m2!1sen!2snp"
-              width="90%"
-              height="300px"
-              style={{ border: "0", marginRight: "auto", marginLeft: "auto" }}
-              allowfullscreen=""
-              loading="lazy"
-              title="google maps"
-            >
-            </iframe> */}
           </div>
         </div>
       </div>
@@ -400,6 +400,23 @@ const Product = () => {
           <h2>Customer's questions</h2>
         </div>
         <div className="productPageMainDiv-questionsContainer-questionsSearchBox">
+          {reply[0] === true ? (
+            <div className="productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo-div">
+              <p className="productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo">
+                {`Replying to ${reply[1]}`}
+              </p>
+              <button
+                className="productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo-cross"
+                onClick={() => {
+                  setReply([false, ""]);
+                }}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            </div>
+          ) : (
+            <></>
+          )}
           <input
             className="productPageMainDiv-questionsContainer-questionsSearchBox-input"
             type="text"

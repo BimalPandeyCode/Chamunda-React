@@ -1,15 +1,14 @@
 .productPageMainDiv {
-  /* overflow-x: hidden; */
   display: grid;
   grid-template-columns: 0.9fr 1fr 0.7fr;
   grid-template-areas: "productImages productInfoContainer checkoutInfo";
-  /* overflow-y: hidden; */
 }
 .productPageMainDiv-productImages {
   grid-area: productImages;
   background-color: lightgreen;
   display: grid;
   grid-template-columns: 50px 1fr;
+  grid-template-rows: 1fr;
   grid-template-areas: "imagesPicker productImages-image";
 }
 .productPageMainDiv-productImages-images {
@@ -17,7 +16,6 @@
   background-color: lightpink;
 }
 .productPageMainDiv-productImages-images-image {
-  /* height: 100%; */
   width: 100%;
   position: sticky;
   position: -webkit-sticky;
@@ -25,7 +23,6 @@
 }
 .productPageMainDiv-productImages-imagesPicker {
   grid-area: imagesPicker;
-  /* position: relative; */
   background-color: lightseagreen;
   display: grid;
   place-items: start;
@@ -54,9 +51,7 @@
 .productPageMainDiv-imageSlider-dots-image {
   width: 45px;
   height: 45px;
-  /* overflow: hidden; */
 }
-/* products container */
 .productPageMainDiv-infoContainer {
   background-color: lightcyan;
   grid-area: productInfoContainer;
@@ -104,9 +99,6 @@
 .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton:hover {
   background-color: #ff2f2f;
 }
-/* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton:focus {
-  background-color: #ff4f4f;
-} */
 .productPageMainDiv-checkOutInfo-buttonHolder-buy {
   background-color: #8974ff;
   border: 1px solid black;
@@ -123,11 +115,6 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin: 5%;
-  /* display: block; */
-  /* margin-left: 5%; */
-  /* margin-right: auto; */
-}
-.productPageMainDiv-checkOutInfo-numberOfItems-lessButton {
 }
 .productPageMainDiv-checkOutInfo-numberOfItems-input {
   width: 2ch;
@@ -147,6 +134,27 @@
 }
 .productPageMainDiv-questionsContainer-questionsSearchBox {
   width: 100%;
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo-div {
+  width: 60%;
+  height: 35px;
+  margin-left: 3%;
+  background-color: #404040;
+  display: grid;
+  grid-template-columns: 1fr 2ch;
+  grid-template-areas: "replyingToBox replyingCrossButton";
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo {
+  color: wheat;
+  grid-area: replyingToBox;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.productPageMainDiv-questionsContainer-questionsSearchBox-replyingTo-cross {
+  color: whitesmoke;
+  background-color: #404040;
+  border: none;
+  grid-area: replyingCrossButton;
 }
 .productPageMainDiv-questionsContainer-questionsSearchBox-input {
   width: 60%;
@@ -176,8 +184,6 @@
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-photo {
   grid-area: questionPhoto;
-  /* margin-top: auto;
-  margin-bottom: auto; */
   margin: 0;
   width: 30px;
   height: 30px;
@@ -191,7 +197,6 @@
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-question-div {
   grid-area: questioQuestion;
-  /* border: 1px solid black; */
   height: fit-content;
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-question {
@@ -201,15 +206,12 @@
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-date-div {
   grid-area: questionDate;
   height: fit-content;
-  /* border: 1px solid black; */
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-date {
   display: grid;
   place-items: center;
   padding: 0px;
   margin: 0px;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv-reply-div {
   grid-area: questionReply;
@@ -230,7 +232,7 @@
   background-color: aquamarine;
   border: 1px solid black;
   border-radius: 2px;
-  width: 75px;
+  width: 15ch;
   height: 25px;
   margin-right: 5px;
 }
@@ -265,7 +267,6 @@
 .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-question-div {
   grid-area: answerQuestion;
   height: fit-content;
-  /* border: 1px solid black; */
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-question {
   margin: 0px;
@@ -274,17 +275,12 @@
 .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-date-div {
   grid-area: answerDate;
   height: fit-content;
-  /* border: 1px solid black; */
 }
 .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv-date {
-  /* margin-bottom: auto; */
-
   display: grid;
   place-items: center;
   padding: 0px;
   margin: 0px;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 /* responsive media quries */
 @media screen and (max-width: 900px) {
@@ -296,7 +292,7 @@
       "productInfoContainer checkoutInfo";
   }
   .productPageMainDiv-productImages {
-    grid-template-rows: 1fr 50px;
+    grid-template-rows: 0.1fr 50px;
     grid-template-columns: 1fr;
     grid-template-areas:
       "productImages-image"
@@ -325,21 +321,6 @@
     width: 30px;
     height: 30px;
   }
-  /*  */
-  /* .productPageMainDiv-questionsContainer-eachConvContainer-questionDiv {
-    grid-template-columns: 30px 150px 1fr 5fr;
-    grid-template-rows: 50px 1fr;
-    grid-template-areas:
-      "questionPhoto questioName .  questionDate"
-      "questioQuestion questioQuestion questioQuestion questioQuestion";
-  }
-  .productPageMainDiv-questionsContainer-eachConvContainer-answerDiv {
-    grid-template-columns: 30px 150px 1fr 5fr;
-    grid-template-rows: 50px 1fr;
-    grid-template-areas:
-      "answerPhoto answerName .  answerDate"
-      "answerQuestion answerQuestion answerQuestion answerQuestion";
-  } */
 }
 @media screen and (max-width: 550px) {
   .productPageMainDiv {
@@ -349,32 +330,16 @@
       "productImages productImages"
       "productInfoContainer checkoutInfo";
   }
-  /* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
-    margin-left: 0%;
-    width: 50%;
-  }
-  .productPageMainDiv-checkOutInfo-buttonHolder-buy {
-    margin-right: 0%;
-    width: 50%;
-  } */
 }
 @media screen and (max-width: 550px) {
   .productPageMainDiv {
-    grid-template-rows: 0.7fr 0.1fr 0.3fr;
+    grid-template-rows: 0.7fr 0.1fr 0.01fr;
     grid-template-columns: 1fr;
     grid-template-areas:
       "productImages"
       "productInfoContainer "
       "checkoutInfo";
   }
-  /* .productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton {
-    margin-left: 0%;
-    width: 50%;
-  }
-  .productPageMainDiv-checkOutInfo-buttonHolder-buy {
-    margin-right: 0%;
-    width: 50%;
-  } */
   .productPageMainDiv-questionsContainer-eachConvContainer {
     width: 90%;
   }
