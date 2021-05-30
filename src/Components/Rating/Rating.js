@@ -24,10 +24,10 @@ const Rating = ({ n, numberOfPeople, key, noOfquestions }) => {
     }
   }
   if (numberOfPeople) {
-    output.push(<i>({numberOfPeople})</i>);
+    output.push(<i key={9}>({numberOfPeople})</i>);
   }
   if (noOfquestions) {
-    output.push(<i>| Questions ({noOfquestions})</i>);
+    output.push(<i key={8}>| Questions ({noOfquestions})</i>);
   }
   return (
     <div className="rating-container" key={key}>

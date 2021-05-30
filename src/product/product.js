@@ -4,8 +4,17 @@ import ReactImageMagnify from "react-image-magnify";
 import "./product.css";
 import data from "../data.js";
 import Rating from "../Components/Rating/Rating.js";
+import AddedTocart from "../Components/addedToCart/addedTocart.js";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { increamentByValue } from "../redux/reducers/counterReducer.js";
+
 const Product = () => {
   let { productID } = useParams();
+  productID = parseInt(productID);
+  let cartInfo = useSelector((state) => state.counterReducer);
+  const dispatch = useDispatch();
   const imgDimension = (imgSrc) => {
     // Create new offscreen image to test
     const theImage = new Image();
@@ -27,6 +36,7 @@ const Product = () => {
   ]);
   const [seeMore, setSeeMore] = useState(new Array(1).fill(false));
   const [reply, setReply] = useState([false, ""]);
+  const [showMessages, setShowMessages] = useState([false, ""]);
   const ImagesPicker = () => {
     let output = [];
     for (let i = 0; i < data[productID].otherImages.length; i++) {
@@ -49,6 +59,7 @@ const Product = () => {
           className="productPageMainDiv-productImages-imagesPicker-image"
           src={data[productID].otherImages[i]}
           alt=""
+          key={i}
         />
       );
     }
@@ -260,6 +271,7 @@ const Product = () => {
 
   return (
     <React.Fragment>
+      {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
       <div className="productPageMainDiv">
         <div className="productPageMainDiv-productImages">
           <div className="productPageMainDiv-productImages-images">
@@ -316,7 +328,11 @@ const Product = () => {
               </div>
             </div>
             <tbody>
-              <ProductDescription />
+              <tr>
+                <td>
+                  <ProductDescription />
+                </td>
+              </tr>
             </tbody>
             <label>
               <h3>About this person</h3>
@@ -371,13 +387,37 @@ const Product = () => {
             )}
           </div>
           <div className="productPageMainDiv-checkOutInfo-buttonHolder">
-            <button className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton">
+            <button
+              className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
+              onClick={() => {
+                if (!cartInfo.productId.includes(productID)) {
+                  dispatch(
+                    increamentByValue({
+                      productId: productID,
+                      noOfCart: noOfItems || 0,
+                    })
+                  );
+                  setShowMessages([true, "Added to cart"]);
+                  setTimeout(() => {
+                    setShowMessages(false);
+                  }, 2000);
+                } else {
+                  setShowMessages([true, "already added to cart"]);
+                  setTimeout(() => {
+                    setShowMessages(false);
+                  }, 2000);
+                }
+              }}
+            >
               {/* <a
                 href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                 target="_blank"
                 rel="noopener noreferrer"
               > */}
-              Add to cart
+              {cartInfo.productId.includes(productID)
+                ? "Go to cart"
+                : "Add to cart"}
+
               {/* </a> */}
             </button>
             {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">

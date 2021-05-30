@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+import { increamentByValue } from "../redux/reducers/counterReducer.js";
+
 import "./navbar.css";
 const Navbar = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [cart, setCart] = useState(0);
+
+  let noOfCart = useSelector((state) => state.counterReducer.noOfCart);
+  let dispatch = useDispatch();
+
   const handleSearch = (e) => {
     setSearchInput(e.target.value);
   };
+  useEffect(() => {
+    if (
+      localStorage.getItem("noOfCart") !== null &&
+      localStorage.getItem("productId") !== null
+    ) {
+      dispatch(
+        increamentByValue({
+          productId: JSON.parse(localStorage.getItem("productId")),
+          noOfCart: localStorage.getItem("noOfCart"),
+        })
+      );
+    }
+  }, []);
   return (
     <header className="navbar">
       <p className="navbar-title">
@@ -22,16 +42,20 @@ const Navbar = () => {
           onChange={handleSearch}
         />
       </div>
-      <button className="navbar-cart" onClick={() => setCart(cart + 1)}>
-        <span className="navbar-cart-number">{cart}</span>
+      <button
+        className="navbar-cart"
+        // onClick={() => {
+        //   dispatch(increament());
+        // console.log("Bimal");
+        // }}
+      >
+        <span className="navbar-cart-number">{parseInt(noOfCart)}</span>
         <i className="fab fa-opencart fa-2x" id="navbar-cart-image"></i>
       </button>
       <button
         className="navbar-signin"
         onClick={() => {
-          if (cart > 0) {
-            setCart(cart - 1);
-          }
+          localStorage.clear();
         }}
       >
         <i className="fas fa-sign-in-alt fa-2x"></i>

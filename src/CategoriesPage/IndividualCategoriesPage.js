@@ -4,6 +4,11 @@ import "./IndividualCategoriesPage.css";
 import data from "../data.js";
 
 import Rating from "../Components/Rating/Rating.js";
+import AddedTocart from "../Components/addedToCart/addedTocart.js";
+
+// redux
+import { useSelector, useDispatch } from "react-redux";
+import { increamentByValue } from "../redux/reducers/counterReducer.js";
 
 const IndividualCategoriesPage = () => {
   const { categoryId } = useParams();
@@ -16,6 +21,8 @@ const IndividualCategoriesPage = () => {
   const [starRatingClickedMoile, setStarRatingClickedMobile] = useState(0);
   const [minMaxPrice, setMinMaxPrice] = useState([-Infinity, Infinity]);
   const [minMaxpriceMobile, setMinMaxPriceMobile] = useState(["", ""]);
+
+  const [showMessages, setShowMessages] = useState([false, ""]);
 
   function useOutsideAlerter(ref) {
     useEffect(() => {
@@ -93,6 +100,8 @@ const IndividualCategoriesPage = () => {
             noOfRating={popular[i].noOfRateing}
             prevPrice={popular[i].prevPrice}
             currPrice={popular[i].currPrice}
+            showMessages={showMessages}
+            setShowMessages={setShowMessages}
           />
         );
       }
@@ -116,6 +125,8 @@ const IndividualCategoriesPage = () => {
             noOfRating={priceUpToDown[j].noOfRateing}
             prevPrice={priceUpToDown[j].prevPrice}
             currPrice={priceUpToDown[j].currPrice}
+            showMessages={showMessages}
+            setShowMessages={setShowMessages}
           />
         );
       }
@@ -139,6 +150,8 @@ const IndividualCategoriesPage = () => {
             noOfRating={priceDownToUp[k].noOfRateing}
             prevPrice={priceDownToUp[k].prevPrice}
             currPrice={priceDownToUp[k].currPrice}
+            showMessages={showMessages}
+            setShowMessages={setShowMessages}
           />
         );
       }
@@ -154,6 +167,7 @@ const IndividualCategoriesPage = () => {
     }
     return (
       <React.Fragment>
+        {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
         {showRatingSortMobile ? (
           <div className="hidden-IndividualCategoriesPage-sideSortBar-filter-Div">
             <button
@@ -552,7 +566,11 @@ const Product = ({
   noOfRating,
   prevPrice,
   currPrice,
+  showMessages,
+  setShowMessages,
 }) => {
+  let cartInfo = useSelector((state) => state.counterReducer);
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
       <div className="IndividualCategoriesPage-product" key={key}>
@@ -589,9 +607,27 @@ const Product = ({
         <div className="IndividualCategoriesPage-product-buttonHolder">
           <button
             className="IndividualCategoriesPage-product-buttonHolder-addToCart"
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={() => {
+              if (!cartInfo.productId.includes(parseInt(id))) {
+                dispatch(
+                  increamentByValue({ productId: parseInt(id), noOfCart: 1 })
+                );
+                setShowMessages([true, "Added to cart"]);
+                setTimeout(() => {
+                  setShowMessages(false);
+                }, 2000);
+              } else {
+                setShowMessages([true, "already added to cart"]);
+                setTimeout(() => {
+                  setShowMessages(false);
+                }, 2000);
+                <></>;
+              }
+            }}
           >
-            Add to cart
+            {cartInfo.productId.includes(parseInt(id))
+              ? "Go to cart"
+              : "Add to cart"}
           </button>
           <button className="IndividualCategoriesPage-product-buttonHolder-Buy">
             Buy

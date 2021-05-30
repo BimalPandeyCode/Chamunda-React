@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import store from "./store.js";
+import store from "./redux/store.js";
 
 import Navbar from "./navbar/navbar.js";
 import TopSlider from "./main/topSlider/topslider.js";
