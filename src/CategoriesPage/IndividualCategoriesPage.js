@@ -102,6 +102,7 @@ const IndividualCategoriesPage = () => {
             currPrice={popular[i].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
+            noOfItems={popular[i].noOfItems}
           />
         );
       }
@@ -127,6 +128,7 @@ const IndividualCategoriesPage = () => {
             currPrice={priceUpToDown[j].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
+            noOfItems={priceUpToDown[j].noOfItems}
           />
         );
       }
@@ -152,6 +154,7 @@ const IndividualCategoriesPage = () => {
             currPrice={priceDownToUp[k].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
+            noOfItems={priceDownToUp[k].noOfItems}
           />
         );
       }
@@ -566,6 +569,7 @@ const Product = ({
   noOfRating,
   prevPrice,
   currPrice,
+  noOfItems,
   showMessages,
   setShowMessages,
 }) => {
@@ -604,13 +608,44 @@ const Product = ({
             </p>
           </div>
         </Link>
-        <div className="IndividualCategoriesPage-product-buttonHolder">
+
+        <div
+          style={{
+            width: "100%",
+            display: "grid",
+            placeItems: "center",
+            marginBottom: "10px",
+          }}
+        >
+          {noOfItems > 0 ? (
+            <span
+              style={{
+                color: "green",
+                fontSize: "20px",
+                fontWeight: "bold",
+              }}
+            >
+              Available
+            </span>
+          ) : (
+            <span
+              style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}
+            >
+              Unavailable
+            </span>
+          )}
+        </div>
+        {/* <div className="IndividualCategoriesPage-product-buttonHolder">
           <button
             className="IndividualCategoriesPage-product-buttonHolder-addToCart"
             onClick={() => {
               if (!cartInfo.productId.includes(parseInt(id))) {
                 dispatch(
-                  increamentByValue({ productId: parseInt(id), noOfCart: 1 })
+                  increamentByValue({
+                    productId: { id: parseInt(id), noOfItems: 1 },
+                    allProductId: parseInt(id),
+                    noOfCart: 1,
+                  })
                 );
                 setShowMessages([true, "Added to cart"]);
                 setTimeout(() => {
@@ -625,14 +660,14 @@ const Product = ({
               }
             }}
           >
-            {cartInfo.productId.includes(parseInt(id))
+            {cartInfo.allProductId.includes(parseInt(id))
               ? "Go to cart"
               : "Add to cart"}
           </button>
           <button className="IndividualCategoriesPage-product-buttonHolder-Buy">
             Buy
           </button>
-        </div>
+        </div> */}
       </div>
     </React.Fragment>
   );

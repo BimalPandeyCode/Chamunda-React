@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, useParams } from "react-router-dom";
+import { BrowserRouter as Router, useParams, Link } from "react-router-dom";
 import ReactImageMagnify from "react-image-magnify";
 import "./product.css";
 import data from "../data.js";
@@ -387,39 +387,50 @@ const Product = () => {
             )}
           </div>
           <div className="productPageMainDiv-checkOutInfo-buttonHolder">
-            <button
-              className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
-              onClick={() => {
-                if (!cartInfo.productId.includes(productID)) {
-                  dispatch(
-                    increamentByValue({
-                      productId: productID,
-                      noOfCart: noOfItems || 0,
-                    })
-                  );
-                  setShowMessages([true, "Added to cart"]);
-                  setTimeout(() => {
-                    setShowMessages(false);
-                  }, 2000);
-                } else {
-                  setShowMessages([true, "already added to cart"]);
-                  setTimeout(() => {
-                    setShowMessages(false);
-                  }, 2000);
-                }
-              }}
-            >
-              {/* <a
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                target="_blank"
-                rel="noopener noreferrer"
-              > */}
-              {cartInfo.productId.includes(productID)
-                ? "Go to cart"
-                : "Add to cart"}
-
-              {/* </a> */}
-            </button>
+            {!cartInfo.allProductId.includes(productID) ? (
+              <button
+                className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
+                onClick={() => {
+                  if (!cartInfo.allProductId.includes(productID)) {
+                    dispatch(
+                      increamentByValue({
+                        productId: { id: productID, noOfItems: noOfItems },
+                        allProductId: productID,
+                        noOfCart: noOfItems || 1,
+                      })
+                    );
+                    setShowMessages([true, "Added to cart"]);
+                    setTimeout(() => {
+                      setShowMessages(false);
+                    }, 2000);
+                  } else {
+                    setShowMessages([true, "already added to cart"]);
+                    setTimeout(() => {
+                      setShowMessages(false);
+                    }, 2000);
+                  }
+                }}
+              >
+                Add to cart
+              </button>
+            ) : (
+              <Link
+                to="/cart"
+                className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
+              >
+                <button
+                  // className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    backgroundColor: "#ffffff00",
+                  }}
+                >
+                  Go to cart
+                </button>
+              </Link>
+            )}
             {/* <a href="https://react-slick.neostack.com/docs/example/dynamic-slides/">
             react js
           </a> */}

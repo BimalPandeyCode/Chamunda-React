@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Link, withRouter } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { increamentByValue } from "../redux/reducers/counterReducer.js";
+import { increamentByValue, reset } from "../redux/reducers/counterReducer.js";
 
 import "./navbar.css";
 const Navbar = () => {
@@ -42,7 +42,8 @@ const Navbar = () => {
           onChange={handleSearch}
         />
       </div>
-      <button
+      <Link
+        to="/cart"
         className="navbar-cart"
         // onClick={() => {
         //   dispatch(increament());
@@ -51,10 +52,11 @@ const Navbar = () => {
       >
         <span className="navbar-cart-number">{parseInt(noOfCart)}</span>
         <i className="fab fa-opencart fa-2x" id="navbar-cart-image"></i>
-      </button>
+      </Link>
       <button
         className="navbar-signin"
         onClick={() => {
+          dispatch(reset());
           localStorage.clear();
         }}
       >

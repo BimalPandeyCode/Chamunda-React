@@ -19,6 +19,8 @@ import IndividualCategoriesPage from "./CategoriesPage/IndividualCategoriesPage.
 
 import Product from "./product/product.js";
 
+import CartPage from "./cartPage/cartPage.js";
+
 import "./App.css";
 function App() {
   return (
@@ -42,6 +44,12 @@ function App() {
             <div style={{ minHeight: "100vh" }}>
               <Navbar />
               <Product />
+            </div>
+          </Route>
+          <Route path="/cart">
+            <div style={{ minHeight: "100vh" }}>
+              {/* <Navbar /> */}
+              <CartPage />
             </div>
           </Route>
           <Route path="*">

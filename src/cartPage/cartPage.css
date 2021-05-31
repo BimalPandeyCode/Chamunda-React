@@ -1,0 +1,160 @@
+.cartPage-navbar {
+  width: 100%;
+  height: 60px;
+  background-color: #f08c2e;
+  display: grid;
+  grid-template-columns: minmax(100px, 200px) 1fr;
+  grid-template-areas: "navbar-title nothingImp";
+}
+.cartPage-navbar-title {
+  grid-area: navbar-title;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-family: "Rock Salt", cursive;
+}
+.cartPage-navbar > h2 {
+  display: grid;
+  place-items: center;
+  grid-area: nothingImp;
+  margin: 0px;
+}
+
+.cartPage-orders {
+  display: grid;
+  grid-template-columns: 1fr 0.3fr;
+  grid-template-areas: "usersInfoAndCartDetails orderSummary";
+}
+
+.cartPage-orders-orderSummary {
+  grid-area: orderSummary;
+  background-color: blanchedalmond;
+}
+.cartPage-orders-usersInfoAndCartDetails {
+  grid-area: usersInfoAndCartDetails;
+  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+}
+
+.cartPage-orders-usersInfoAndCartDetails-shippingDetails {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-areas: "shippingDetailsTitle shippingDetailsInfo shippingDetailsChangeButtonDiv";
+  border-bottom: 1px dashed black;
+}
+.cartPage-orders-usersInfoAndCartDetails-shippingDetails-title {
+  grid-area: shippingDetailsTitle;
+}
+.cartPage-orders-usersInfoAndCartDetails-shippingDetails-info {
+  grid-area: shippingDetailsInfo;
+}
+.cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton {
+  grid-area: shippingDetailsChangeButtonDiv;
+  display: grid;
+  place-items: center;
+}
+.cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton > button {
+  width: 90px;
+  height: 30px;
+}
+
+.cartPage-orders-usersInfoAndCartDetails-paymentMethod {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  grid-template-areas: "paymentMethodTitle paymentMethodInfo paymentMethodChangeButtonDiv";
+}
+.cartPage-orders-usersInfoAndCartDetails-paymentMethod-title {
+  grid-area: paymentMethodTitle;
+}
+.cartPage-orders-usersInfoAndCartDetails-paymentMethod-info {
+  grid-area: paymentMethodInfo;
+}
+.cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton {
+  grid-area: paymentMethodChangeButtonDiv;
+  display: grid;
+  place-items: center;
+}
+.cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton > button {
+  width: 90px;
+  height: 30px;
+}
+@media screen and (max-width: 750px) {
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "shippingDetailsTitle shippingDetailsInfo "
+      "shippingDetailsTitle shippingDetailsChangeButtonDiv";
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-title {
+    grid-area: shippingDetailsTitle;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-info {
+    grid-area: shippingDetailsInfo;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton {
+    grid-area: shippingDetailsChangeButtonDiv;
+  }
+
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "paymentMethodTitle paymentMethodInfo "
+      "paymentMethodTitle paymentMethodChangeButtonDiv";
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-title {
+    grid-area: paymentMethodTitle;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-info {
+    grid-area: paymentMethodInfo;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton {
+    grid-area: paymentMethodChangeButtonDiv;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    grid-template-areas:
+      "shippingDetailsTitle"
+      "shippingDetailsInfo"
+      "shippingDetailsChangeButtonDiv";
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-title {
+    grid-area: shippingDetailsTitle;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-info {
+    grid-area: shippingDetailsInfo;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton {
+    grid-area: shippingDetailsChangeButtonDiv;
+  }
+
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    grid-template-areas:
+      "paymentMethodTitle"
+      "paymentMethodInfo"
+      "paymentMethodChangeButtonDiv";
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-title {
+    grid-area: paymentMethodTitle;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-info {
+    grid-area: paymentMethodInfo;
+  }
+  .cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton {
+    grid-area: paymentMethodChangeButtonDiv;
+  }
+}
