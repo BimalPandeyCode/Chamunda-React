@@ -15,17 +15,17 @@ const Navbar = () => {
     setSearchInput(e.target.value);
   };
   useEffect(() => {
-    if (
-      localStorage.getItem("noOfCart") !== null &&
-      localStorage.getItem("productId") !== null
-    ) {
-      dispatch(
-        increamentByValue({
-          productId: JSON.parse(localStorage.getItem("productId")),
-          noOfCart: localStorage.getItem("noOfCart"),
-        })
-      );
-    }
+    // if (
+    //   localStorage.getItem("noOfCart") !== null &&
+    //   localStorage.getItem("productId") !== null
+    // ) {
+    //   dispatch(
+    //     increamentByValue({
+    //       productId: JSON.parse(localStorage.getItem("productId")),
+    //       noOfCart: localStorage.getItem("noOfCart"),
+    //     })
+    //   );
+    // }
   }, []);
   return (
     <header className="navbar">
