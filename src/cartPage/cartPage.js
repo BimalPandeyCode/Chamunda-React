@@ -4,10 +4,17 @@ import "./cartPage.css";
 import data from "../data.js";
 
 import { Link } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
+import {
+  increamentByValue,
+  decreamentByValue,
+  removeByID,
+} from "../redux/reducers/counterReducer.js";
 
 const CartPage = () => {
   let cartInfo = useSelector((state) => state.counterReducer);
+  const dispatch = useDispatch();
   const CartProducts = () => {
     if (cartInfo.productId.length > 0) {
       return cartInfo.productId.map((product) => {
@@ -29,7 +36,7 @@ const CartPage = () => {
                 </span>
                 <br />
                 <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-noOfItemsLeft">
-                  {`only ${currentProduct.noOfItems} items remaining, order soon`}
+                  {`only ${currentProduct.noOfItems} left, order soon`}
                 </span>
                 <br />
                 <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-shippedFrom">
@@ -37,15 +44,46 @@ const CartPage = () => {
                 </span>
                 <br />
                 <br />
+                <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price">
+                  ${currentProduct.currPrice}
+                </span>
                 <div className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-quantityDiv">
-                  <button>+</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        decreamentByValue({
+                          productId: { id: currentProduct.id, noOfItems: 1 },
+                          allProductId: currentProduct.id,
+                          noOfCart: 1,
+                        })
+                      )
+                    }
+                  >
+                    -
+                  </button>
                   <input
                     type="number"
                     className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-quantityDiv-inputNumber"
+                    value={
+                      cartInfo.productId.find(
+                        ({ id }) => id === currentProduct.id
+                      ).noOfItems
+                    }
                   />
-                  <button>-</button>
+                  <button
+                    onClick={() =>
+                      dispatch(
+                        increamentByValue({
+                          productId: { id: currentProduct.id, noOfItems: 1 },
+                          allProductId: currentProduct.id,
+                          noOfCart: 1,
+                        })
+                      )
+                    }
+                  >
+                    +
+                  </button>
                 </div>
-                <br />
                 <div
                   style={{
                     minWidth: "100%",
@@ -53,7 +91,18 @@ const CartPage = () => {
                     placeItems: "end",
                   }}
                 >
-                  <button className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton">
+                  <button
+                    className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton"
+                    onClick={() =>
+                      dispatch(
+                        removeByID({
+                          productId: { id: currentProduct.id, noOfItems: 1 },
+                          allProductId: currentProduct.id,
+                          noOfCart: 1,
+                        })
+                      )
+                    }
+                  >
                     Remove
                   </button>
                 </div>
@@ -63,64 +112,56 @@ const CartPage = () => {
                   ${currentProduct.currPrice}
                 </span>
               </div>
-              {/* <div>{product.id}</div>
-              <div>{product.noOfItems}</div> */}
             </div>
             <hr />
           </>
         );
       });
     } else {
-      return <div>Cart is empty</div>;
+      return (
+        <div className="cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty">
+          <div style={{ marginTop: "10px" }}>
+            <img
+              src="https://tss-static-images.gumlet.io/emptyCart.png"
+              width="75px"
+              height="75px"
+              alt=""
+              className="cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty-image"
+            />
+            <span className="cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty-text">
+              Your Chamunda cart is empty
+            </span>
+          </div>
+        </div>
+      );
     }
   };
+  let totalprice = 0;
+  cartInfo.productId.forEach((element) => {
+    totalprice +=
+      element.noOfItems * data.find(({ id }) => id === element.id).currPrice;
+  });
   return (
     <React.Fragment>
-      <div className="cartPage-navbar">
-        <p className="cartPage-navbar-title">
-          <Link to="/">Chamunda</Link>
-        </p>
-        <h2>Checkout({cartInfo.noOfCart})</h2>
-      </div>
       <div className="cartPage-orders">
-        <div className="cartPage-orders-orderSummary">
-          <button className="cartPage-orders-orderSummary-checkoutButton">
-            Proceed to checkout
-          </button>
-        </div>
-        {/* <div className="cartPage-orders-usersInfoAndCartDetails">
-          <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails">
-            <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-title">
-              Shipping address
-            </div>
-            <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-info">
-              <h4>kageshwori, Manohara-9-Kathmandu Nepal</h4>
-              <h4>Birendrachwok, Nursery, 9815</h4>
-            </div>
-            <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton">
-              <button>Change</button>
+        {cartInfo.productId.length > 0 ? (
+          <div className="cartPage-orders-orderSummary">
+            <div className="cartPage-orders-orderSummary-checkoutContainer">
+              <div className="cartPage-orders-orderSummary-checkoutContainer-div">
+                <span className="cartPage-orders-orderSummary-checkoutContainer-subTotal">{`Subtotal:$${totalprice}`}</span>
+                <button className="cartPage-orders-orderSummary-checkoutButton">
+                  {`Proceed to checkout(${cartInfo.noOfCart})`}
+                </button>
+              </div>
             </div>
           </div>
-          <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod">
-            <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-title">
-              Payment method
-            </div>
-            <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-info">
-              <h4>Credit card</h4>
-              <h4>98565413216845321</h4>
-            </div>
-            <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton">
-              <button>Change</button>
-            </div>
-          </div> 
-
-          <div>
-           
-          </div>
-        </div>*/}
+        ) : (
+          <></>
+        )}
+        {/* <UserInfo /> */}
         <div className="cartPage-orders-cartDiv">
           <div className="cartPage-orders-cartDiv-cartItemsContainer">
-            <h2>Shopping Cart</h2>
+            {cartInfo.productId.length > 0 ? <h2>Shopping Cart</h2> : <></>}
             <CartProducts />
           </div>
         </div>
@@ -128,4 +169,38 @@ const CartPage = () => {
     </React.Fragment>
   );
 };
+
+const UserInfo = () => {
+  return (
+    <div className="cartPage-orders-usersInfoAndCartDetails">
+      <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails">
+        <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-title">
+          Shipping address
+        </div>
+        <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-info">
+          <h4>kageshwori, Manohara-9-Kathmandu Nepal</h4>
+          <h4>Birendrachwok, Nursery, 9815</h4>
+        </div>
+        <div className="cartPage-orders-usersInfoAndCartDetails-shippingDetails-changeButton">
+          <button>Change</button>
+        </div>
+      </div>
+      <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod">
+        <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-title">
+          Payment method
+        </div>
+        <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-info">
+          <h4>Credit card</h4>
+          <h4>98565413216845321</h4>
+        </div>
+        <div className="cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton">
+          <button>Change</button>
+        </div>
+      </div>
+
+      <div></div>
+    </div>
+  );
+};
+
 export default CartPage;

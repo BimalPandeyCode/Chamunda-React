@@ -33,11 +33,28 @@
   grid-area: orderSummary;
   background-color: blanchedalmond;
 }
+.cartPage-orders-orderSummary-checkoutContainer {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: fit-content;
+  background-color: cornsilk;
+  display: grid;
+  place-items: center;
+}
+.cartPage-orders-orderSummary-checkoutContainer-div {
+  margin: 10px;
+}
+.cartPage-orders-orderSummary-checkoutContainer-subTotal {
+  font-weight: bold;
+  font-size: 18px;
+}
 .cartPage-orders-orderSummary-checkoutButton {
   display: block;
   margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: 10px;
+  height: 30px;
+  width: 100%;
 }
 .cartPage-orders-usersInfoAndCartDetails {
   grid-area: usersInfoAndCartDetails;
@@ -89,6 +106,22 @@
   height: 30px;
 }
 /*  */
+.cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-bottom: auto;
+}
+.cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty-text {
+  margin-bottom: auto;
+  margin-top: auto;
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  /* margin-bottom: auto; */
+}
+/*  */
 .cartPage-orders-cartDiv {
   grid-area: cartDiv;
 }
@@ -107,7 +140,7 @@
   grid-area: imageContainer;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-imageDiv-image {
-  width: 100%;
+  width: 180px;
   height: 180px;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv {
@@ -124,8 +157,14 @@
   font-size: 13px;
 }
 
+.cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price {
+  font-weight: bolder;
+  font-size: 20px;
+  display: none;
+}
+
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-quantityDiv-inputNumber {
-  width: 3ch;
+  width: 2ch;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton {
   background-color: rgb(255, 91, 91);
@@ -148,10 +187,10 @@
 @media screen and (max-width: 750px) {
   .cartPage-orders {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.1fr 1fr;
+    grid-template-rows: 0.00001fr 1fr;
     grid-template-areas:
       "orderSummary"
-      "cartDiv ";
+      "cartDiv";
     background-color: #eaeded;
   }
   .cartPage-orders-usersInfoAndCartDetails-shippingDetails {
@@ -189,9 +228,22 @@
   .cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton {
     grid-area: paymentMethodChangeButtonDiv;
   }
+  .cartPage-orders-orderSummary {
+    position: sticky;
+    top: 0;
+  }
+  .cartPage-orders-orderSummary-checkoutContainer-div {
+    margin: 0px;
+  }
+  .cartPage-orders-orderSummary-checkoutContainer-subTotal {
+    font-size: 16px;
+  }
+  .cartPage-orders-orderSummary-checkoutButton {
+    margin: 0px;
+  }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .cartPage-navbar {
     width: 100%;
     height: 60px;
@@ -236,5 +288,29 @@
   }
   .cartPage-orders-usersInfoAndCartDetails-paymentMethod-changeButton {
     grid-area: paymentMethodChangeButtonDiv;
+  }
+  /*  */
+  .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems {
+    grid-template-columns: minmax(100px, 100px) 0.001fr 1fr;
+    grid-template-rows: 1fr 0.001fr;
+    grid-template-areas:
+      "imageContainer productInfoDiv productInfoDiv "
+      " . priceDiv .";
+  }
+  .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-imageDiv {
+    grid-area: imageContainer;
+    display: grid;
+    place-items: center;
+  }
+  .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-priceDiv {
+    grid-area: priceDiv;
+    display: none;
+  }
+  .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-imageDiv-image {
+    width: 100px;
+    height: 100px;
+  }
+  .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price {
+    display: grid;
   }
 }

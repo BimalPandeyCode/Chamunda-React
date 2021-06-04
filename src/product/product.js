@@ -392,22 +392,24 @@ const Product = () => {
                 className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
                 onClick={() => {
                   if (!cartInfo.allProductId.includes(productID)) {
-                    dispatch(
-                      increamentByValue({
-                        productId: { id: productID, noOfItems: noOfItems },
-                        allProductId: productID,
-                        noOfCart: noOfItems || 1,
-                      })
-                    );
-                    setShowMessages([true, "Added to cart"]);
-                    setTimeout(() => {
-                      setShowMessages(false);
-                    }, 2000);
-                  } else {
-                    setShowMessages([true, "already added to cart"]);
-                    setTimeout(() => {
-                      setShowMessages(false);
-                    }, 2000);
+                    if (data.find(({ id }) => id === productID).noOfItems > 0) {
+                      dispatch(
+                        increamentByValue({
+                          productId: { id: productID, noOfItems: noOfItems },
+                          allProductId: productID,
+                          noOfCart: noOfItems || 1,
+                        })
+                      );
+                      setShowMessages([true, "Added to cart"]);
+                      setTimeout(() => {
+                        setShowMessages(false);
+                      }, 2000);
+                    } else {
+                      setShowMessages([true, "Unavailable"]);
+                      setTimeout(() => {
+                        setShowMessages(false);
+                      }, 2000);
+                    }
                   }
                 }}
               >

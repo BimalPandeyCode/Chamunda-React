@@ -48,7 +48,7 @@ function App() {
           </Route>
           <Route path="/cart">
             <div style={{ minHeight: "100vh" }}>
-              {/* <Navbar /> */}
+              <Navbar />
               <CartPage />
             </div>
           </Route>
