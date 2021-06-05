@@ -145,16 +145,22 @@
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv {
   grid-area: productInfoDiv;
+  display: flex;
+  flex-direction: column;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-productName {
   font-size: 22px;
+  margin: 0px;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-noOfItemsLeft {
   font-size: 13px;
   color: #bf2769;
+  margin: 0px;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-shippedFrom {
   font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price {
@@ -165,6 +171,9 @@
 
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-quantityDiv-inputNumber {
   width: 2ch;
+}
+.cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton-div {
+  flex-grow: 1;
 }
 .cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton {
   background-color: rgb(255, 91, 91);

@@ -69,7 +69,7 @@ const Product = () => {
     let output = [];
     for (const key in data[productID].description) {
       output.push(
-        <tr>
+        <tr key={key}>
           {
             <td className="productPageMainDiv-infoContainer-div-tbody-key">
               {key}:
@@ -300,6 +300,7 @@ const Product = () => {
             </div>
           </div>
         </div>
+        {/* XAc%At$27pq37 */}
         <div className="productPageMainDiv-infoContainer">
           <div className="productPageMainDiv-infoContainer-div">
             <h2>{data[productID].name}</h2>
@@ -328,11 +329,9 @@ const Product = () => {
               </div>
             </div>
             <tbody>
-              <tr>
-                <td>
-                  <ProductDescription />
-                </td>
-              </tr>
+              <td>
+                <ProductDescription />
+              </td>
             </tbody>
             <label>
               <h3>About this person</h3>
@@ -363,6 +362,7 @@ const Product = () => {
                   className="productPageMainDiv-checkOutInfo-numberOfItems-input"
                   type="number"
                   value={noOfItems}
+                  readOnly={true}
                 />
                 <button
                   className="productPageMainDiv-checkOutInfo-numberOfItems-moreButton"

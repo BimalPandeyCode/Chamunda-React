@@ -21,6 +21,8 @@ import Product from "./product/product.js";
 
 import CartPage from "./cartPage/cartPage.js";
 
+import ProductUploadingPage from "./Private/pageUploadingPage/pageUploadingPage.js";
+
 import "./App.css";
 function App() {
   return (
@@ -51,6 +53,9 @@ function App() {
               <Navbar />
               <CartPage />
             </div>
+          </Route>
+          <Route path="/private123456789">
+            <ProductUploadingPage />
           </Route>
           <Route path="*">
             <div className="Wrong-URL">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./cartPage.css";
 
 import data from "../data.js";
@@ -13,16 +13,22 @@ import {
 } from "../redux/reducers/counterReducer.js";
 
 const CartPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   let cartInfo = useSelector((state) => state.counterReducer);
   const dispatch = useDispatch();
   const CartProducts = () => {
     if (cartInfo.productId.length > 0) {
-      return cartInfo.productId.map((product) => {
+      return cartInfo.productId.map((product, index) => {
         const currentProduct = data.find(({ id }) => id === product.id);
         return (
           <>
             <hr />
-            <div className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems">
+            <div
+              className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems"
+              key={index}
+            >
               <div className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-imageDiv">
                 <img
                   className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-imageDiv-image"
@@ -31,22 +37,21 @@ const CartPage = () => {
                 />
               </div>
               <div className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv">
-                <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-productName">
+                <Link
+                  to={`/product/${currentProduct.id}`}
+                  className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-productName"
+                >
                   {currentProduct.name}
-                </span>
-                <br />
-                <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-noOfItemsLeft">
+                </Link>
+                <p className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-noOfItemsLeft">
                   {`only ${currentProduct.noOfItems} left, order soon`}
-                </span>
-                <br />
-                <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-shippedFrom">
+                </p>
+                <p className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-shippedFrom">
                   {`Shipped from: ${"Kageshwori Manohora-9 Kathmandu"}`}
-                </span>
-                <br />
-                <br />
-                <span className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price">
+                </p>
+                <p className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-price">
                   ${currentProduct.currPrice}
-                </span>
+                </p>
                 <div className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-quantityDiv">
                   <button
                     onClick={() =>
@@ -69,6 +74,8 @@ const CartPage = () => {
                         ({ id }) => id === currentProduct.id
                       ).noOfItems
                     }
+                    onChange={(e) => e.stopPropagation()}
+                    readOnly={true}
                   />
                   <button
                     onClick={() =>
@@ -85,6 +92,7 @@ const CartPage = () => {
                   </button>
                 </div>
                 <div
+                  className="cartPage-orders-cartDiv-cartItemsContainer-eachCartItems-productInfoDiv-removeButton-div"
                   style={{
                     minWidth: "100%",
                     display: "grid",
@@ -119,7 +127,10 @@ const CartPage = () => {
       });
     } else {
       return (
-        <div className="cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty">
+        <div
+          className="cartPage-orders-cartDiv-cartItemsContainer-cartIsEmpty"
+          key="98"
+        >
           <div style={{ marginTop: "10px" }}>
             <img
               src="https://tss-static-images.gumlet.io/emptyCart.png"

@@ -625,13 +625,13 @@ const Product = ({
                 fontWeight: "bold",
               }}
             >
-              Available
+              In stock
             </span>
           ) : (
             <span
               style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}
             >
-              Unavailable
+              Temporarily Unavailable
             </span>
           )}
         </div>
