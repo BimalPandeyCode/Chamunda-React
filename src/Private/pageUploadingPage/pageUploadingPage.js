@@ -1,7 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./pageUploadingPage.css";
-
+import Axios from "axios";
 const PageUploadingPage = () => {
+  const [values, setValues] = useState({
+    prouctName: "",
+    prevPrice: 0,
+    currPrice: 0,
+    description: "",
+  });
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Axios.get("http://localhost:4000/test")
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => console.log(err));
+    // Axios.post("http://localhost:4000/post", {
+    //   message: "This is post example",
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => console.log(err));
+  }, []);
   const password = "123456789";
   const [showContent, setShowContent] = useState(false);
   const [noOfDescription, setNoOfDescription] = useState(1);
@@ -15,14 +36,17 @@ const PageUploadingPage = () => {
       setShowContent(true);
     }
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   const OutputForDescription = () => {
     let outputForDescription = [];
     for (let i = 0; i < parseInt(noOfDescription); i++) {
       outputForDescription.push(
-        <>
+        <div style={{ width: "100%" }} key={i}>
           <input className="inputField" type="text" placeholder="title" />
           <input className="inputField" type="text" placeholder="value" />
-        </>
+        </div>
       );
     }
     return outputForDescription;
@@ -39,13 +63,17 @@ const PageUploadingPage = () => {
           <button onClick={() => checkPassword()}>Enter</button>
         </div>
       ) : (
-        <div className="mainDiv">
+        <form className="mainDiv">
           <div className="productNameDiv">
             <label>Product Name</label>
             <input
               className="inputField"
               type="text"
               placeholder="Product Name"
+              value={values.prouctName}
+              onChange={(e) =>
+                setValues({ ...values, prouctName: e.target.value })
+              }
             />
           </div>
           <div className="productNameDiv">
@@ -54,6 +82,10 @@ const PageUploadingPage = () => {
               className="inputField"
               type="number"
               placeholder="previous price"
+              value={values.prevPrice}
+              onChange={(e) =>
+                setValues({ ...values, prevPrice: e.target.value })
+              }
             />
           </div>
           <div className="productNameDiv">
@@ -62,6 +94,22 @@ const PageUploadingPage = () => {
               className="inputField"
               type="number"
               placeholder="Actual price"
+              value={values.currPrice}
+              onChange={(e) =>
+                setValues({ ...values, currPrice: e.target.value })
+              }
+            />
+          </div>
+          <div className="productNameDiv">
+            <label>Description about the product in hand</label>
+            <textarea
+              className="inputField"
+              type="text"
+              placeholder="Product Name"
+              value={values.description}
+              onChange={(e) =>
+                setValues({ ...values, description: e.target.value })
+              }
             />
           </div>
           <div className="productNameDiv">
@@ -124,7 +172,8 @@ const PageUploadingPage = () => {
             <label>Description</label>
             <OutputForDescription />
           </div>
-        </div>
+          <button onSubmit={(e) => handleSubmit(e)}>Submit</button>
+        </form>
       )}
     </div>
   );

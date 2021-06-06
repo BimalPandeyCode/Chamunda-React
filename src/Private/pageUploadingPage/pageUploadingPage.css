@@ -7,13 +7,19 @@
 }
 input {
   height: 25px;
-  width: 99%;
+  width: 99.5%;
+  resize: vertical;
+}
+textarea {
+  height: 80px;
+  width: 99.5%;
+  resize: vertical;
 }
 label {
   margin-right: auto;
 }
 .productNameDiv {
-  width: 50%;
+  width: 70%;
   display: grid;
   place-items: center;
   margin-bottom: 20px;
