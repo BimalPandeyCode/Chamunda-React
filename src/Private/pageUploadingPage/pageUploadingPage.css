@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: gray;
 }
 input {
   height: 25px;
@@ -17,13 +18,14 @@ textarea {
 }
 label {
   margin-right: auto;
+  color: wheat;
 }
 .productNameDiv {
   width: 70%;
   display: grid;
   place-items: center;
   margin-bottom: 20px;
-  border: 1px solid black;
+  border: 1px solid wheat;
 }
 .imagePreview {
   height: 100px;

@@ -10,4 +10,14 @@ const AddedTocart = ({ messages }) => {
   );
 };
 
+// usage
+// const [showMessages, setShowMessages] = useState([false, ""]);
+
+// {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
+
+// setShowMessages([true, "Added to cart"]);
+// setTimeout(() => {
+//   setShowMessages(false);
+// }, 2000);
+
 export default AddedTocart;
