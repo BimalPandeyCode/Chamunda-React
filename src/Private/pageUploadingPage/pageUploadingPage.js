@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./pageUploadingPage.css";
 import Axios from "axios";
 import AddedTocart from "../../Components/addedToCart/addedTocart.js";
+import axios from "axios";
+//
 const PageUploadingPage = () => {
   const password = "123456789";
   const [showContent, setShowContent] = useState(false);
   const [noOfDescription, setNoOfDescription] = useState(5);
-  const [images, setImages] = useState(["", "", "", ""]);
+  const [images, setImages] = useState(new Array(4).fill(""));
   const [showMessages, setShowMessages] = useState([false, ""]);
+  const [files123, setFile] = useState(new Array(4).fill(""));
   const [values, setValues] = useState({
     prouctName: "",
     prevPrice: "",
@@ -15,8 +18,6 @@ const PageUploadingPage = () => {
     noOfItems: 1,
     description: "",
     productDetails: new Array(noOfDescription).fill({ title: "", value: "" }),
-    // cartImage: "",
-    // otherImages: ["", "", ""],
   });
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,28 +34,48 @@ const PageUploadingPage = () => {
     //   })
     //   .catch((err) => console.log(err));
   }, []);
-
+  useEffect(() => {
+    console.log(files123);
+  }, [files123]);
   const handlePhotoChange = (e, id, imagesID) => {
     // let img = document.getElementById(id);
     let file = e.target.files[0];
+
     if (file !== undefined) {
-      if (file.size / 1000 > 1024) {
-        alert("The image must be less than 1 mb");
+      if (file.size / 1000 > 16000) {
+        alert("The image must be less than 16 mb");
       } else {
         let fileReader = new FileReader();
         fileReader.onload = () => {
-          // console.log(fileReader.result);
-          // img.src = fileReader.result;
           setImages([
             ...images.slice(0, imagesID),
             fileReader.result,
             ...images.slice(imagesID + 1, images.length),
           ]);
+          setFile([
+            ...files123.slice(0, imagesID),
+            e.target.files[0],
+            ...files123.slice(imagesID + 1, files123.length),
+          ]);
+          // let fileData = new FormData();
+          // fileData.append("myImage", files123[1]);
+          // axios
+          //   .post("http://localhost:4000/post", fileData)
+          //   .then((res) => console.log(res))
+          //   .catch((err) => console.log(err));
         };
         fileReader.readAsDataURL(file);
       }
     }
     // img.src = URL.createObjectURL(e.target.files[0]);
+  };
+  const photoSubmit = () => {
+    let fileData = new FormData();
+    fileData.append("myImage", files123[1]);
+    axios
+      .post("http://localhost:4000/post", fileData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   const checkPassword = () => {
     if (password === document.getElementById("passwordInput").value) {
@@ -83,7 +104,10 @@ const PageUploadingPage = () => {
                   if (allValueOfProductDetailsEmpty) {
                     let img = new Image();
                     img.src = images[0];
-                    if (img.naturalWidth === img.naturalHeight) {
+                    if (
+                      img.naturalWidth / img.naturalHeight < 1.4 &&
+                      img.naturalWidth / img.naturalHeight > 0.7
+                    ) {
                       Axios.post("http://localhost:4000/products", {
                         ...values,
                         cartImage: images[0],
@@ -162,48 +186,81 @@ const PageUploadingPage = () => {
     let outputForDescription = [];
     for (let i = 0; i < parseInt(noOfDescription); i++) {
       outputForDescription.push(
-        <div style={{ width: "100%" }} key={i}>
-          <input
-            key={i}
-            className="inputField"
-            value={values.productDetails[i].title}
-            onChange={(e) => {
-              setValues({
-                ...values,
-                productDetails: [
-                  ...values.productDetails.slice(0, i),
-                  { ...values.productDetails[i], title: e.target.value },
-                  ...values.productDetails.slice(
-                    i + 1,
-                    values.productDetails.length
-                  ),
-                ],
-              });
-            }}
-            type="text"
-            placeholder="title"
-          />
-          <input
-            key={i + 1}
-            className="inputField"
-            type="text"
-            value={values.productDetails[i].value}
-            onChange={(e) =>
-              setValues({
-                ...values,
-                productDetails: [
-                  ...values.productDetails.slice(0, i),
-                  { ...values.productDetails[i], value: e.target.value },
-                  ...values.productDetails.slice(
-                    i + 1,
-                    values.productDetails.length
-                  ),
-                ],
-              })
-            }
-            placeholder="value"
-          />
-          <br />
+        <div
+          className="inputFieldHolderAndButtonHolder"
+          style={{ width: "100%" }}
+          key={i}
+        >
+          <div className="inputFieldHolder">
+            <input
+              key={i}
+              className="inputField"
+              value={values.productDetails[i].title}
+              onChange={(e) => {
+                setValues({
+                  ...values,
+                  productDetails: [
+                    ...values.productDetails.slice(0, i),
+                    { ...values.productDetails[i], title: e.target.value },
+                    ...values.productDetails.slice(
+                      i + 1,
+                      values.productDetails.length
+                    ),
+                  ],
+                });
+              }}
+              type="text"
+              placeholder="title"
+            />
+            <input
+              key={i + 1}
+              className="inputField"
+              type="text"
+              value={values.productDetails[i].value}
+              onChange={(e) =>
+                setValues({
+                  ...values,
+                  productDetails: [
+                    ...values.productDetails.slice(0, i),
+                    { ...values.productDetails[i], value: e.target.value },
+                    ...values.productDetails.slice(
+                      i + 1,
+                      values.productDetails.length
+                    ),
+                  ],
+                })
+              }
+              placeholder="value"
+            />
+          </div>
+          <div className="ButtonHolder">
+            <button
+              type="button"
+              onClick={() => {
+                if (noOfDescription > 5) {
+                  setValues({
+                    ...values,
+                    productDetails: [
+                      ...values.productDetails.slice(0, i),
+                      // { ...values.productDetails[i], value: e.target.value },
+                      ...values.productDetails.slice(
+                        i + 1,
+                        values.productDetails.length
+                      ),
+                    ],
+                  });
+                  setNoOfDescription(noOfDescription - 1);
+                } else {
+                  setShowMessages([true, "We need at least 5 details"]);
+                  setTimeout(() => {
+                    setShowMessages(false);
+                  }, 1500);
+                }
+              }}
+            >
+              <i className="far fa-times-circle"></i>
+            </button>
+          </div>
           <br />
         </div>
       );
@@ -220,7 +277,11 @@ const PageUploadingPage = () => {
           <button onClick={() => checkPassword()}>Enter</button>
         </div>
       ) : (
-        <form className="mainDiv" onSubmit={(e) => handleSubmit(e)}>
+        <form
+          className="mainDiv"
+          onSubmit={(e) => handleSubmit(e)}
+          encType="multipart/form-data"
+        >
           <div className="productNameDiv">
             <label>Product Name</label>
             <input
@@ -293,6 +354,7 @@ const PageUploadingPage = () => {
               }}
               accept="image/*"
             />
+
             <img
               src={images[0]}
               className="imagePreview"
@@ -310,6 +372,9 @@ const PageUploadingPage = () => {
               }}
               accept="image/*"
             />
+            <button type="button" onClick={() => photoSubmit()}>
+              Click e to send
+            </button>
             <img
               src={images[1]}
               className="imagePreview"
