@@ -19,6 +19,7 @@ const PageUploadingPage = () => {
     description: "",
     productDetails: new Array(noOfDescription).fill({ title: "", value: "" }),
   });
+  const [multipeFiles, setMultipleFiles] = useState(["", ""]);
   useEffect(() => {
     window.scrollTo(0, 0);
     // Axios.get("http://localhost:4000/test")4!5%$3YekT&v&@mY%bTe
@@ -34,29 +35,30 @@ const PageUploadingPage = () => {
     //   })
     //   .catch((err) => console.log(err));
   }, []);
-  useEffect(() => {
-    console.log(files123);
-  }, [files123]);
+
   const handlePhotoChange = (e, id, imagesID) => {
     // let img = document.getElementById(id);
     let file = e.target.files[0];
-
     if (file !== undefined) {
       if (file.size / 1000 > 16000) {
         alert("The image must be less than 16 mb");
       } else {
         let fileReader = new FileReader();
         fileReader.onload = () => {
-          setImages([
-            ...images.slice(0, imagesID),
-            fileReader.result,
-            ...images.slice(imagesID + 1, images.length),
-          ]);
-          setFile([
-            ...files123.slice(0, imagesID),
+          setMultipleFiles([
             e.target.files[0],
-            ...files123.slice(imagesID + 1, files123.length),
+            ...multipeFiles.slice(1, multipeFiles.length),
           ]);
+          // setImages([
+          //   ...images.slice(0, imagesID),
+          //   fileReader.result,
+          //   ...images.slice(imagesID + 1, images.length),
+          // ]);
+          // setFile([
+          //   ...files123.slice(0, imagesID),
+          //   e.target.files[0],
+          //   ...files123.slice(imagesID + 1, files123.length),
+          // ]);
           // let fileData = new FormData();
           // fileData.append("myImage", files123[1]);
           // axios
@@ -73,7 +75,7 @@ const PageUploadingPage = () => {
     let fileData = new FormData();
     fileData.append("myImage", files123[1]);
     axios
-      .post("http://localhost:4000/post", fileData)
+      .post("http://localhost:4000/test", fileData)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -88,8 +90,8 @@ const PageUploadingPage = () => {
       if (values.prevPrice !== "") {
         if (values.currPrice !== "") {
           if (values.description !== "") {
-            if (images[0] !== "") {
-              if (images[1] !== "" && images[2] !== "" && images[3] !== "") {
+            if (multipeFiles[0] !== "") {
+              if (multipeFiles.length > 3) {
                 if (values.noOfItems > 0) {
                   let allValueOfProductDetailsEmpty = true;
                   for (let i = 0; i < values.productDetails.length; i++) {
@@ -102,24 +104,69 @@ const PageUploadingPage = () => {
                     }
                   }
                   if (allValueOfProductDetailsEmpty) {
+                    let allow = true;
                     let img = new Image();
-                    img.src = images[0];
-                    if (
-                      img.naturalWidth / img.naturalHeight < 1.4 &&
-                      img.naturalWidth / img.naturalHeight > 0.7
-                    ) {
-                      Axios.post("http://localhost:4000/products", {
-                        ...values,
-                        cartImage: images[0],
-                        otherImages: [...images.slice(1, images.length)],
-                      })
-                        .then((res) => console.log(res.data))
+                    // document.getElementById("photoTest").style.display = "flex";
+                    // img.src = URL.createObjectURL(multipeFiles[0]);
+                    // document.getElementById("photoTest").src =
+                    //   URL.createObjectURL(multipeFiles[0]);
+                    document.getElementById("cartImageInput").clientWidth /
+                      document.getElementById("cartImageInput").clientHeight <
+                      1.4 &&
+                    document.getElementById("cartImageInput").clientWidth /
+                      document.getElementById("cartImageInput").clientHeight >
+                      0.7
+                      ? (allow = true)
+                      : (allow = false);
+                    console.log(
+                      document.getElementById("cartImageInput").clientWidth
+                    );
+                    console.log(
+                      document.getElementById("cartImageInput").clientHeight
+                    );
+                    // document.getElementById("photoTest").style.display = "none";
+                    if (allow) {
+                      let productData = new FormData();
+                      productData.append("productName", values.prouctName);
+                      productData.append("prevPrice", values.prevPrice);
+                      productData.append("currPrice", values.currPrice);
+                      productData.append("noOfItems", values.noOfItems);
+                      productData.append("description", values.description);
+                      productData.append(
+                        "productDetails",
+                        JSON.stringify(values.productDetails)
+                      );
+                      // productData.append("cartImage", files123[0]);
+                      for (let i = 0; i < multipeFiles.length; i++) {
+                        productData.append("productImages", multipeFiles[i]);
+                      }
+                      // axios
+                      //   .post("https://httpbin.org/anything", productData)
+                      //   .then((response) => console.log(response))
+                      //   .catch((errorr) => console.log(errorr));
+                      Axios.post(
+                        "https://chamunda.herokuapp.com/products",
+                        productData
+                      )
+                        .then((res) => {
+                          if (res.data === "productUploaded") {
+                            setShowMessages([true, "product uploaded"]);
+                            setTimeout(() => {
+                              setShowMessages(false);
+                            }, 2000);
+                            // console.log(res);
+                          } else {
+                            console.log(res);
+                          }
+                        })
                         .catch((err) => console.log(err));
                     } else {
-                      alert(
-                        img.naturalWidth +
+                      console.log(multipeFiles);
+                      console.log(
+                        document.getElementById("cartImageInput").clientWidth +
                           "     " +
-                          img.naturalHeight +
+                          document.getElementById("cartImageInput")
+                            .clientHeight +
                           "please make the image square"
                       );
                     }
@@ -131,7 +178,7 @@ const PageUploadingPage = () => {
                     // alert("You have details missing");
                   }
                 } else {
-                  setShowMessages([true, "No of item is less than 0 is empty"]);
+                  setShowMessages([true, "No of item is less than 1"]);
                   setTimeout(() => {
                     setShowMessages(false);
                   }, 2000);
@@ -267,6 +314,22 @@ const PageUploadingPage = () => {
     }
     return outputForDescription;
   };
+  const ImagesPreview = () => {
+    let output = [];
+    for (let i = 1; i < multipeFiles.length; i++) {
+      if (multipeFiles[1] !== "") {
+        output.push(
+          <img
+            key={i}
+            className="imagePreview"
+            src={URL.createObjectURL(multipeFiles[i])}
+            alt=""
+          />
+        );
+      }
+    }
+    return output;
+  };
   return (
     <div className="mainDiv">
       {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
@@ -356,60 +419,34 @@ const PageUploadingPage = () => {
             />
 
             <img
-              src={images[0]}
+              src={
+                multipeFiles[0] === ""
+                  ? ""
+                  : URL.createObjectURL(multipeFiles[0])
+              }
               className="imagePreview"
-              id="imageInput"
+              id="cartImageInput"
               alt=""
             />
           </div>
           <div className="productNameDiv">
-            <label>Choose three photo with 16:9 ratio</label>
+            <label>
+              Choose three or more than three photos with 16:9 ratio
+            </label>
+            {/* <input type="file" name="myImage" onChange={(e) => { handlePhotoChange(e, "imageInput1", 1); }} accept="image/*" />
+            <button type="button" onClick={() => photoSubmit()}> Click e to send </button>
+            <img src={images[1]} className="imagePreview" id="imageInput1" alt="" /> */}
             <input
               type="file"
-              name="myImage"
               onChange={(e) => {
-                handlePhotoChange(e, "imageInput1", 1);
+                setMultipleFiles([multipeFiles[0], ...e.target.files]);
               }}
               accept="image/*"
+              multiple={true}
             />
-            <button type="button" onClick={() => photoSubmit()}>
-              Click e to send
-            </button>
-            <img
-              src={images[1]}
-              className="imagePreview"
-              id="imageInput1"
-              alt=""
-            />
-            <input
-              type="file"
-              name="myImage"
-              onChange={(e) => {
-                handlePhotoChange(e, "imageInput2", 2);
-              }}
-              accept="image/*"
-            />
-            <img
-              src={images[2]}
-              className="imagePreview"
-              id="imageInput2"
-              alt=""
-            />
-            <input
-              type="file"
-              name="myImage"
-              onChange={(e) => {
-                handlePhotoChange(e, "imageInput3", 3);
-              }}
-              accept="image/*"
-            />
-
-            <img
-              src={images[3]}
-              className="imagePreview"
-              id="imageInput3"
-              alt=""
-            />
+            <div className="imagePreviewDiv">
+              <ImagesPreview />
+            </div>
           </div>
           <div className="productNameDiv">
             <label>Description</label>
@@ -431,6 +468,7 @@ const PageUploadingPage = () => {
             </button>
           </div>
           <button>Submit</button>
+          <img id="photoTest" alt="" />
         </form>
       )}
     </div>

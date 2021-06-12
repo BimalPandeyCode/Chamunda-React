@@ -30,6 +30,7 @@ label {
 .imagePreview {
   height: 100px;
   width: auto;
+  margin: 2px;
 }
 .inputFieldHolderAndButtonHolder {
   display: grid;
@@ -45,4 +46,9 @@ label {
   grid-area: buttonHolder;
   display: grid;
   place-items: center;
+}
+.imagePreviewDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
