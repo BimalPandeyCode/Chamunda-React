@@ -11,6 +11,7 @@ const PageUploadingPage = () => {
   const [images, setImages] = useState(new Array(4).fill(""));
   const [showMessages, setShowMessages] = useState([false, ""]);
   const [files123, setFile] = useState(new Array(4).fill(""));
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({
     prouctName: "",
     prevPrice: "",
@@ -82,6 +83,11 @@ const PageUploadingPage = () => {
   const checkPassword = () => {
     if (password === document.getElementById("passwordInput").value) {
       setShowContent(true);
+    } else {
+      setShowMessages([true, "Wrong password"]);
+      setTimeout(() => {
+        setShowMessages(false);
+      }, 1500);
     }
   };
   const handleSubmit = (e) => {
@@ -144,22 +150,53 @@ const PageUploadingPage = () => {
                       //   .post("https://httpbin.org/anything", productData)
                       //   .then((response) => console.log(response))
                       //   .catch((errorr) => console.log(errorr));
+                      setLoading(true);
                       Axios.post(
                         "https://chamunda.herokuapp.com/products",
                         productData
-                      )
+                      ) //https://chamunda.herokuapp.com/products //http://localhost:4000/products
                         .then((res) => {
+                          setLoading(false);
+
                           if (res.data === "productUploaded") {
+                            setNoOfDescription(5);
+                            setValues({
+                              prouctName: "",
+                              prevPrice: "",
+                              currPrice: "",
+                              noOfItems: 1,
+                              description: "",
+                              productDetails: new Array(noOfDescription).fill({
+                                title: "",
+                                value: "",
+                              }),
+                            });
+                            setMultipleFiles(["", ""]);
                             setShowMessages([true, "product uploaded"]);
                             setTimeout(() => {
                               setShowMessages(false);
                             }, 2000);
                             // console.log(res);
+                          } else if (res.data === "productNotUploaded") {
+                            setShowMessages([true, "product NOT uploaded"]);
+                            setTimeout(() => {
+                              setShowMessages(false);
+                            }, 2000);
                           } else {
+                            setShowMessages([
+                              true,
+                              "something else caused this so please hold on",
+                            ]);
+                            setTimeout(() => {
+                              setShowMessages(false);
+                            }, 2000);
                             console.log(res);
                           }
                         })
-                        .catch((err) => console.log(err));
+                        .catch((err) => {
+                          console.log(err);
+                          setLoading(false);
+                        });
                     } else {
                       console.log(multipeFiles);
                       console.log(
@@ -314,6 +351,7 @@ const PageUploadingPage = () => {
     }
     return outputForDescription;
   };
+
   const ImagesPreview = () => {
     let output = [];
     for (let i = 1; i < multipeFiles.length; i++) {
@@ -335,10 +373,17 @@ const PageUploadingPage = () => {
       {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
       <h1>This is product uploading page</h1>
       {!showContent ? (
-        <div className="productNameDiv">
-          <input type="text" id="passwordInput" placeholder="Password" />
-          <button onClick={() => checkPassword()}>Enter</button>
+        <div className="passwordDiv">
+          <input type="password" id="passwordInput" placeholder="Password" />
+          <button className="btn btn1" onClick={() => checkPassword()}>
+            Enter
+          </button>
         </div>
+      ) : loading ? (
+        <>
+          <span>Uploading</span>
+          <i className="fas fa-cog fa-spin fa-4x"></i>
+        </>
       ) : (
         <form
           className="mainDiv"
@@ -405,31 +450,36 @@ const PageUploadingPage = () => {
               }
             />
           </div>
-          <div className="productNameDiv">
-            <label>
+          <div className="ProductDescription">
+            <label htmlFor="file" className="inputFileLabel">
               Main picture. Try your best to make the image a square
             </label>
             <input
               type="file"
               name="myImage"
+              id="file"
+              className="inputFileSingle"
               onChange={(e) => {
                 handlePhotoChange(e, "imageInput", 0);
               }}
               accept="image/*"
             />
-
-            <img
-              src={
-                multipeFiles[0] === ""
-                  ? ""
-                  : URL.createObjectURL(multipeFiles[0])
-              }
-              className="imagePreview"
-              id="cartImageInput"
-              alt=""
-            />
+            {multipeFiles[0] === "" ? (
+              <></>
+            ) : (
+              <img
+                src={
+                  multipeFiles[0] === ""
+                    ? ""
+                    : URL.createObjectURL(multipeFiles[0])
+                }
+                className="imagePreview"
+                id="cartImageInput"
+                alt=""
+              />
+            )}
           </div>
-          <div className="productNameDiv">
+          <div className="ProductDescription">
             <label>
               Choose three or more than three photos with 16:9 ratio
             </label>
@@ -438,6 +488,7 @@ const PageUploadingPage = () => {
             <img src={images[1]} className="imagePreview" id="imageInput1" alt="" /> */}
             <input
               type="file"
+              className="inputFileSingle"
               onChange={(e) => {
                 setMultipleFiles([multipeFiles[0], ...e.target.files]);
               }}
@@ -448,11 +499,12 @@ const PageUploadingPage = () => {
               <ImagesPreview />
             </div>
           </div>
-          <div className="productNameDiv">
+          <div className="ProductDescription">
             <label>Description</label>
             {OutputForDescription()}
             <button
               type="button"
+              className="btn"
               onClick={(e) => {
                 setNoOfDescription(noOfDescription + 1);
                 setValues({
@@ -464,10 +516,14 @@ const PageUploadingPage = () => {
                 });
               }}
             >
-              Add more
+              +
             </button>
           </div>
-          <button>Submit</button>
+          <div className="submitButtonHolder">
+            <button className="btn" style={{ marginLeft: "auto" }}>
+              Submit
+            </button>
+          </div>
           <img id="photoTest" alt="" />
         </form>
       )}
