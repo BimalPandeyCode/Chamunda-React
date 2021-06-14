@@ -163,6 +163,32 @@ label {
   flex-direction: row;
   flex-wrap: wrap;
 }
+.tagsInputDiv {
+  width: 75%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+.tagsDisplayDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.tagsDisplay {
+  display: grid;
+  grid-template-columns: 1fr 0.001fr;
+  grid-template-areas: "tagText tagButton";
+  width: fit-content;
+  margin: 5px;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+.tagsDisplay-text {
+  grid-area: tagText;
+}
+.tagsDisplay-button {
+  grid-area: tagButton;
+}
 @media screen and (max-width: 400px) {
   .inputFileSingle {
     width: 200px;

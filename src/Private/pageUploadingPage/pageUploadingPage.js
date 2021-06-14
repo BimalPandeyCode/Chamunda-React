@@ -18,8 +18,10 @@ const PageUploadingPage = () => {
     currPrice: "",
     noOfItems: 1,
     description: "",
+    tags: "",
     productDetails: new Array(noOfDescription).fill({ title: "", value: "" }),
   });
+  const [tags, setTags] = useState([]);
   const [multipeFiles, setMultipleFiles] = useState(["", ""]);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,7 +38,12 @@ const PageUploadingPage = () => {
     //   })
     //   .catch((err) => console.log(err));
   }, []);
-
+  useEffect(() => {
+    let newTagsVariable = JSON.parse(
+      JSON.stringify([...values.tags.split(" ")])
+    ).filter((ele) => ele !== "");
+    setTags(newTagsVariable);
+  }, [values.tags]);
   const handlePhotoChange = (e, id, imagesID) => {
     // let img = document.getElementById(id);
     let file = e.target.files[0];
@@ -90,6 +97,7 @@ const PageUploadingPage = () => {
       }, 1500);
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (values.prouctName !== "") {
@@ -138,6 +146,7 @@ const PageUploadingPage = () => {
                       productData.append("currPrice", values.currPrice);
                       productData.append("noOfItems", values.noOfItems);
                       productData.append("description", values.description);
+                      productData.append("tags", JSON.stringify(tags));
                       productData.append(
                         "productDetails",
                         JSON.stringify(values.productDetails)
@@ -151,26 +160,26 @@ const PageUploadingPage = () => {
                       //   .then((response) => console.log(response))
                       //   .catch((errorr) => console.log(errorr));
                       setLoading(true);
-                      Axios.post(
-                        "https://chamunda.herokuapp.com/products",
-                        productData
-                      ) //https://chamunda.herokuapp.com/products //http://localhost:4000/products
+                      Axios.post("http://localhost:4000/products", productData) //https://chamunda.herokuapp.com/products //http://localhost:4000/products
                         .then((res) => {
                           setLoading(false);
 
                           if (res.data === "productUploaded") {
                             setNoOfDescription(5);
+
                             setValues({
                               prouctName: "",
                               prevPrice: "",
                               currPrice: "",
                               noOfItems: 1,
                               description: "",
+                              tags: "",
                               productDetails: new Array(noOfDescription).fill({
                                 title: "",
                                 value: "",
                               }),
                             });
+                            setTags([]);
                             setMultipleFiles(["", ""]);
                             setShowMessages([true, "product uploaded"]);
                             setTimeout(() => {
@@ -182,6 +191,15 @@ const PageUploadingPage = () => {
                             setTimeout(() => {
                               setShowMessages(false);
                             }, 2000);
+                          } else if (res.data === "imagesNotUploaded") {
+                            setShowMessages([
+                              true,
+                              "Images not uploaded, please see if any of the images is more than 16 mb",
+                            ]);
+                            setTimeout(() => {
+                              setShowMessages(false);
+                            }, 2000);
+                            console.log(res);
                           } else {
                             setShowMessages([
                               true,
@@ -497,6 +515,48 @@ const PageUploadingPage = () => {
             />
             <div className="imagePreviewDiv">
               <ImagesPreview />
+            </div>
+          </div>
+          <div className="tagsInputDiv">
+            <label>Tags</label>
+            <input
+              className="inputField"
+              type="text"
+              placeholder="Search tags"
+              value={values.tags}
+              onChange={(e) => {
+                setValues({ ...values, tags: e.target.value });
+              }}
+            />
+            <div className="tagsDisplayDiv">
+              {tags.map((ele, index) => {
+                if (ele !== "") {
+                  return (
+                    <div className="tagsDisplay" key={index}>
+                      <div className="tagsDisplay-text">{ele}</div>
+                      {/* <button type="button" className="tagsDisplay-button" onClick={()=>{
+                        let newValuesForTags = [...values.tags.split(" ")];
+
+                      }}>
+                        X
+                      </button> */}
+                    </div>
+                  );
+                }
+                return <></>;
+              })}
+              {/* <div className="tagsDisplay">
+                <div className="tagsDisplay-text">Reactjs</div>
+                <button type="button" className="tagsDisplay-button">
+                  X
+                </button>
+              </div>
+              <div className="tagsDisplay">
+                <div className="tagsDisplay-text">Reactjs</div>
+                <button type="button" className="tagsDisplay-button">
+                  X
+                </button>
+              </div> */}
             </div>
           </div>
           <div className="ProductDescription">
