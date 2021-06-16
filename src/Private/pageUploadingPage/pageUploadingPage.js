@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./pageUploadingPage.css";
 import Axios from "axios";
 import AddedTocart from "../../Components/addedToCart/addedTocart.js";
 import axios from "axios";
 //
+let PROUUCT_UPLOADING_API = "https://chamunda.herokuapp.com/products"; //http://localhost:4000/products
+
 const PageUploadingPage = () => {
   const password = "123456789";
   const [showContent, setShowContent] = useState(false);
@@ -23,6 +25,25 @@ const PageUploadingPage = () => {
   });
   const [tags, setTags] = useState([]);
   const [multipeFiles, setMultipleFiles] = useState(["", ""]);
+
+  const [showSort, setShowSort] = useState(false);
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      // Function for click event
+      function handleOutsideClick(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setShowSort(false);
+          // alert("you just clicked outside of box!");
+        }
+      }
+
+      // Adding click event listener
+      document.addEventListener("click", handleOutsideClick);
+    }, [ref]);
+  }
+  let sortClickEventListener = useRef(null);
+  useOutsideAlerter(sortClickEventListener);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     // Axios.get("http://localhost:4000/test")4!5%$3YekT&v&@mY%bTe
@@ -151,19 +172,15 @@ const PageUploadingPage = () => {
                         "productDetails",
                         JSON.stringify(values.productDetails)
                       );
-                      // productData.append("cartImage", files123[0]);
+
                       for (let i = 0; i < multipeFiles.length; i++) {
                         productData.append("productImages", multipeFiles[i]);
                       }
-                      // axios
-                      //   .post("https://httpbin.org/anything", productData)
-                      //   .then((response) => console.log(response))
-                      //   .catch((errorr) => console.log(errorr));
+
                       setLoading(true);
-                      Axios.post("http://localhost:4000/products", productData) //https://chamunda.herokuapp.com/products //http://localhost:4000/products
+                      Axios.post(PROUUCT_UPLOADING_API, productData) //https://chamunda.herokuapp.com/products //http://localhost:4000/products
                         .then((res) => {
                           setLoading(false);
-
                           if (res.data === "productUploaded") {
                             setNoOfDescription(5);
 
@@ -185,7 +202,6 @@ const PageUploadingPage = () => {
                             setTimeout(() => {
                               setShowMessages(false);
                             }, 2000);
-                            // console.log(res);
                           } else if (res.data === "productNotUploaded") {
                             setShowMessages([true, "product NOT uploaded"]);
                             setTimeout(() => {
@@ -517,6 +533,39 @@ const PageUploadingPage = () => {
               <ImagesPreview />
             </div>
           </div>
+          <div className="ProductDescription">
+            {/* <div
+              className="PriceSortHolderButton-Div"
+              style={{ gridArea: "priceSort" }}
+              ref={sortClickEventListener}
+            > */}
+            <button
+              type="button"
+              className="fa PriceSortHolderButton"
+              onClick={() => setShowSort(!showSort)}
+            >
+              Bitch {showSort ? <>&#xf0de;</> : <>&#xf0dd;</>}
+            </button>
+            {showSort === true ? (
+              <div
+                className="PriceSortHolder2"
+                // style={{ height: "auto", display: "flex" }}
+              >
+                <button type="button" className="PriceSortHolderButton">
+                  Popular
+                </button>
+                <button type="button" className="PriceSortHolderButton">
+                  Price<i className="fas fa-sort-amount-down-alt"></i>
+                </button>
+                <button type="button" className="PriceSortHolderButton">
+                  Price<i className="fas fa-sort-amount-up"></i>
+                </button>
+              </div>
+            ) : (
+              <></>
+            )}
+            {/* </div> */}
+          </div>
           <div className="tagsInputDiv">
             <label>Tags</label>
             <input
@@ -528,6 +577,7 @@ const PageUploadingPage = () => {
                 setValues({ ...values, tags: e.target.value });
               }}
             />
+
             <div className="tagsDisplayDiv">
               {tags.map((ele, index) => {
                 if (ele !== "") {
