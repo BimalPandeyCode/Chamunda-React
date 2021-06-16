@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Link, useParams } from "react-router-dom";
+import axios from "axios";
+
 import "./IndividualCategoriesPage.css";
-import data from "../data.js";
+// import data from "../data.js";
 
 import Rating from "../Components/Rating/Rating.js";
 import AddedTocart from "../Components/addedToCart/addedTocart.js";
@@ -9,10 +11,18 @@ import AddedTocart from "../Components/addedToCart/addedTocart.js";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { increamentByValue } from "../redux/reducers/counterReducer.js";
+import { createNewProductList } from "../redux/reducers/productReducer.js";
+
+let PRODUCT_LOADING_API = "https://chamunda.herokuapp.com/productsLoad"; //!http://localhost:4000/productsLoad
 
 const IndividualCategoriesPage = () => {
+  //
+  // !productList
+  let data = useSelector((state) => state.productReducer.productList);
+  let dispatch = useDispatch();
+  //!Productlist end
   const { categoryId } = useParams();
-
+  // const [data, setData] = useState([]);
   const [showSort, setShowSort] = useState(false);
   const [sortName, setSortName] = useState(<span>Popular</span>);
   const [sortingName, setSortingName] = useState("popular"); //this is for re rendering the products
@@ -43,8 +53,14 @@ const IndividualCategoriesPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    axios
+      .get(PRODUCT_LOADING_API)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(createNewProductList({ productList: res.data }));
+      })
+      .catch((err) => console.log(err));
   }, []);
-
   const handleSetSortName = (input) => {
     if (input === "popular") {
       setSortName(<span className="fas">Popular</span>);
@@ -68,7 +84,7 @@ const IndividualCategoriesPage = () => {
   };
 
   if (categoryId < data.length) {
-    const { name } = data[categoryId];
+    // const { name } = data[categoryId];
     let outputPopular = [];
     let outputPriceUp = [];
     let outputPriceDown = [];
@@ -84,21 +100,23 @@ const IndividualCategoriesPage = () => {
     const priceUpToDown = copyDataPriceUp.sort((a, b) => {
       return b.currPrice - a.currPrice;
     });
+    console.log([popular, priceDownToUp, priceUpToDown]);
     for (let i = 0; i < popular.length; i++) {
       if (
-        popular[i].rating >= starRating &&
+        popular[i].reviews.length >= starRating &&
         popular[i].currPrice <= minMaxPrice[1] &&
         popular[i].currPrice >= minMaxPrice[0]
       ) {
         outputPopular.push(
           <Product
-            id={popular[i].id}
-            image={popular[i].image}
-            key={i}
-            name={popular[i].name}
-            rating={popular[i].rating}
-            noOfRating={popular[i].noOfRateing}
-            prevPrice={popular[i].prevPrice}
+            key={popular[i]._id}
+            id={popular[i]._id}
+            image={popular[i].otherImagesLink[0].main}
+            keyid={i}
+            name={popular[i].productName}
+            rating={popular[i].reviews.length}
+            noOfRating={popular[i].reviews.length}
+            prevPrice={popular[i].prevprice}
             currPrice={popular[i].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
@@ -108,7 +126,7 @@ const IndividualCategoriesPage = () => {
       }
     }
     if (outputPopular.length === 0) {
-      outputPopular.push(<Empty />);
+      outputPopular.push(<Empty key={333} />);
     }
     for (let j = 0; j < priceUpToDown.length; j++) {
       if (
@@ -118,13 +136,14 @@ const IndividualCategoriesPage = () => {
       ) {
         outputPriceUp.push(
           <Product
-            id={priceUpToDown[j].id}
-            image={priceUpToDown[j].image}
-            key={j}
-            name={priceUpToDown[j].name}
-            rating={priceUpToDown[j].rating}
-            noOfRating={priceUpToDown[j].noOfRateing}
-            prevPrice={priceUpToDown[j].prevPrice}
+            key={priceUpToDown[j]._id}
+            id={priceUpToDown[j]._id}
+            image={priceUpToDown[j].otherImagesLink[0].main}
+            keyid={j}
+            name={priceUpToDown[j].productName}
+            rating={priceUpToDown[j].rating.length}
+            noOfRating={priceUpToDown[j].rating.length}
+            prevPrice={priceUpToDown[j].prevprice}
             currPrice={priceUpToDown[j].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
@@ -134,7 +153,7 @@ const IndividualCategoriesPage = () => {
       }
     }
     if (outputPriceUp.length === 0) {
-      outputPriceUp.push(<Empty />);
+      outputPriceUp.push(<Empty key={444} />);
     }
     for (let k = 0; k < priceDownToUp.length; k++) {
       if (
@@ -144,13 +163,14 @@ const IndividualCategoriesPage = () => {
       ) {
         outputPriceDown.push(
           <Product
-            id={priceDownToUp[k].id}
-            image={priceDownToUp[k].image}
-            key={k}
-            name={priceDownToUp[k].name}
-            rating={priceDownToUp[k].rating}
-            noOfRating={priceDownToUp[k].noOfRateing}
-            prevPrice={priceDownToUp[k].prevPrice}
+            key={priceDownToUp[k]._id}
+            id={priceDownToUp[k]._id}
+            image={priceDownToUp[k].otherImagesLink[0].main}
+            keyid={k}
+            name={priceDownToUp[k].productName}
+            rating={priceDownToUp[k].rating.length}
+            noOfRating={priceDownToUp[k].rating.length}
+            prevPrice={priceDownToUp[k].prevprice}
             currPrice={priceDownToUp[k].currPrice}
             showMessages={showMessages}
             setShowMessages={setShowMessages}
@@ -160,7 +180,7 @@ const IndividualCategoriesPage = () => {
       }
     }
     if (outputPriceDown.length === 0) {
-      outputPriceDown.push(<Empty />);
+      outputPriceDown.push(<Empty key={555} />);
     }
 
     if (showRatingSortMobile) {
@@ -344,7 +364,7 @@ const IndividualCategoriesPage = () => {
         )}
         <div className="IndividualCategoriesPage">
           <div className="IndividualCategoriesPage-mainTitle">
-            <h3>{name}</h3>
+            <h3>Name</h3>
           </div>
           <div className="IndividualCategoriesPage-sideSortBar">
             <div className="IndividualCategoriesPage-sideSortBar-holder">
@@ -564,7 +584,7 @@ const Product = ({
   id,
   name,
   image,
-  key,
+  keyid,
   rating,
   noOfRating,
   prevPrice,
@@ -576,66 +596,67 @@ const Product = ({
   let cartInfo = useSelector((state) => state.counterReducer);
   const dispatch = useDispatch();
   return (
-    <React.Fragment>
-      <div className="IndividualCategoriesPage-product" key={key}>
-        <Link to={`/product/${id}`}>
-          <img
-            src={image}
-            alt=""
-            className="IndividualCategoriesPage-product-Image"
-          />
-        </Link>
-        <Link
-          to={`/product/${id}`}
-          className="IndividualCategoriesPage-product-info"
-        >
-          <p style={{ fontSize: "20px" }}>{name}</p>
-          <Rating n={rating} numberOfPeople={noOfRating} key={key} />
-          <p>
-            Lorem Ipsum is a phrase that I do not understand, its probably
-            something latin for how my cow stopped giving milk.
+    <div className="IndividualCategoriesPage-product" key={keyid}>
+      <Link to={`/product/${id}`}>
+        <img
+          src={image}
+          alt=""
+          className="IndividualCategoriesPage-product-Image"
+        />
+      </Link>
+      <Link
+        to={`/product/${id}`}
+        className="IndividualCategoriesPage-product-info"
+      >
+        <p style={{ fontSize: "20px" }}>{name}</p>
+        <Rating
+          n={rating}
+          numberOfPeople={noOfRating}
+          key={keyid}
+          keyid={keyid}
+        />
+        <p>
+          Lorem Ipsum is a phrase that I do not understand, its probably
+          something latin for how my cow stopped giving milk.
+        </p>
+        <div className="IndividualCategoriesPage-product-info-priceHolder">
+          <p className="IndividualCategoriesPage-product-info-truePrice">
+            ${currPrice}
           </p>
-          <div className="IndividualCategoriesPage-product-info-priceHolder">
-            <p className="IndividualCategoriesPage-product-info-truePrice">
-              ${currPrice}
-            </p>
-            <strike className="IndividualCategoriesPage-product-info-crossedPrice">
-              ${prevPrice}
-            </strike>
-            <p className="IndividualCategoriesPage-product-info-percentage">
-              {(((prevPrice - currPrice) * 100) / prevPrice).toFixed(2) +
-                "% OFF"}
-            </p>
-          </div>
-        </Link>
-
-        <div
-          style={{
-            width: "100%",
-            display: "grid",
-            placeItems: "center",
-            marginBottom: "10px",
-          }}
-        >
-          {noOfItems > 0 ? (
-            <span
-              style={{
-                color: "green",
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-            >
-              In stock
-            </span>
-          ) : (
-            <span
-              style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}
-            >
-              Temporarily Unavailable
-            </span>
-          )}
+          <strike className="IndividualCategoriesPage-product-info-crossedPrice">
+            ${prevPrice}
+          </strike>
+          <p className="IndividualCategoriesPage-product-info-percentage">
+            {(((prevPrice - currPrice) * 100) / prevPrice).toFixed(2) + "% OFF"}
+          </p>
         </div>
-        {/* <div className="IndividualCategoriesPage-product-buttonHolder">
+      </Link>
+
+      <div
+        style={{
+          width: "100%",
+          display: "grid",
+          placeItems: "center",
+          marginBottom: "10px",
+        }}
+      >
+        {noOfItems > 0 ? (
+          <span
+            style={{
+              color: "green",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            In stock
+          </span>
+        ) : (
+          <span style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}>
+            Temporarily Unavailable
+          </span>
+        )}
+      </div>
+      {/* <div className="IndividualCategoriesPage-product-buttonHolder">
           <button
             className="IndividualCategoriesPage-product-buttonHolder-addToCart"
             onClick={() => {
@@ -668,8 +689,7 @@ const Product = ({
             Buy
           </button>
         </div> */}
-      </div>
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -681,7 +701,7 @@ const Empty = () => {
         placeItems: "center",
         minHeight: "100vh",
       }}
-      key="99"
+      key="9999"
     >
       <p>
         We've searched far and wide but we can't seem to find what you are

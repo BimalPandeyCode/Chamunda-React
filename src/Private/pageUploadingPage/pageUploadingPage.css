@@ -163,6 +163,13 @@ label {
   flex-direction: row;
   flex-wrap: wrap;
 }
+.PriceSortHolder2 {
+  /* position: relative;
+  top: 30px; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
 .tagsInputDiv {
   width: 75%;
   margin-bottom: 20px;

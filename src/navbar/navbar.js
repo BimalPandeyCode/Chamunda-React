@@ -58,9 +58,13 @@ const Navbar = () => {
         onClick={() => {
           dispatch(reset());
           localStorage.clear();
+          window.location =
+            "https://sellercentral.amazon.com/gp/help/external/G200332540?language=en_US";
         }}
       >
-        <i className="fas fa-sign-in-alt fa-2x"></i>
+        <a href="https://sellercentral.amazon.com/gp/help/external/G200332540?language=en_US">
+          <i className="fas fa-sign-in-alt fa-2x"></i>
+        </a>
       </button>
     </header>
   );

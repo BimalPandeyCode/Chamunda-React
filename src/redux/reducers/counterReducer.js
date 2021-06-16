@@ -11,18 +11,18 @@ export const noOfCartSlice = createSlice({
   reducers: {
     increamentByValue: (state, action) => {
       if (state.allProductId.includes(action.payload.productId.id)) {
-        if (
-          state.productId.find(({ id }) => id === action.payload.productId.id)
-            .noOfItems <
-          data.find(({ id }) => id === action.payload.productId.id).noOfItems
-        ) {
-          state.productId.find(
-            ({ id }) => id === action.payload.productId.id
-          ).noOfItems += action.payload.productId.noOfItems;
-          let copy = 0;
-          state.productId.map((ele) => (copy += ele.noOfItems));
-          state.noOfCart = copy;
-        }
+        // if (
+        //   state.productId.find(({ id }) => id === action.payload.productId.id)
+        //     .noOfItems <
+        //   data.find(({ id }) => id === action.payload.productId.id).noOfItems
+        // ) {
+        state.productId.find(
+          ({ id }) => id === action.payload.productId.id
+        ).noOfItems += action.payload.productId.noOfItems;
+        let copy = 0;
+        state.productId.map((ele) => (copy += ele.noOfItems));
+        state.noOfCart = copy;
+        // }
       } else {
         state.productId = [
           ...state.productId,

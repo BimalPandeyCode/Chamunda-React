@@ -166,6 +166,10 @@
   margin-left: auto;
   margin-right: auto;
   width: 95%;
+  /* padding-top: 53.5%;
+  position: relative;
+  overflow: hidden; */
+  height: 133.5px;
 }
 
 .IndividualCategoriesPage-product-info-priceHolder {
@@ -325,5 +329,8 @@
 @media screen and (max-width: 539px) {
   .IndividualCategoriesPage-product {
     width: 90%;
+  }
+  .IndividualCategoriesPage-product-Image {
+    height: auto;
   }
 }

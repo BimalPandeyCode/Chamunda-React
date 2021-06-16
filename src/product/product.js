@@ -2,17 +2,61 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, useParams, Link } from "react-router-dom";
 import ReactImageMagnify from "react-image-magnify";
 import "./product.css";
-import data from "../data.js";
+// import data from "../data.js";
 import Rating from "../Components/Rating/Rating.js";
 import AddedTocart from "../Components/addedToCart/addedTocart.js";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { increamentByValue } from "../redux/reducers/counterReducer.js";
+import { createNewProductList } from "../redux/reducers/productReducer.js";
+import axios from "axios";
 
 const Product = () => {
+  const [loading, setLoading] = useState(true);
   let { productID } = useParams();
-  productID = parseInt(productID);
+  const [productInfo, setProductInfo] = useState({});
+  let productInfo2 = useSelector((state) => {
+    state?.productReducer?.productList.find(({ _id }) => _id === productID);
+  });
+  const [productInfoValueDoesntChange] = useState(productInfo2);
+
+  useEffect(() => {
+    // console.log("productInfo");
+    // console.log(productInfo);
+    // console.log("productInfo");
+    if (productInfo.otherImagesLink !== undefined) {
+      setCurrentImage([
+        productInfo.otherImagesLink[0].main,
+        0,
+        imgDimension(productInfo.otherImagesLink[0].main).width,
+        imgDimension(productInfo.otherImagesLink[0].main).height,
+      ]);
+      setLoading(false);
+    }
+  }, [productInfo]);
+
+  useEffect(() => {
+    if (productInfoValueDoesntChange === undefined) {
+      axios
+        .get("http://localhost:4000/productsLoad")
+        .then((res) => {
+          console.log(res.data);
+          setProductInfo(res.data.find(({ _id }) => _id === productID));
+
+          dispatch(createNewProductList({ productList: res.data }));
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setProductInfo(productInfoValueDoesntChange);
+      setLoading(false);
+    }
+  }, [productInfoValueDoesntChange]);
+  // let productInfo = useSelector((state) => {
+  //   state.productReducer.productList.find(({ _id }) => _id === productID);
+  // });
+
   let cartInfo = useSelector((state) => state.counterReducer);
   const dispatch = useDispatch();
   const imgDimension = (imgSrc) => {
@@ -28,28 +72,28 @@ const Product = () => {
     return imgDimensions;
   };
   const [noOfItems, setNoOfItems] = useState(1);
-  const [currentImage, setCurrentImage] = useState([
-    data[productID].otherImages[0],
-    0,
-    imgDimension(data[productID].otherImages[0]).width,
-    imgDimension(data[productID].otherImages[0]).height,
-  ]);
+  const [currentImage, setCurrentImage] = useState([]);
+  // const [currentImage, setCurrentImage] = useState([
+  //   productInfo.otherImagesLink[0].main,
+  //   0,
+  //   imgDimension(productInfo.otherImagesLink[0].main).width,
+  //   imgDimension(productInfo.otherImagesLink[0].main).height,
+  // ]);
   const [seeMore, setSeeMore] = useState(new Array(1).fill(false));
   const [reply, setReply] = useState([false, ""]);
   const [showMessages, setShowMessages] = useState([false, ""]);
   const ImagesPicker = () => {
     let output = [];
-    for (let i = 0; i < data[productID].otherImages.length; i++) {
+    for (let i = 0; i < productInfo.otherImagesLink.length; i++) {
       output.push(
         <img
           onMouseOver={() => {
             setCurrentImage([
-              data[productID].otherImages[i],
+              productInfo.otherImagesLink[i].medium,
               i,
-              imgDimension(data[productID].otherImages[i]).width,
-              imgDimension(data[productID].otherImages[i]).height,
+              imgDimension(productInfo.otherImagesLink[i].medium).width,
+              imgDimension(productInfo.otherImagesLink[i].medium).height,
             ]);
-            // console.log(currentImage);
           }}
           style={
             currentImage[1] === i
@@ -57,7 +101,7 @@ const Product = () => {
               : { border: "1px solid black" }
           }
           className="productPageMainDiv-productImages-imagesPicker-image"
-          src={data[productID].otherImages[i]}
+          src={productInfo.otherImagesLink[i].low}
           alt=""
           key={i}
         />
@@ -67,24 +111,42 @@ const Product = () => {
   };
   const ProductDescription = () => {
     let output = [];
-    for (const key in data[productID].description) {
+    for (let i = 0; i < productInfo.productDetails.length; i++) {
       output.push(
-        <tr key={key}>
+        <tr key={i}>
           {
             <td className="productPageMainDiv-infoContainer-div-tbody-key">
-              {key}:
+              {productInfo.productDetails[i].title}:
             </td>
           }
           {
             <td className="productPageMainDiv-infoContainer-div-tbody-value">
-              {data[productID].description[key] === ""
+              {productInfo.productDetails[i].value === ""
                 ? "No Data"
-                : data[productID].description[key]}
+                : productInfo.productDetails[i].value}
             </td>
           }
         </tr>
       );
     }
+    // for (const key in productInfo.productDetails) {
+    //   output.push(
+    //     <tr key={key}>
+    //       {
+    //         <td className="productPageMainDiv-infoContainer-div-tbody-key">
+    //           {key}:
+    //         </td>
+    //       }
+    //       {
+    //         <td className="productPageMainDiv-infoContainer-div-tbody-value">
+    //           {productInfo.productDetails[key] === ""
+    //             ? "No Data"
+    //             : productInfo.productDetails[key]}
+    //         </td>
+    //       }
+    //     </tr>
+    //   );
+    // }
     return output;
   };
 
@@ -157,7 +219,7 @@ const Product = () => {
       return output;
     };
     let i = 1000;
-    data[0].Questions.forEach((eachConv, index) => {
+    productInfo.question.forEach((eachConv, index) => {
       let [nowMonth, nowDay, nowYear] = new Date()
         .toLocaleDateString("en-Np")
         .split("/");
@@ -251,12 +313,15 @@ const Product = () => {
     });
     return output;
   };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.getElementsByClassName(
-      "productPageMainDiv-productImages-images-image"
-    )[0].style.position = "sticky";
-    setSeeMore(new Array(data[0].Questions.length).fill(false));
+    if (!loading) {
+      document.getElementsByClassName(
+        "productPageMainDiv-productImages-images-image"
+      )[0].style.position = "sticky";
+      setSeeMore(new Array(productInfo.question.length).fill(false));
+    }
   }, []);
   let multiplyFactor = 2;
   if (currentImage[2] > currentImage[3]) {
@@ -269,7 +334,12 @@ const Product = () => {
     multiplyFactor = 2;
   }
 
-  return (
+  return loading ? (
+    <>
+      <span>loading...</span>
+      <i className="fas fa-cog fa-spin fa-4x"></i>
+    </>
+  ) : (
     <React.Fragment>
       {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
       <div className="productPageMainDiv">
@@ -301,28 +371,28 @@ const Product = () => {
           </div>
         </div>
         {/* XAc%At$27pq37 */}
+        {/* // * Product Info Container */}
         <div className="productPageMainDiv-infoContainer">
           <div className="productPageMainDiv-infoContainer-div">
-            <h2>{data[productID].name}</h2>
+            <h2>{productInfo.productName}</h2>
             <Rating
-              n={data[productID].rating}
-              numberOfPeople={data[productID].noOfRateing}
-              noOfquestions={data[0].Questions.length}
+              n={productInfo.rating.$numberDecimal}
+              numberOfPeople={productInfo.noOfRating}
+              noOfquestions={productInfo.question.length}
             />
             <p>Brand: No Brand</p>
             <div className="productPageMainDiv-infoContainer-div-priceInfo">
               <div className="productPageMainDiv-infoContainer-div-priceInfo-currPrice">
-                <h2>${data[productID].currPrice}</h2>
+                <h2>${productInfo.currPrice}</h2>
               </div>
               <strike className="productPageMainDiv-infoContainer-div-priceInfo-prevPrice">
-                <h5>${data[productID].prevPrice}</h5>
+                <h5>${productInfo.prevprice}</h5>
               </strike>
               <div>
                 <h6>
                   {Number.parseFloat(
-                    ((data[productID].prevPrice - data[productID].currPrice) *
-                      100) /
-                      data[productID].prevPrice
+                    ((productInfo.prevprice - productInfo.currPrice) * 100) /
+                      productInfo.prevprice
                   ).toFixed(2)}
                   % OFF
                 </h6>
@@ -336,13 +406,14 @@ const Product = () => {
             <label>
               <h3>About this person</h3>
             </label>
-            <p>{data[productID].AboutThisItem}</p>
+            <p>{productInfo.description}</p>
             <br />
           </div>
         </div>
         <div className="productPageMainDiv-checkOutInfo">
+          {/* //* Increase or decrease cart Items */}
           <div className="productPageMainDiv-checkOutInfo-numberOfItems">
-            {data[productID].noOfItems > 0 ? (
+            {productInfo.noOfItems > 0 ? (
               <>
                 {" "}
                 <label style={{ marginRight: "5px" }}>Quantity</label>
@@ -367,7 +438,7 @@ const Product = () => {
                 <button
                   className="productPageMainDiv-checkOutInfo-numberOfItems-moreButton"
                   onClick={() => {
-                    if (noOfItems < data[productID].noOfItems) {
+                    if (noOfItems < productInfo.noOfItems) {
                       setNoOfItems(parseInt(noOfItems) + 1);
                     } else if (isNaN(noOfItems) || noOfItems === "") {
                       setNoOfItems(1);
@@ -379,20 +450,21 @@ const Product = () => {
                   {"+"}
                 </button>
                 <label style={{ marginLeft: "5px" }}>
-                  {data[productID].noOfItems} items left
+                  {productInfo.noOfItems} items left
                 </label>{" "}
               </>
             ) : (
               <h3>Unavailable</h3>
             )}
           </div>
+          {/* // * CART button Holder */}
           <div className="productPageMainDiv-checkOutInfo-buttonHolder">
             {!cartInfo.allProductId.includes(productID) ? (
               <button
                 className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
                 onClick={() => {
                   if (!cartInfo.allProductId.includes(productID)) {
-                    if (data.find(({ id }) => id === productID).noOfItems > 0) {
+                    if (productInfo.noOfItems > 0) {
                       dispatch(
                         increamentByValue({
                           productId: { id: productID, noOfItems: noOfItems },
@@ -421,7 +493,6 @@ const Product = () => {
                 className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
               >
                 <button
-                  // className="productPageMainDiv-checkOutInfo-buttonHolder-addToCartButton"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -437,17 +508,12 @@ const Product = () => {
             react js
           </a> */}
             <button className="productPageMainDiv-checkOutInfo-buttonHolder-buy">
-              {/* <a
-                href="https://ourworldindata.org/covid-vaccinations?country=NPL~OWID_WRL"
-                target="_blank"
-                rel="noopener noreferrer"
-              > */}
               BUY
-              {/* </a> */}
             </button>
           </div>
         </div>
       </div>
+      {/** // * :customers question*/}
       <div className="productPageMainDiv-questionsContainer">
         <div className="productPageMainDiv-questionsContainer-title">
           <h2>Customer's questions</h2>
