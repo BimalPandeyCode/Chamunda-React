@@ -4,11 +4,15 @@ import Axios from "axios";
 import AddedTocart from "../../Components/addedToCart/addedTocart.js";
 import axios from "axios";
 //
-let PROUUCT_UPLOADING_API = "https://chamunda.herokuapp.com/products"; //http://localhost:4000/products
-
+let PROUUCT_UPLOADING_API = "https://chamunda.herokuapp.com/products"; //!http://localhost:4000/products
+let PRODUCT_UPDATING_API = "https://chamunda.herokuapp.com/productsUpdate"; //!http://localhost:4000/productsUpdate
+let PRODUCT_LOADING_API = "https://chamunda.herokuapp.com/productsLoad"; //!http://localhost:4000/productsLoad
 const PageUploadingPage = () => {
   const password = "123456789";
+  const [editProductID, setEditProductID] = useState("");
   const [showContent, setShowContent] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [allProduct, setAllProducts] = useState([]);
   const [noOfDescription, setNoOfDescription] = useState(5);
   const [images, setImages] = useState(new Array(4).fill(""));
   const [showMessages, setShowMessages] = useState([false, ""]);
@@ -58,6 +62,13 @@ const PageUploadingPage = () => {
     //     console.log(res.data);
     //   })
     //   .catch((err) => console.log(err));
+    axios
+      .get(PRODUCT_LOADING_API)
+      .then((res) => {
+        setAllProducts(res.data);
+        // console.log(res);
+      })
+      .catch((err) => console.log(err));
   }, []);
   useEffect(() => {
     let newTagsVariable = JSON.parse(
@@ -111,6 +122,7 @@ const PageUploadingPage = () => {
   const checkPassword = () => {
     if (password === document.getElementById("passwordInput").value) {
       setShowContent(true);
+      return true;
     } else {
       setShowMessages([true, "Wrong password"]);
       setTimeout(() => {
@@ -298,7 +310,190 @@ const PageUploadingPage = () => {
       // alert("product name is empty");
     }
   };
+  const handleUpdate = (e) => {
+    // e.preventDefault();
+    if (values.prouctName !== "") {
+      if (values.prevPrice !== "") {
+        if (values.currPrice !== "") {
+          if (values.description !== "") {
+            // if (multipeFiles[0] !== "") {
+            // if (multipeFiles.length > 3) {
+            if (values.noOfItems > 0) {
+              let allValueOfProductDetailsEmpty = true;
+              for (let i = 0; i < values.productDetails.length; i++) {
+                if (
+                  values.productDetails[i].title === "" ||
+                  values.productDetails[i].value === ""
+                ) {
+                  allValueOfProductDetailsEmpty = false;
+                  break;
+                }
+              }
+              if (allValueOfProductDetailsEmpty) {
+                let allow = true;
+                let img = new Image();
+                // document.getElementById("photoTest").style.display = "flex";
+                // img.src = URL.createObjectURL(multipeFiles[0]);
+                // document.getElementById("photoTest").src =
+                //   URL.createObjectURL(multipeFiles[0]);
+                if (multipeFiles[0] !== "") {
+                  allow = false;
+                  document.getElementById("cartImageInput").clientWidth /
+                    document.getElementById("cartImageInput").clientHeight <
+                    1.4 &&
+                  document.getElementById("cartImageInput").clientWidth /
+                    document.getElementById("cartImageInput").clientHeight >
+                    0.7
+                    ? (allow = true)
+                    : (allow = false);
+                  console.log(
+                    document.getElementById("cartImageInput").clientWidth
+                  );
+                  console.log(
+                    document.getElementById("cartImageInput").clientHeight
+                  );
+                }
 
+                // document.getElementById("photoTest").style.display = "none";
+                if (allow) {
+                  let productData = new FormData();
+                  productData.append("productID", editProductID);
+                  productData.append("productName", values.prouctName);
+                  productData.append("prevPrice", values.prevPrice);
+                  productData.append("currPrice", values.currPrice);
+                  productData.append("noOfItems", values.noOfItems);
+                  productData.append("description", values.description);
+                  productData.append("tags", JSON.stringify(tags));
+                  productData.append(
+                    "productDetails",
+                    JSON.stringify(values.productDetails)
+                  );
+                  if (multipeFiles[0] !== "" || multipeFiles.length > 2) {
+                    for (let i = 0; i < multipeFiles.length; i++) {
+                      productData.append("productImages", multipeFiles[i]);
+                    }
+                  }
+
+                  setLoading(true);
+                  Axios.post(PRODUCT_UPDATING_API, productData)
+                    .then((res) => {
+                      setLoading(false);
+                      if (res.data === "productUploaded") {
+                        setNoOfDescription(5);
+
+                        setValues({
+                          prouctName: "",
+                          prevPrice: "",
+                          currPrice: "",
+                          noOfItems: 1,
+                          description: "",
+                          tags: "",
+                          productDetails: new Array(noOfDescription).fill({
+                            title: "",
+                            value: "",
+                          }),
+                        });
+                        setTags([]);
+                        setMultipleFiles(["", ""]);
+                        setShowMessages([true, "product updated"]);
+                        setTimeout(() => {
+                          setShowMessages(false);
+                        }, 2000);
+                      } else if (res.data === "productNotUploaded") {
+                        setShowMessages([true, "product NOT uploaded"]);
+                        setTimeout(() => {
+                          setShowMessages(false);
+                        }, 2000);
+                      } else if (res.data === "imagesNotUploaded") {
+                        setShowMessages([
+                          true,
+                          "Images not uploaded, please see if any of the images is more than 16 mb",
+                        ]);
+                        setTimeout(() => {
+                          setShowMessages(false);
+                        }, 2000);
+                        console.log(res);
+                      } else {
+                        setShowMessages([
+                          true,
+                          "something else caused this so please hold on",
+                        ]);
+                        setTimeout(() => {
+                          setShowMessages(false);
+                        }, 2000);
+                        console.log(res);
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      setLoading(false);
+                    });
+                } else {
+                  console.log(multipeFiles);
+                  console.log(
+                    document.getElementById("cartImageInput").clientWidth +
+                      "     " +
+                      document.getElementById("cartImageInput").clientHeight +
+                      "please make the image square"
+                  );
+                }
+              } else {
+                setShowMessages([true, "You have details missing"]);
+                setTimeout(() => {
+                  setShowMessages(false);
+                }, 2000);
+                // alert("You have details missing");
+              }
+            } else {
+              setShowMessages([true, "No of item is less than 1"]);
+              setTimeout(() => {
+                setShowMessages(false);
+              }, 2000);
+              // alert("No of item is less than 0 is empty");
+            }
+            //   } else {
+            //     setShowMessages([true, "Other image is empty"]);
+            //     setTimeout(() => {
+            //       setShowMessages(false);
+            //     }, 2000);
+            //     // alert("Other image is empty");
+            //   }
+            // } else {
+            //   setShowMessages([true, "Cart Image is empty"]);
+            //   setTimeout(() => {
+            //     setShowMessages(false);
+            //   }, 2000);
+            //   // alert("Cart Image is empty");
+            // }
+          } else {
+            setShowMessages([true, "description is empty"]);
+            setTimeout(() => {
+              setShowMessages(false);
+            }, 2000);
+            // alert("description is empty");
+          }
+        } else {
+          setShowMessages([true, "Current price is empty"]);
+          setTimeout(() => {
+            setShowMessages(false);
+          }, 2000);
+          // alert("Current price is empty");
+        }
+      } else {
+        setShowMessages([true, "previous price is empty"]);
+        setTimeout(() => {
+          setShowMessages(false);
+        }, 2000);
+        // alert("previous price is empty");
+      }
+    } else {
+      setShowMessages([true, "product name is empty"]);
+      setTimeout(() => {
+        setShowMessages(false);
+      }, 2000);
+      // alert("product name is empty");
+    }
+  };
   //
   const OutputForDescription = () => {
     let outputForDescription = [];
@@ -402,6 +597,61 @@ const PageUploadingPage = () => {
     }
     return output;
   };
+  const AllProducts = () => {
+    let output = [];
+    for (let i = 0; i < allProduct.length; i++) {
+      output.push(
+        <div
+          key={i}
+          style={{
+            width: "100%",
+            display: "grid",
+            placeItems: "center",
+            margin: "5px",
+            padding: "5px",
+          }}
+        >
+          <button
+            key={i}
+            onClick={() => {
+              if (checkPassword() === true) {
+                setEditProductID(allProduct[i]._id);
+                let output = [];
+                for (let j = 0; j < allProduct[i].productDetails.length; j++) {
+                  output.push({
+                    title: allProduct[i].productDetails[j].title,
+                    value: allProduct[i].productDetails[j].value,
+                  });
+                }
+                setNoOfDescription(allProduct[i].productDetails.length);
+                setValues({
+                  prouctName: allProduct[i].productName,
+                  prevPrice: allProduct[i].prevprice,
+                  currPrice: allProduct[i].currPrice,
+                  noOfItems: allProduct[i].noOfItems,
+                  description: allProduct[i].description,
+                  tags: JSON.parse(allProduct[i].tags).join(" "),
+                  productDetails: output,
+                });
+              }
+            }}
+            style={{
+              minWidth: "150px",
+              minHeight: "30px",
+            }}
+          >
+            <img
+              style={{ width: "30px", height: "30px" }}
+              src={allProduct[i].cartImageLinks[0].main}
+              alt=""
+            />
+            {allProduct[i].productName}
+          </button>
+        </div>
+      );
+    }
+    return output;
+  };
   return (
     <div className="mainDiv">
       {showMessages[0] ? <AddedTocart messages={showMessages[1]} /> : <></>}
@@ -412,6 +662,15 @@ const PageUploadingPage = () => {
           <button className="btn btn1" onClick={() => checkPassword()}>
             Enter
           </button>
+          {showEdit ? (
+            <AllProducts />
+          ) : (
+            <>
+              <button className="btn btn1" onClick={() => setShowEdit(true)}>
+                Edit
+              </button>
+            </>
+          )}
         </div>
       ) : loading ? (
         <>
@@ -630,11 +889,25 @@ const PageUploadingPage = () => {
             </button>
           </div>
           <div className="submitButtonHolder">
-            <button className="btn" style={{ marginLeft: "auto" }}>
-              Submit
-            </button>
+            {showEdit ? (
+              <button
+                type="button"
+                className="btn"
+                style={{ marginLeft: "auto" }}
+                onClick={() => handleUpdate()}
+              >
+                Update
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="btn"
+                style={{ marginLeft: "auto" }}
+              >
+                Submit
+              </button>
+            )}
           </div>
-          <img id="photoTest" alt="" />
         </form>
       )}
     </div>

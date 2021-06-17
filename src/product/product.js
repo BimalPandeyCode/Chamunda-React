@@ -27,10 +27,20 @@ const Product = () => {
     // console.log("productInfo");
     if (productInfo.otherImagesLink !== undefined) {
       setCurrentImage([
-        productInfo.otherImagesLink[0].main,
+        productInfo.otherImagesLink[0].medium
+          ? productInfo.otherImagesLink[0].medium
+          : productInfo.otherImagesLink[0].main,
         0,
-        imgDimension(productInfo.otherImagesLink[0].main).width,
-        imgDimension(productInfo.otherImagesLink[0].main).height,
+        imgDimension(
+          productInfo.otherImagesLink[0].medium
+            ? productInfo.otherImagesLink[0].medium
+            : productInfo.otherImagesLink[0].main
+        ).width,
+        imgDimension(
+          productInfo.otherImagesLink[0].medium
+            ? productInfo.otherImagesLink[0].medium
+            : productInfo.otherImagesLink[0].main
+        ).height,
       ]);
       setLoading(false);
     }
@@ -89,10 +99,20 @@ const Product = () => {
         <img
           onMouseOver={() => {
             setCurrentImage([
-              productInfo.otherImagesLink[i].medium,
+              productInfo.otherImagesLink[i].medium
+                ? productInfo.otherImagesLink[i].medium
+                : productInfo.otherImagesLink[i].main,
               i,
-              imgDimension(productInfo.otherImagesLink[i].medium).width,
-              imgDimension(productInfo.otherImagesLink[i].medium).height,
+              imgDimension(
+                productInfo.otherImagesLink[i].medium
+                  ? productInfo.otherImagesLink[i].medium
+                  : productInfo.otherImagesLink[i].main
+              ).width,
+              imgDimension(
+                productInfo.otherImagesLink[i].medium
+                  ? productInfo.otherImagesLink[i].medium
+                  : productInfo.otherImagesLink[i].main
+              ).height,
             ]);
           }}
           style={
